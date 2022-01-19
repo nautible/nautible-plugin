@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bookinfo-root
+  namespace: argocd
+spec:
+  destination:
+    namespace: bookinfo
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 'ArgoCD/applications/bookinfo/'
+    repoURL: https://github.com/nautible/nautible-infra
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true

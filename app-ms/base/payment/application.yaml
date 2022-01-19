@@ -1,0 +1,71 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nautible-app-payment-bff
+  namespace: argocd
+spec:
+  destination:
+    namespace: nautible-app
+    server: https://kubernetes.default.svc
+  project: application
+  source:
+    path: 'bff/overlays/dev/'
+    repoURL: https://github.com/nautible/nautible-app-payment-manifest
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nautible-app-payment-cash
+  namespace: argocd
+spec:
+  destination:
+    namespace: nautible-app
+    server: https://kubernetes.default.svc
+  project: application
+  source:
+    path: 'cash/overlays/dev/'
+    repoURL: https://github.com/nautible/nautible-app-payment-manifest
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nautible-app-payment-convenience
+  namespace: argocd
+spec:
+  destination:
+    namespace: nautible-app
+    server: https://kubernetes.default.svc
+  project: application
+  source:
+    path: 'convenience/overlays/dev/'
+    repoURL: https://github.com/nautible/nautible-app-payment-manifest
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nautible-app-payment-credit
+  namespace: argocd
+spec:
+  destination:
+    namespace: nautible-app
+    server: https://kubernetes.default.svc
+  project: application
+  source:
+    path: 'credit/overlays/dev/'
+    repoURL: https://github.com/nautible/nautible-app-payment-manifest
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true

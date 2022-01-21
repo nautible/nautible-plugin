@@ -10,13 +10,13 @@ spec:
   source:
     path: 'manifests/charts/gateways/istio-egress'
     repoURL: 'https://github.com/istio/istio'
-    targetRevision: 1.9.2
+    targetRevision: 1.12.2
     helm:
       parameters:
         - name: 'global.hub'
           value: 'docker.io/istio'
         - name: 'global.tag'
-          value: '1.9.2'
+          value: '1.12.2'
   project: default
   syncPolicy:
     automated:

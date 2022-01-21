@@ -10,7 +10,7 @@ spec:
     namespace: istio-operator
   source:
     repoURL: 'https://github.com/istio/istio'
-    targetRevision: 1.9.2
+    targetRevision: 1.12.2
     path: 'manifests/charts/istio-operator'
     helm:
       parameters:

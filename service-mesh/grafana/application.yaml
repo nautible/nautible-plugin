@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 'ArgoCD/ecosystems/base/istio/grafana/base'
-    repoURL: https://github.com/nautible/nautible-infra
-    targetRevision: HEAD
+    path: 'service-mesh/grafana/base'
+    repoURL: https://github.com/nautible/nautible-plugin
+    targetRevision: feature/init
   syncPolicy:
     automated:
       prune: true

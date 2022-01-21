@@ -35,7 +35,7 @@ spec:
     # ref https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack/
     chart: 'kube-prometheus-stack'
     repoURL: 'https://prometheus-community.github.io/helm-charts'
-    targetRevision: 20.0.1   # application 0.52.0
+    targetRevision: 30.1.0   # application 0.52.0
     helm:
       version: v3
       releaseName: prometheus-operator

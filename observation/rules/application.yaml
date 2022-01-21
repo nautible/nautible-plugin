@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 'ArgoCD/ecosystems/base/observation/rules/base'
-    repoURL: https://github.com/nautible/nautible-infra
-    targetRevision: HEAD
+    path: 'observation/rules/base'
+    repoURL: https://github.com/nautible/nautible-plugin
+    targetRevision: feature/init
   syncPolicy:
     automated:
       prune: true

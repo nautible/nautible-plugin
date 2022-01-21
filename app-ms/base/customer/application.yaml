@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nautible-app-customer
+  name: nautible-app-customer-ms
   namespace: argocd
 spec:
   destination:
-    namespace: nautible-app
+    namespace: nautible-app-ms
     server: https://kubernetes.default.svc
   project: application
   source:
     path: 'overlays/dev/'
-    repoURL: https://github.com/nautible/nautible-app-customer-manifest
+    repoURL: https://github.com/nautible/nautible-app-ms-customer-manifest
     targetRevision: HEAD
   syncPolicy:
     automated:

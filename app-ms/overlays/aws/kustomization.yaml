@@ -11,12 +11,12 @@ patches:
 - path: patch.json
   target:
     kind: Application
-    name: nautible-app-customer
+    name: nautible-app-ms-customer
 - path: patch.json
   target:
     kind: Application
-    name: nautible-app-stock
+    name: nautible-app-ms-stock
 - path: patch.json
   target:
     kind: Application
-    name: nautible-app-order
+    name: nautible-app-ms-order

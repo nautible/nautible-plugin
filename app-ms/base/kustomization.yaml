@@ -1,10 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - nautible-app/common/namespace.yaml
-  - nautible-app/common/dapr-rbac.yaml
-  - nautible-app/customer/application.yaml
-  - nautible-app/product/product.yaml
-  - nautible-app/stock/application.yaml
-  - nautible-app/order/application.yaml
-  - nautible-app/payment/application.yaml
+  - common/namespace.yaml
+  - common/dapr-rbac.yaml
+  - customer/application.yaml
+  - product/product.yaml
+  - stock/application.yaml
+  - order/application.yaml
+  - payment/application.yaml

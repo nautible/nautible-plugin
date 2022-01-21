@@ -5,7 +5,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: secret-reader
-  namespace: nautible-app-ms
+  namespace: nautible-app
 rules:
 - apiGroups: [""]
   resources: ["secrets"]
@@ -16,7 +16,7 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: dapr-secret-reader
-  namespace: nautible-app-ms
+  namespace: nautible-app
 subjects:
 - kind: ServiceAccount
   name: default

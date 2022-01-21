@@ -4,7 +4,7 @@ resources:
   - common/namespace.yaml
   - common/dapr-rbac.yaml
   - customer/application.yaml
-  - product/product.yaml
+  - product/application.yaml
   - stock/application.yaml
   - order/application.yaml
   - payment/application.yaml

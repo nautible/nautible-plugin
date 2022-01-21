@@ -1,6 +1,6 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: nautible-app-ms
+  name: nautible-app
   labels: 
     istio-injection: enabled

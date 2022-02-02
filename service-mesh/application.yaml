@@ -11,7 +11,7 @@ spec:
   source:
     path: 'service-mesh/'
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/init
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true

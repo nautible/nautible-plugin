@@ -9,8 +9,8 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 'ArgoCD/applications/bookinfo/'
-    repoURL: https://github.com/nautible/nautible-infra
+    path: 'app-bookinfo/bookinfo/'
+    repoURL: https://github.com/nautible/nautible-plugin
     targetRevision: HEAD
   syncPolicy:
     automated:

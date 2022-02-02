@@ -9,8 +9,8 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 'ArgoCD/ecosystems/base/istio/prometheus/base'
-    repoURL: https://github.com/nautible/nautible-infra
+    path: 'service-mesh/prometheus/base'
+    repoURL: https://github.com/nautible/nautible-plugin
     targetRevision: HEAD
   syncPolicy:
     automated:

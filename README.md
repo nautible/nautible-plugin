@@ -11,7 +11,7 @@ Kubernetesへエコシステムやアプリケーションを導入するため�
 |app-bookinfo|Istio動作確認アプリケーション|service-mesh||
 |app-ms|マイクロサービスアプリケーション|distributed-application<br>secrets||
 |cluster-autoscaler|クラスタのNode数調整||AWSのみ必要|
-|container-registry|Harbor（プライベートレジストリ）の導入|||
+|container-registry|Harborの導入|||
 |distributed-application|Daprの導入|||
 |kong-apigateway|KongApiGatewayの導入|||
 |metrics-server|Istio動作確認アプリケーション|service-mesh|AWSのみ必要|

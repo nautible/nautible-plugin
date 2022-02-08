@@ -27,12 +27,9 @@ TODO: nautible-kong-serverless作成後に追記する
 ## 3. 確認
 
 ```
-$ kubectl get deploy -n dapr-system
-NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
-dapr-dashboard          1/1     1            1           18d
-dapr-operator           1/1     1            1           18d
-dapr-sentry             1/1     1            1           18d
-dapr-sidecar-injector   1/1     1            1           18d
+$ kubectl get deploy -n kong
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+ingress-kong   1/1     1            1           8d
 ```
 
 ## 4. 削除

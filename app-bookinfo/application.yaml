@@ -11,7 +11,9 @@ spec:
   source:
     path: 'app-bookinfo/'
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: HEAD
+    targetRevision: feature/init
   syncPolicy:
     automated:
       prune: true
+    syncOptions:
+      - CreateNamespace=true

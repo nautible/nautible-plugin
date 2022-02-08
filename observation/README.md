@@ -1,10 +1,11 @@
 # 監視系（モニタリング/ロギング/トレーシング）
 
+TODO: docsトあわせて整理
+
 フォルダ構成
 
 ```
 observation
-├docs                :ドキュメント 
 ├loki                :GrafanaLokiデプロイ用マニフェスト 
 ├prometheus-operator :kube-prometheus-stackデプロイ用マニフェスト
 ├promtail            :Promtailデプロイ用マニフェスト

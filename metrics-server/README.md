@@ -1,36 +1,28 @@
 
 # Metrics Server
 
-クラスタ内のリソース使用状況を取得するサーバー
+## 1. 概要
 
-## 対応環境
+クラスタ内のリソース使用状況を取得するメトリクスサーバー
 
-|環境|対応|
-|:--|:--|
-|AWS|〇|
-|Azure|〇|
-|GCP|-|
+AWS（EKS）にはデフォルトで導入されないため、メトリクスを取得する際は導入する必要がある。
 
-## 導入
+## 2. 導入
 
 ```
 $ kubectl apply -f metrics-server/application.yaml
 ```
 
-## 確認
+## 3. 確認
 
-コマンド
 ```
-$kubectl get deployment metrics-server -n kube-system
-```
+$ kubectl get deployment metrics-server -n kube-system
 
-出力
-```
 NAME             READY   UP-TO-DATE   AVAILABLE   AGE
 metrics-server   1/1     1            1           6m
 ```
 
-## 削除
+## 4. 削除
 
 ```
 $ kubectl delete -f metrics-server/application.yaml

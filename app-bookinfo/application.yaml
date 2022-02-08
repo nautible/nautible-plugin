@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 'app-bookinfo/bookinfo/'
+    path: 'app-bookinfo/'
     repoURL: https://github.com/nautible/nautible-plugin
     targetRevision: HEAD
   syncPolicy:

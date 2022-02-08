@@ -29,13 +29,13 @@ kubernetes-external-secretsを導入し、シークレットをクラウドサ�
 AWS
 
 ```
-kubectl apply external-secrets/aws/application.yaml
+$ kubectl apply external-secrets/aws/application.yaml
 ```
 
 Azure
 
 ```
-kubectl apply external-secrets/azure/application.yaml
+$ kubectl apply external-secrets/azure/application.yaml
 ```
 
 ### ExternalSecretリソースの導入

@@ -9,7 +9,7 @@ Kubernetesへエコシステムやアプリケーションを導入するため�
 |プラグイン|概要|依存関係|備考|
 |:--|:--|:--|:--|
 |app-bookinfo|Istio動作確認アプリケーション|service-mesh||
-|app-ms|マイクロサービスアプリケーション|distributed-application,secrets||
+|app-ms|マイクロサービスアプリケーション|distributed-application<br>secrets||
 |cluster-autoscaler|クラスタのNode数調整||AWSのみ必要|
 |container-registry|Harbor（プライベートレジストリ）の導入|||
 |distributed-application|Daprの導入|||

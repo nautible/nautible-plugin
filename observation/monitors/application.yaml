@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: observation-monitors
+  namespace: argocd
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 'observation/monitors/base'
+    repoURL: https://github.com/nautible/nautible-plugin
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true

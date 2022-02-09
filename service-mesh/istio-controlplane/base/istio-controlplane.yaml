@@ -1,0 +1,21 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: istio-controlplane
+spec:
+  profile: default
+  meshConfig:
+    # Enable Envoy's access logging
+    # https://istio.io/latest/docs/tasks/observability/logs/access-log/
+    accessLogFile: /dev/stdout
+    accessLogEncoding: JSON
+    defaultConfig:
+      tracing:
+        # Customizing Trace sampling
+        # https://istio.io/latest/docs/tasks/observability/distributed-tracing/configurability/
+        sampling: 20
+  components:
+    egressGateways:
+    - name: istio-egressgateway
+      enabled: true

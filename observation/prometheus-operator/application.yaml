@@ -1,104 +1,40 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus-operator-crd
+  name: observation-crd
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: 'charts/kube-prometheus-stack/crds'
-    repoURL: 'https://github.com/prometheus-community/helm-charts'
-    targetRevision: 32.2.0
+    namespace: observation
+    server: https://kubernetes.default.svc
   project: default
+  source:
+    path: 'manifests/setup'
+    repoURL: https://github.com/prometheus-operator/kube-prometheus
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
-      selfHeal: false
     syncOptions:
-      - CreateNamespace=false
+      - CreateNamespace=true
+      - Replace=true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus-operator
+  name: observation
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: observation
-    server: 'https://kubernetes.default.svc'
-  source:
-    # ref https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack/
-    chart: 'kube-prometheus-stack'
-    repoURL: 'https://prometheus-community.github.io/helm-charts'
-    targetRevision: 32.2.0   # application 0.54.0
-    helm:
-      version: v3
-      releaseName: prometheus-operator
-      skipCrds: true
-      values: |
-        defaultRules:
-          rules:
-            general: false
-        kubeControllerManager:
-          enabled: false
-        kubeScheduler:
-          enabled: false
-        kubeProxy:
-          enabled: false
-        kubeApiServer:
-          enabled: false
-        kubeEtcd:
-          enabled: false
-        coreDns:
-          enabled: true
-        kubelet:
-          enabled: true
-        grafana:
-          persistence:
-            enabled: true
-        prometheus:
-          prometheusSpec:
-            serviceMonitorSelector:
-              matchExpressions:
-              - key: release
-                operator: In
-                values: [prometheus-operator, promtail, istio]
-            podMonitorSelector:
-              matchExpressions:
-              - key: release
-                operator: In
-                values: [istio]
-        alertmanager:
-          alertmanagerSpec:
-            replicas: 2
-          config:
-            global:
-              resolve_timeout: 5m
-              slack_api_url: 'https://hooks.slack.com/services/xxxxxxxxx/yyyyyyyyyyyyyyyyyyyyyyyyyy'
-            route:
-              receiver: 'slack_notifications'
-              group_interval: 5m
-              group_wait: 30s
-              repeat_interval: 12h
-              routes:
-              - match:
-                  severity: 'critical'
-                receiver: 'slack_notifications'
-            receivers:
-            - name: 'slack_notifications'
-              slack_configs:
-              - channel: '#nautible'
-                send_resolved: true
-                icon_url: https://avatars3.githubusercontent.com/u/3380462
+    server: https://kubernetes.default.svc
   project: default
+  source:
+    path: 'observation/prometheus-operator/manifests/'
+    repoURL: https://github.com/nautible/nautible-plugin
+    targetRevision: feature/observation
   syncPolicy:
     automated:
       prune: true
-      selfHeal: false
     syncOptions:
       - CreateNamespace=true

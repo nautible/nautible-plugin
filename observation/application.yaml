@@ -1,27 +1,6 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observation-crd
-  namespace: argocd
-spec:
-  destination:
-    namespace: observation
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    path: 'manifests/setup'
-    repoURL: https://github.com/prometheus-operator/kube-prometheus
-    targetRevision: HEAD
-  syncPolicy:
-    automated:
-      prune: true
-    syncOptions:
-      - CreateNamespace=true
-      - Replace=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
   name: observation
   namespace: argocd
 spec:
@@ -30,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 'manifests/'
-    repoURL: https://github.com/prometheus-operator/kube-prometheus
-    targetRevision: HEAD
+    path: 'observation/'
+    repoURL: https://github.com/nautible/nautible-plugin
+    targetRevision: feature/observation
   syncPolicy:
     automated:
       prune: true

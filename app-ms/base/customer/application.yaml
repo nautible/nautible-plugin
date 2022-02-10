@@ -11,7 +11,7 @@ spec:
   source:
     path: 'overlays/dev/'
     repoURL: https://github.com/nautible/nautible-app-ms-customer-manifest
-    targetRevision: HEAD
+    targetRevision: feature/observation
   syncPolicy:
     automated:
       prune: true

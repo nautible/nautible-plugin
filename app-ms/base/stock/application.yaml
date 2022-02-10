@@ -11,7 +11,7 @@ spec:
   source:
     path: 'overlays/dev/'
     repoURL: https://github.com/nautible/nautible-app-ms-stock-manifest
-    targetRevision: feature/observation
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true

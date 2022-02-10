@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observation-crd
+  name: prometheus-operator-crd
   namespace: argocd
 spec:
   destination:
@@ -22,7 +22,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observation
+  name: prometheus-operator
   namespace: argocd
 spec:
   destination:

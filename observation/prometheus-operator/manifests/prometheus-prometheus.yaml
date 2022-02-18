@@ -43,8 +43,25 @@ spec:
     runAsUser: 1000
   serviceAccountName: prometheus-k8s
   serviceMonitorNamespaceSelector:
-    matchExpressions:
-    - key: name
-      operator: Exists
+    - key: kubernetes.io/metadata.name
+      operator: In
+      values:
+        - argocd
+        - autoscaler
+        - bookinfo
+        - dapr-system
+        - default
+        - istio-operator
+        - istio-system
+        - keda
+        - keycloak
+        - kong
+        - kube-node-lease
+        - kube-public
+        - kube-system
+        - kubernetes-external-secrets
+        - monitoring
+        - nautible-app
+        - observation
   serviceMonitorSelector: {}
   version: 2.29.1

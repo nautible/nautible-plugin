@@ -47,7 +47,10 @@ spec:
     runAsNonRoot: true
     runAsUser: 1000
   serviceAccountName: prometheus-k8s
-  serviceMonitorNamespaceSelector: {}
+  serviceMonitorNamespaceSelector:
+    matchExpressions:
+    - key: name
+      operator: Exists
   serviceMonitorSelector:
     matchExpressions:
     - key: release

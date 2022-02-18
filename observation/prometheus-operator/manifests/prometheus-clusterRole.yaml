@@ -16,7 +16,7 @@ rules:
   - endpoints
   - pods
   verbs:
-  - get
+  - ["get", "list", "watch"]
 - nonResourceURLs:
   - /metrics
   verbs:

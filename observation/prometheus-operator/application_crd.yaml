@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus-operator
+  name: prometheus-operator-crd
   namespace: argocd
 spec:
   destination:
@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 'observation/prometheus-operator/manifests/'
+    path: 'observation/prometheus-operator/manifests/setup/'
     repoURL: https://github.com/nautible/nautible-plugin
     targetRevision: feature/observation
   syncPolicy:
@@ -17,3 +17,4 @@ spec:
       prune: true
     syncOptions:
       - CreateNamespace=true
+      - Replace=true

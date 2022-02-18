@@ -43,6 +43,7 @@ spec:
     runAsUser: 1000
   serviceAccountName: prometheus-k8s
   serviceMonitorNamespaceSelector:
+    matchExpressions:
     - key: kubernetes.io/metadata.name
       operator: In
       values:

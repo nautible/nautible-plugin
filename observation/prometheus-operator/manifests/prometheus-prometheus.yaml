@@ -64,5 +64,10 @@ spec:
         - monitoring
         - nautible-app
         - observation
-  serviceMonitorSelector: {}
+  serviceMonitorSelector:
+    matchExpressions:
+    - key: release
+      operator: In
+      values:
+        - prometheus-operator
   version: 2.29.1

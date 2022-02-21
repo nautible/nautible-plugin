@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observation-loki
+  name: loki
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: observation
+    namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
     # ref https://github.com/grafana/helm-charts/blob/main/charts/loki/

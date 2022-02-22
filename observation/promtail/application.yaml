@@ -31,18 +31,14 @@ spec:
                 - json:
                     expressions:
                       level: level
-                      dt: dt
                       id: id
                       url: url
                       method: method
-                      message: message
                 - labels:
                     level:
-                    dt:
                     id:
                     url:
                     method:
-                    message:
                 - metrics:
                     log_error_total:
                       type: Counter

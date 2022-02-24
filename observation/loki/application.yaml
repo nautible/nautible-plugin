@@ -13,7 +13,7 @@ spec:
     # ref https://github.com/grafana/helm-charts/blob/main/charts/loki/
     chart: 'loki'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 2.9.1   # application v2.4.1
+    targetRevision: 2.10.1   # application v2.4.2
     helm:
       version: v3
       releaseName: loki

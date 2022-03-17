@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+  - ../../base
+patches:
+# 全部の対応が完了したらこちらを有効にする
+# - path: patch.json
+#   target:
+#     kind: Application
+#     name: nautible-app-.*
+- path: patch.json
+  target:
+    kind: Application
+    name: nautible-app-ms-customer
+- path: patch.json
+  target:
+    kind: Application
+    name: nautible-app-ms-stock
+- path: patch.json
+  target:
+    kind: Application
+    name: nautible-app-ms-order

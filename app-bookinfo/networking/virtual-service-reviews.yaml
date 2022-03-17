@@ -1,0 +1,32 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: reviews
+spec:
+  hosts:
+    - reviews
+  http:
+  # Request Routing
+  # https://istio.io/latest/docs/tasks/traffic-management/request-routing/
+  - match:
+    - headers:
+        end-user:
+          exact: jason
+    route:
+    - destination:
+        host: reviews
+        subset: v3
+  # Traffic Shifting
+  # https://istio.io/latest/docs/tasks/traffic-management/traffic-shifting/
+  - route:
+    - destination:
+        host: reviews
+        subset: v1
+      weight: 80
+    - destination:
+        host: reviews
+        subset: v2
+      weight: 20
+    # Request Timeouts
+    # https://istio.io/latest/docs/tasks/traffic-management/request-timeouts/
+    timeout: 0.5s

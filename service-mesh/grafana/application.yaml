@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio-grafana
+  namespace: argocd
+spec:
+  destination:
+    namespace: istio-system
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: 'service-mesh/grafana/base'
+    repoURL: https://github.com/nautible/nautible-plugin
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true

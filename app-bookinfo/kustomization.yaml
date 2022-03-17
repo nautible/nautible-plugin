@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  #- namespace/namespace.yaml
+  # Deploy the sample application
+  # https://istio.io/latest/docs/setup/getting-started/
+  - bookinfo/bookinfo.yaml
+  - bookinfo-gateway/bookinfo-gateway.yaml
+  # Traffic Management
+  # https://istio.io/latest/docs/tasks/traffic-management/
+  - networking/destination-rule-all.yaml
+  - networking/virtual-service-ratings.yaml
+  - networking/virtual-service-reviews.yaml

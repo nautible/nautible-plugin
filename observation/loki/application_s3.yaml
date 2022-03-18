@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  source:
+    # ref https://github.com/grafana/helm-charts/blob/main/charts/loki/
+    chart: 'loki'
+    repoURL: 'https://grafana.github.io/helm-charts'
+    targetRevision: 2.10.1   # application v2.4.2
+    helm:
+      version: v3
+      releaseName: loki
+      values: |
+        extraArgs:
+          target: all,table-manager
+        replicas: 1
+        persistence:
+          enabled: true
+        config:
+          schema_config:
+            configs:
+            - from: 2020-05-15
+              store: aws
+              object_store: s3
+              schema: v11
+              index:
+                prefix: loki_
+          storage_config:
+            aws:
+              s3: s3://ap-northeast-1/nautible-dev-loki
+              dynamodb:
+                dynamodb_url: dynamodb://ap-northeast-1
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true

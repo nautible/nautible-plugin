@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: nautible-app
+    namespace: nautible-app-ms
     server: https://kubernetes.default.svc
   project: application
   source:
@@ -23,7 +23,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: nautible-app
+    namespace: nautible-app-ms
     server: https://kubernetes.default.svc
   project: application
   source:
@@ -41,7 +41,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: nautible-app
+    namespace: nautible-app-ms
     server: https://kubernetes.default.svc
   project: application
   source:

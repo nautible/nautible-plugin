@@ -15,5 +15,5 @@ resources:
   # https://istio.io/latest/docs/tasks/observability/
   #- prometheus/application.yaml
   #- grafana/application.yaml
-  - jaeger/application.yaml
-  - kiali/application.yaml
+  - jaeger
+  - kiali

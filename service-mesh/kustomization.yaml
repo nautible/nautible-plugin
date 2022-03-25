@@ -17,3 +17,12 @@ resources:
   #- grafana/application.yaml
   - jaeger/application.yaml
   - kiali/application.yaml
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/source/targetRevision
+        value: feature/istio-refactoring
+    target:
+      kind: Application
+      name: jaeger|kiali

@@ -11,7 +11,7 @@ spec:
   source:
     path: 'observation/prometheus-operator/manifests/setup/'
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/observation
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true

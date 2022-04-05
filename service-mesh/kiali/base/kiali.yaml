@@ -105,9 +105,9 @@ data:
       custom_dashboards:
         enabled: true
       grafana:
-        in_cluster_url: "http://prometheus-operator-grafana.observation:80"
+        in_cluster_url: "http://prometheus-operator-grafana.monitoring:80"
       prometheus:
-        url: "http://prometheus-operated.observation:9090"
+        url: "http://prometheus-operated.monitoring:9090"
     identity:
       cert_file: ""
       private_key_file: ""

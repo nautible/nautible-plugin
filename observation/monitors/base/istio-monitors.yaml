@@ -3,7 +3,7 @@ kind: PodMonitor
 metadata:
   name: envoy-stats-monitor
   #namespace: istio-system
-  namespace: observation
+  namespace: monitoring
   labels:
     monitoring: istio-proxies
     release: istio
@@ -42,7 +42,7 @@ kind: ServiceMonitor
 metadata:
   name: istio-component-monitor
   #namespace: istio-system
-  namespace: observation
+  namespace: monitoring
   labels:
     monitoring: istio-components
     release: istio

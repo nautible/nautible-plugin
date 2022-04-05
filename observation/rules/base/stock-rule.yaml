@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: stock-alert.rules
-  namespace: observation
+  namespace: monitoring
   labels:
     app: kube-prometheus-stack
     release: prometheus-operator

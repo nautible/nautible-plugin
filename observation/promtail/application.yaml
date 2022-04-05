@@ -1,147 +1,141 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observation-promtail
+  name: promtail
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: observation
+    namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
     # ref https://github.com/grafana/helm-charts/tree/main/charts/promtail/
     chart: 'promtail'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 3.10.0   # application 2.4.1
+    targetRevision: 3.11.0   # application 2.4.2
     helm:
       version: v3
       releaseName: promtail
       values: |
-        loki:
-          serviceName: loki
-        syslogService:
-          enabled: false
         serviceMonitor:
           enabled: true
-        pipelineStages:
-        - docker:
-        - match:
-            selector: '{app=~"demo-.*"}'
-            stages:
-            - json:
-                expressions:
-                  level: level
-                  dt: dt
-                  id: id
-                  url: url
-                  method: method
-                  message: message
-            - labels:
-                level:
-                dt:
-                id:
-                url:
-                method:
-                message:
-            - metrics:
-                log_error_total:
-                  type: Counter
-                  description: error number
-                  prefix: promtail_custom_
-                  source: level
-                  config:
-                    value: ERROR
-                    action: inc
-        - match:
-            selector: '{app=~"nautible-app-.*"}'
-            stages:
-            - json:
-                expressions:
-                  level: level
-                  timestamp: timestamp
-                  hostName: hostName
-                  message: message
-                  mdc: mdc
-            - json:
-                expressions:
-                  #can't use charactor [-]
-                  x_request_id: '"x-request-id"'
-                  url: url
-                  http_method: '"http-method"'
-                  gRPC_method: '"gRPC-method"'
-                source: mdc
-            - labels:
-                level:
-                timestamp:
-                hostName:
-                message:
-                mdc:
-                url:
-                x_request_id:
-                http_method:
-                gRPC_method:
-        - match:
-            selector: '{app=~"nautible-app-ms-customer.*"}'
-            stages:
-            - metrics:
-                log_error_total:
-                  type: Counter
-                  description: error number
-                  prefix: customer_
-                  source: level
-                  config:
-                    value: ERROR
-                    action: inc
-                log_severe_total:
-                  type: Counter
-                  description: error number
-                  prefix: customer_
-                  source: level
-                  config:
-                    value: SEVERE
-                    action: inc
-        - match:
-            selector: '{app=~"nautible-app-ms-stock.*"}'
-            stages:
-            - metrics:
-                log_error_total:
-                  type: Counter
-                  description: error number
-                  prefix: stock_
-                  source: level
-                  config:
-                    value: ERROR
-                    action: inc
-                log_severe_total:
-                  type: Counter
-                  description: error number
-                  prefix: stock_
-                  source: level
-                  config:
-                    value: SEVERE
-                    action: inc
-        - match:
-            selector: '{app=~"nautible-app-ms-order.*"}'
-            stages:
-            - metrics:
-                log_error_total:
-                  type: Counter
-                  description: error number
-                  prefix: order_
-                  source: level
-                  config:
-                    value: ERROR
-                    action: inc
-                log_severe_total:
-                  type: Counter
-                  description: error number
-                  prefix: order_
-                  source: level
-                  config:
-                    value: SEVERE
-                    action: inc
-
+        config:
+          lokiAddress: http://loki:3100/loki/api/v1/push
+          snippets:
+            pipelineStages:
+            - docker:
+            - match:
+                selector: '{app=~"demo-.*"}'
+                stages:
+                - json:
+                    expressions:
+                      level: level
+                      id: id
+                      url: url
+                      method: method
+                - labels:
+                    level:
+                    id:
+                    url:
+                    method:
+                - metrics:
+                    log_error_total:
+                      type: Counter
+                      description: error number
+                      prefix: promtail_custom_
+                      source: level
+                      config:
+                        value: ERROR
+                        action: inc
+            - match:
+                selector: '{app=~"nautible-app-.*"}'
+                stages:
+                - json:
+                    expressions:
+                      level: level
+                      timestamp: timestamp
+                      hostName: hostName
+                      message: message
+                      mdc: mdc
+                - json:
+                    expressions:
+                      #can't use charactor [-]
+                      x_request_id: '"x-request-id"'
+                      url: url
+                      http_method: '"http-method"'
+                      gRPC_method: '"gRPC-method"'
+                    source: mdc
+                - labels:
+                    level:
+                    timestamp:
+                    hostName:
+                    message:
+                    mdc:
+                    url:
+                    x_request_id:
+                    http_method:
+                    gRPC_method:
+            - match:
+                selector: '{app=~"nautible-app-ms-customer.*"}'
+                stages:
+                - metrics:
+                    log_error_total:
+                      type: Counter
+                      description: error number
+                      prefix: customer_
+                      source: level
+                      config:
+                        value: ERROR
+                        action: inc
+                    log_severe_total:
+                      type: Counter
+                      description: error number
+                      prefix: customer_
+                      source: level
+                      config:
+                        value: SEVERE
+                        action: inc
+            - match:
+                selector: '{app=~"nautible-app-ms-stock.*"}'
+                stages:
+                - metrics:
+                    log_error_total:
+                      type: Counter
+                      description: error number
+                      prefix: stock_
+                      source: level
+                      config:
+                        value: ERROR
+                        action: inc
+                    log_severe_total:
+                      type: Counter
+                      description: error number
+                      prefix: stock_
+                      source: level
+                      config:
+                        value: SEVERE
+                        action: inc
+            - match:
+                selector: '{app=~"nautible-app-ms-order.*"}'
+                stages:
+                - metrics:
+                    log_error_total:
+                      type: Counter
+                      description: error number
+                      prefix: order_
+                      source: level
+                      config:
+                        value: ERROR
+                        action: inc
+                    log_severe_total:
+                      type: Counter
+                      description: error number
+                      prefix: order_
+                      source: level
+                      config:
+                        value: SEVERE
+                        action: inc
   project: default
   syncPolicy:
     automated:

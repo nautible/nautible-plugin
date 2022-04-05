@@ -2,10 +2,12 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: demo-alert.rules
-  namespace: observation
+  namespace: monitoring
   labels:
-    app: kube-prometheus-stack
-    release: prometheus-operator
+    app.kubernetes.io/name: kube-prometheus
+    app.kubernetes.io/part-of: kube-prometheus
+    prometheus: k8s
+    role: alert-rules
 spec:
   groups:
   - name: rules-demo-alert1
@@ -26,7 +28,7 @@ spec:
           count (promtail_custom_log_error_total) > 0
       for: 1m
       labels:
-        severity: warning
+        severity: critical
       annotations:
         message: >-
           {{ $labels.job }}/{{ $labels.service }} targets in {{ $labels.namespace }} namespace are application error.

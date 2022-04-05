@@ -42,16 +42,16 @@ $ kubectl apply -f app-ms/overlays/azure/application.yaml
 ## 3. 確認
 
 ```
-$ kubectl get deploy -n nautible-app
+$ kubectl get deploy -n nautible-app-ms
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
-nautible-app-customer              2/2     2            2           18d
-nautible-app-order                 2/2     2            2           18d
-nautible-app-payment-bff           1/1     1            1           18d
-nautible-app-payment-cash          1/1     1            1           18d
-nautible-app-payment-convenience   1/1     1            1           18d
-nautible-app-payment-credit        1/1     1            1           18d
-nautible-app-product               1/1     1            1           18d
-nautible-app-stock                 2/2     2            2           18d
+nautible-app-ms-customer              2/2     2            2           18d
+nautible-app-ms-order                 2/2     2            2           18d
+nautible-app-ms-payment-bff           1/1     1            1           18d
+nautible-app-ms-payment-cash          1/1     1            1           18d
+nautible-app-ms-payment-convenience   1/1     1            1           18d
+nautible-app-ms-payment-credit        1/1     1            1           18d
+nautible-app-ms-product               1/1     1            1           18d
+nautible-app-ms-stock                 2/2     2            2           18d
 ```
 
 ## 4. 削除

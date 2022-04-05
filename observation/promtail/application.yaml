@@ -77,7 +77,7 @@ spec:
                     http_method:
                     gRPC_method:
             - match:
-                selector: '{app=~"nautible-app-customer.*"}'
+                selector: '{app=~"nautible-app-ms-customer.*"}'
                 stages:
                 - metrics:
                     log_error_total:
@@ -97,7 +97,7 @@ spec:
                         value: SEVERE
                         action: inc
             - match:
-                selector: '{app=~"nautible-app-stock.*"}'
+                selector: '{app=~"nautible-app-ms-stock.*"}'
                 stages:
                 - metrics:
                     log_error_total:
@@ -117,7 +117,7 @@ spec:
                         value: SEVERE
                         action: inc
             - match:
-                selector: '{app=~"nautible-app-order.*"}'
+                selector: '{app=~"nautible-app-ms-order.*"}'
                 stages:
                 - metrics:
                     log_error_total:
@@ -136,7 +136,6 @@ spec:
                       config:
                         value: SEVERE
                         action: inc
-
   project: default
   syncPolicy:
     automated:

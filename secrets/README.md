@@ -78,15 +78,15 @@ default-token-99nmc   kubernetes.io/service-account-token   3      271d
 secret-sqs            Opaque                                2      17d
 ```
 
-nautible-app
+nautible-app-ms
 ```
-$ kubectl get ExternalSecrets -n nautible-app
-NAME                             LAST SYNC   STATUS    AGE
-secret-nautible-app-product-db   5s          SUCCESS   17d
-$ kubectl get secrets -n nautible-app
-NAME                             TYPE                                  DATA   AGE
-default-token-m8rtv              kubernetes.io/service-account-token   3      17d
-secret-nautible-app-product-db   Opaque                                2      17d
+$ kubectl get ExternalSecrets -n nautible-app-ms
+NAME                                LAST SYNC   STATUS    AGE
+secret-nautible-app-ms-product-db   5s          SUCCESS   17d
+$ kubectl get secrets -n nautible-app-ms
+NAME                                TYPE                                  DATA   AGE
+default-token-m8rtv                 kubernetes.io/service-account-token   3      17d
+secret-nautible-app-ms-product-db   Opaque                                2      17d
 ```
 
 ## 4. 削除

@@ -11,7 +11,7 @@ spec:
   source:
     path: ''
     repoURL: 'https://kubernetes.github.io/autoscaler/'
-    targetRevision: 9.10.8
+    targetRevision: 9.17.0
     chart: cluster-autoscaler
     helm:
       parameters:
@@ -19,6 +19,8 @@ spec:
           value: 'nautible-dev-cluster'
         - name: 'awsRegion'
           value: 'ap-northeast-1'
+        - name: 'rbac.serviceAccount.annotations.eks\.amazonaws\.com/role-arn'
+          value: 'arn:aws:iam::XXXXXXXXXXX:role/XXXXXXXXXX-AmazonEKSClusterAutoscalerRole'
   project: default
   syncPolicy:
     automated:

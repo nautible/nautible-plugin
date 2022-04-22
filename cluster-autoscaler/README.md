@@ -9,7 +9,8 @@ AWS（EKS）にはデフォルトで導入されないため、Nodeのオート�
 
 ## 2. 導入
 
-helm.parameters.valueの値を対象のクラスタ名に変更する。
+helm.parameters.valueの値を対象のクラスタ名、ロールarnに変更する。  
+※ロールはterraformで作成されます。
 
 ```
     helm:
@@ -18,6 +19,9 @@ helm.parameters.valueの値を対象のクラスタ名に変更する。
           value: 'nautible-dev-cluster'      # 対象のクラスタ名に変更する
         - name: 'awsRegion'
           value: 'ap-northeast-1'
+        - name: 'rbac.serviceAccount.annotations.eks\.amazonaws\.com/role-arn'
+          value: 'arn:aws:iam::XXXXXXXXXXX:role/XXXXXXXXXX-AmazonEKSClusterAutoscalerRole' # 対象のロールarnに変更する。
+
 ```
 
 cluster-autoscalerをデプロイする。

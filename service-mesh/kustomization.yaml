@@ -22,7 +22,7 @@ patches:
   - patch: |-
       - op: replace
         path: /spec/source/targetRevision
-        value: feature/istio-vup
+        value: develop
     target:
       kind: Application
       name: jaeger|kiali

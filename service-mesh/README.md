@@ -1,24 +1,30 @@
-# Istio
+# サービスメッシュ (Istio)
 
-　Istio はオープンソースのサービスメッシュであり、マイクロサービスを接続・保護・監視する統一的な方法を提供します。
-
+　サービスメッシュはマイクロサービスを接続・保護・監視する統一的な方法を提供します。
+　nautible では、オープンソースの Istio を利用してサービスメッシュを実現します。
 
 ## 1. フォルダ構成
 
 ```
-istio/
-├ istio-base/        : カスタムリソースデプロイ用マニフェスト
-├ istiod/            : istiod サービスデプロイ用マニフェスト
-├ istio-ingress/     : Ingress Gateway デプロイ用マニフェスト
-├ istio-egress/      : Egress Gateway デプロイ用マニフェスト
-├ prometheus/        : Prometheus デプロイ用マニフェスト
-├ grafana/           : Grafana デプロイ用マニフェスト
-├ jaeger/            : Jaeger デプロイ用マニフェスト
-├ kiali/             : Kiali デプロイ用マニフェスト
-├ application.yaml   : ArgoCD アプリケーションのマニフェスト
-├ kustomization.yaml : デプロイする入れ子のアプリケーションの一覧
-└ README.md          : 本ファイル
+service-mesh/
+├ istio-operator/     : Istio Operator デプロイ用マニフェスト(*1)
+├ istio-controlplane/ : コントロールプレーンデプロイ用マニフェスト(*1)
+├ istio-base/         : カスタムリソースデプロイ用マニフェスト(*2)
+├ istiod/             : istiod サービスデプロイ用マニフェスト(*2)
+├ istio-ingress/      : Ingress Gateway デプロイ用マニフェスト(*2)
+├ istio-egress/       : Egress Gateway デプロイ用マニフェスト(*2)
+├ prometheus/         : Prometheus デプロイ用マニフェスト(*3)
+├ grafana/            : Grafana デプロイ用マニフェスト(*3)
+├ jaeger/             : Jaeger デプロイ用マニフェスト
+├ kiali/              : Kiali デプロイ用マニフェスト
+├ application.yaml    : ArgoCD アプリケーションのマニフェスト
+├ kustomization.yaml  : デプロイする入れ子のアプリケーションの一覧
+└ README.md           : 本ファイル
 ```
+
+*1: オペレータインストールで使用  
+*2: Helm によるインストールで使用  
+*3: [Observation](../observation) で実現しているため未使用
 
 
 ## 2. セットアップ
@@ -32,7 +38,7 @@ istio/
 ```bash
 $ kubectl create namespace istio-operator
 $ helm install istio-operator manifests/charts/istio-operator \
-    --set hub="docker.io/istio" --set tag="1.9.2"
+    --set hub="docker.io/istio" --set tag="1.13.3"
 
 $ kubectl create namespace istio-system
 $ kubectl apply -f istio-controlplane.yaml
@@ -54,7 +60,7 @@ spec:
       enabled: true
 ```
 
-※ 公式ドキュメントに、1.9以降では `hub`、`tag` の指定は不要と記載されているが、values.yaml の設定が、zip ファイルでは `docker.io/istio`、`1.9.2` だが、GitHub のタグでは `gcr.io/istio-testing`、`latest` となっているため、ArgoCD で GitHub 上の Helm Chart を指定する場合、このオプションの指定が必要。
+※ 公式ドキュメントに、1.9以降では `hub`、`tag` の指定は不要と記載されているが、values.yaml の設定が、zip ファイルでは `docker.io/istio`、`1.13.3` だが、GitHub のタグでは `gcr.io/istio-testing`、`latest` となっているため、ArgoCD で GitHub 上の Helm Chart を指定する場合、このオプションの指定が必要。
 
 ### 2-2. Helm によるインストールの場合
 
@@ -65,10 +71,10 @@ $ kubectl create namespace istio-system
 $ helm install istio-base manifests/charts/base -n istio-system
 $ helm install istiod manifests/charts/istio-control/istio-discovery \
     -n istio-system \
-    --set global.hub="docker.io/istio" --set global.tag="1.9.2"
+    --set global.hub="docker.io/istio" --set global.tag="1.13.3"
 ```
 
-※ 公式ドキュメントに、1.9以降では `global.hub`、`global.tag` の指定は不要と記載されているが、values.yaml の設定が、zip ファイルでは `docker.io/istio`、`1.9.2` だが、GitHub のタグでは `gcr.io/istio-testing`、`latest` となっているため、ArgoCD で GitHub 上の Helm Chart を指定する場合、このオプションの指定が必要。
+※ 公式ドキュメントに、1.9以降では `global.hub`、`global.tag` の指定は不要と記載されているが、values.yaml の設定が、zip ファイルでは `docker.io/istio`、`1.13.3` だが、GitHub のタグでは `gcr.io/istio-testing`、`latest` となっているため、ArgoCD で GitHub 上の Helm Chart を指定する場合、このオプションの指定が必要。
 
 
 ## 3. Traffic management (トラフィック管理)
@@ -108,19 +114,19 @@ $ helm install istiod manifests/charts/istio-control/istio-discovery \
 ### 5-1. Metrics
 
 　Prometheus Operator でインストールした Prometheus で Istio のメトリクスを収集しています。
-[ecosystems/base/observation/monitors/base/istio-monitors.yaml](../observation/monitors/base/istio-monitors.yaml) に設定を記述しています。
+[observation/monitors/base/istio-monitors.yaml](../observation/monitors/base/istio-monitors.yaml) に設定を記述しています。
 
 ```bash
-$ kubectl port-forward svc/prometheus-operated -n observation 9090:9090
+$ kubectl port-forward svc/prometheus-operated -n monitoring 9090:9090
 ```
 
-を実行後、ブラウザで http://localhost:9000 にアクセスすると、Prometheus のダッシュボードが起動します。
+を実行後、ブラウザで <http://localhost:9000> にアクセスすると、Prometheus のダッシュボードが起動します。
 
 ```bash
-$ kubectl port-forward svc/prometheus-operator-grafana -n observation 3000:80
+$ kubectl port-forward svc/grafana -n monitoring 3000:3000
 ```
 
-を実行後、ブラウザで http://localhost:3000 にアクセスすると、Grafana が起動します。
+を実行後、ブラウザで <http://localhost:3000> にアクセスすると、Grafana が起動します。
 
 　Grafana が起動したら、以下のダッシュボードをインストールしてください。
 
@@ -130,36 +136,6 @@ $ kubectl port-forward svc/prometheus-operator-grafana -n observation 3000:80
 - Istio Service Dashboard: 7636
 - Istio Wasm Extension Dashboard: 13277
 - Istio Workload Dashboard: 7630
-
----
-(以下、削除予定)  
-　以下のコマンドで Prometheus のダッシュボードが起動します。
-
-```bash
-$ istioctl dashboard prometheus
-```
-
-または、
-
-```bash
-$ kubectl port-forward svc/prometheus -n istio-system 9090:9090
-```
-
-を実行後、ブラウザで http://localhost:9000 にアクセス。
-
-　以下のコマンドで Grafana が起動します。
-
-```bash
-$ istioctl dashboard grafana
-```
-
-または、
-
-```bash
-$ kubectl port-forward svc/grafana -n istio-system 3000:3000
-```
-
-を実行後、ブラウザで http://localhost:3000 にアクセス。
 
 ### 5-2. Logs
 
@@ -204,7 +180,7 @@ $ istioctl dashboard jaeger
 $ kubectl port-forward svc/tracing -n istio-system 16686:80
 ```
 
-を実行後、ブラウザで http://localhost:16686 にアクセス。
+を実行後、ブラウザで <http://localhost:16686> にアクセス。
 
 　Istio のインストール時またはアプリケーションのデプロイ時に設定を変更できます。
 
@@ -247,13 +223,15 @@ $ istioctl dashboard kiali
 $ kubectl port-forward svc/kiali -n istio-system 20001:20001
 ```
 
-を実行後、ブラウザで http://localhost:20001 にアクセス。
+を実行後、ブラウザで <http://localhost:20001> にアクセス。
 
 
 ## 6. 参考文献・URL
 
 - Istio 公式サイト  
-  https://istio.io/
+  <https://istio.io/>
 - Istio Docs  
-  https://istio.io/latest/docs/
+  <https://istio.io/latest/docs/>
+- Istio - GitHub  
+  <https://github.com/istio/istio>
 

@@ -38,6 +38,15 @@ Azure
 $ kubectl apply external-secrets/azure/application.yaml
 ```
 
+### クラウドサービスへシークレットを登録する
+app-msの稼働に必要なシークレットを登録する。AWSの場合はパラメータストア、Azureの場合はAzureKeyvaultに登録する。
+
+| name | value |
+| ---- | ---- |
+| nautible-app-ms-product-db-user | 商品サービスDBのユーザー |
+| nautible-app-ms-product-db-password | 商品サービスDBのパスワード |
+| nautible-app-ms-order-elasticache-password | 注文サービスelasticacheのパスワード（Token） |
+
 ### ExternalSecretリソースの導入
 
 app-msの稼働に必要なシークレットを導入する

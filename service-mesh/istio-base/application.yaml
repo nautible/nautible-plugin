@@ -10,7 +10,7 @@ spec:
   source:
     path: 'manifests/charts/base'
     repoURL: 'https://github.com/istio/istio'
-    targetRevision: 1.12.2
+    targetRevision: 1.13.3
   project: default
   syncPolicy:
     automated:

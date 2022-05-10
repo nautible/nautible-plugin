@@ -1,17 +1,17 @@
 # 監視系（モニタリング/ロギング/トレーシング）
 
-TODO: docsトあわせて整理
-
 フォルダ構成
 
-```
+```text
 observation
+├docs                :ドキュメント 
 ├loki                :GrafanaLokiデプロイ用マニフェスト 
+├monitors            :ServiceMonitorデプロイ用マニフェスト
 ├prometheus-operator :kube-prometheus-stackデプロイ用マニフェスト
 ├promtail            :Promtailデプロイ用マニフェスト
 ├rules               :Prometheusの設定を行うカスタムリソースデプロイ用マニフェスト
-├servicemonitors     :ServiceMonitorデプロイ用マニフェスト
-├namespace.yaml      :ネームスペース（名前：observation）デプロイ用マニフェスト
+├application.yaml    :observation配下一括導入用applicationマニフェスト
+├kustomization.yaml  :observation配下一括導入用kustomizeファイル
 └README.md           :本ファイル
 ```
 

@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 'observation/prometheus-operator/manifests/'
+    path: observation/prometheus-operator/manifests/
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/test_actions2
+    targetRevision: feature/test_actions
   syncPolicy:
     automated:
       prune: true

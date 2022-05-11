@@ -1,0 +1,28 @@
+name: Release Preparation
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+      - release/*
+    types: [closed]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      OWNER: ${{ github.repository_owner }}
+      SRC_BRANCH: ${{ github.head_ref }}
+      DEST_BRANCH: ${{ github.base_ref }}
+    if: github.event.pull_request.merged == true
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    - name: Change targetRevision
+      uses: nautible/nautible-actions-argocd-changetarget@2022.1.0
+      with:
+        name: 'application.yaml'
+        owner: ${{ env.OWNER }}
+        srcRevision: ${{ env.SRC_BRANCH }}
+        destRevision: ${{ env.DEST_BRANCH }}

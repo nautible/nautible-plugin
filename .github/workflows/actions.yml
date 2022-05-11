@@ -23,7 +23,12 @@ jobs:
     - name: Change targetRevision
       uses: nautible/nautible-actions-argocd-changetarget@2022.1.0
       with:
-        name: 'application_test.yaml'
+        name: 'application.yaml'
         owner: ${{ env.OWNER }}
-        srcRevision: ${{ env.SRC_BRANCH }}
+        destRevision: ${{ env.DEST_BRANCH }}
+    - name: Change targetRevision CRD
+      uses: nautible/nautible-actions-argocd-changetarget@2022.1.0
+      with:
+        name: 'application_crd.yaml'
+        owner: ${{ env.OWNER }}
         destRevision: ${{ env.DEST_BRANCH }}

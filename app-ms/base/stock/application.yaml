@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: application
   source:
-    path: 'overlays/dev/'
+    path: overlays/dev/
     repoURL: https://github.com/nautible/nautible-app-ms-stock-manifest
-    targetRevision: HEAD
+    targetRevision: feature/test_actions
   syncPolicy:
     automated:
       prune: true

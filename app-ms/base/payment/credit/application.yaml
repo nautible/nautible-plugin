@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: application
   source:
-    path: 'credit/overlays/dev/'
+    path: credit/overlays/dev/
     repoURL: https://github.com/nautible/nautible-app-ms-payment-manifest
-    targetRevision: HEAD
+    targetRevision: feature/test_actions
   syncPolicy:
     automated:
       prune: true

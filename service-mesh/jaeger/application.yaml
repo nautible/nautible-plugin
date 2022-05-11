@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 'service-mesh/jaeger/base'
+    path: service-mesh/jaeger/base
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: HEAD
+    targetRevision: feature/test_actions
   syncPolicy:
     automated:
       prune: true

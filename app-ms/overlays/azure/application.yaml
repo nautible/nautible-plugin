@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 'app-ms/overlays/azure'
+    path: app-ms/overlays/azure
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: HEAD
+    targetRevision: feature/test_actions
   syncPolicy:
     automated:
       prune: true

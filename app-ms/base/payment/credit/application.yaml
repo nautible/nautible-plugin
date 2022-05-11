@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nautible-app-ms-payment-credit
+  namespace: argocd
+spec:
+  destination:
+    namespace: nautible-app-ms
+    server: https://kubernetes.default.svc
+  project: application
+  source:
+    path: 'credit/overlays/dev/'
+    repoURL: https://github.com/nautible/nautible-app-ms-payment-manifest
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true

@@ -14,6 +14,6 @@ spec:
     targetRevision: feature/test_actions
   syncPolicy:
     automated:
-      prune: true
+      prune: false
     syncOptions:
       - CreateNamespace=true

@@ -10,8 +10,8 @@ spec:
     namespace: istio-system
   source:
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: HEAD
-    path: 'service-mesh/istio-controlplane/base'
+    targetRevision: develop
+    path: service-mesh/istio-controlplane/base
   syncPolicy:
     automated:
       prune: true

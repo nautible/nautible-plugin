@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: 'service-mesh/kiali/base'
+    path: service-mesh/kiali/base
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: HEAD
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

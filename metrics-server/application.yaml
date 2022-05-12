@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: kube-system
   source:
-    path: 'metrics-server/manifests'
+    path: metrics-server/manifests
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: HEAD
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

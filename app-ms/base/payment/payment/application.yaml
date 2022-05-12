@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kiali
+  name: nautible-app-ms-payment-payment
   namespace: argocd
 spec:
   destination:
-    namespace: istio-system
+    namespace: nautible-app-ms
     server: https://kubernetes.default.svc
-  project: default
+  project: application
   source:
-    path: service-mesh/kiali/base
-    repoURL: https://github.com/nautible/nautible-plugin
+    path: payment/overlays/dev/
+    repoURL: https://github.com/nautible/nautible-app-ms-payment-manifest
     targetRevision: develop
   syncPolicy:
     automated:

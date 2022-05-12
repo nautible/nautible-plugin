@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: kong
   source:
-    path: 'kong-apigateway/manifests'
+    path: kong-apigateway/manifests
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: HEAD
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

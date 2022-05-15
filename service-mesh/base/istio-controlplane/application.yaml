@@ -1,17 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: istio-grafana
   namespace: argocd
+  name: istio-controlplane
 spec:
-  destination:
-    namespace: istio-system
-    server: https://kubernetes.default.svc
   project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: istio-system
   source:
-    path: service-mesh/grafana/base
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: develop
+    targetRevision: feature/issue8
+    path: service-mesh/base/istio-controlplane/base
   syncPolicy:
     automated:
       prune: true
+    syncOptions:
+      - CreateNamespace=true

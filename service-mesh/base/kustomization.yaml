@@ -17,12 +17,3 @@ resources:
   #- grafana/application.yaml
   - jaeger/application.yaml
   - kiali/application.yaml
-
-patches:
-  - patch: |-
-      - op: replace
-        path: /spec/source/targetRevision
-        value: develop
-    target:
-      kind: Application
-      name: jaeger|kiali

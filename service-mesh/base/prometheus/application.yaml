@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: istio-root
+  name: istio-prometheus
   namespace: argocd
 spec:
   destination:
@@ -9,11 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: service-mesh/
+    path: service-mesh/base/prometheus/base
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: develop
+    targetRevision: feature/issue8
   syncPolicy:
     automated:
       prune: true
-    syncOptions:
-      - CreateNamespace=true

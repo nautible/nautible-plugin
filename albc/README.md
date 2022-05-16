@@ -32,7 +32,7 @@ $ kubectl apply -f albc/application.yaml
 Ingressの設定でLoadBalancerに設定するセキュリティグループに変更する。  
 ※ロールはterraformで作成されます。terraformのoutpoutを参照してください。
 
-albc/ingress/manifest/application.yaml
+albc/ingress/manifest/ingress.yaml
 ```YAML
 metadata:
   annotations:

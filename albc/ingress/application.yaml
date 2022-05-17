@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: kube-system
   source:
-    path: 'albc/ingress/manifest'
+    path: albc/ingress/manifest
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/issue8
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

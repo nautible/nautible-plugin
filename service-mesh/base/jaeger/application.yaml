@@ -11,7 +11,7 @@ spec:
   source:
     path: service-mesh/base/jaeger/base
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/issue8
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

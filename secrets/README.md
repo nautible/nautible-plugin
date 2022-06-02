@@ -28,24 +28,34 @@ kubernetes-external-secretsを導入し、シークレットをクラウドサ�
 
 AWS
 
-```
+```bash
 $ kubectl apply external-secrets/aws/application.yaml
 ```
 
 Azure
 
+kubernetes-external-secretsからAzure Key vaultへ接続するためのk8s secretを作成する。詳細については[公式ドキュメント](https://github.com/external-secrets/kubernetes-external-secrets)参照。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定してください。
+```bash
+$ kubectl create secret generic external-secrets-azure-credentials -n kubernetes-external-secrets --from-literal=tenantid=$TENANTID --from-literal=clientid=$CLIENTID --from-literal=clientsecret=$CLIENTSECRET 
+
 ```
+
+```bash
 $ kubectl apply external-secrets/azure/application.yaml
 ```
 
 ### クラウドサービスへシークレットを登録する
 app-msの稼働に必要なシークレットを登録する。AWSの場合はパラメータストア、Azureの場合はAzureKeyvaultに登録する。
 
-| name | value |
-| ---- | ---- |
-| nautible-app-ms-product-db-user | 商品サービスDBのユーザー |
-| nautible-app-ms-product-db-password | 商品サービスDBのパスワード |
-| nautible-app-ms-order-elasticache-password | 注文サービスelasticacheのパスワード（Token） |
+| name | value | aws/azure | 備考 |
+| ---- | ---- | ---- | ---- |
+| nautible-app-ms-product-db-user | 商品サービスDBのユーザー | aws/azure | |
+| nautible-app-ms-product-db-password | 商品サービスDBのパスワード | aws/azure | |
+| nautible-app-ms-order-elasticache-password | 注文サービスelasticacheのパスワード（Token） | aws/azure | |
+| nautible-app-ms-cosmosdb-user | Cosmosdbのアクセスユーザー | azure | |
+| nautible-app-ms-cosmosdb-password | Cosmosdbのパスワード | azure | |
+| nautible-app-ms-servicebus-connectionstring| Azure Servicebus 接続文字列  | azure | Azureの管理コンソール＞Service Bus＞共有アクセスポリシー＞RootManageSharedAccessKey 参照 |
+
 
 ### ExternalSecretリソースの導入
 
@@ -53,13 +63,13 @@ app-msの稼働に必要なシークレットを導入する
 
 AWS
 
-```
+```bash
 $ kubectl apply -f secrets/secret-parameter/aws/application.yaml
 ```
 
 Azure
 
-```
+```bash
 $ kubectl apply -f secrets/secret-parameter/azure/application.yaml
 ```
 
@@ -67,7 +77,7 @@ $ kubectl apply -f secrets/secret-parameter/azure/application.yaml
 
 ### kubernetes-external-secretsの導入確認
 
-```
+```bash
 $ kubectl get deploy -n kubernetes-external-secrets
 NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
 kubernetes-external-secrets   1/1     1            1           18d
@@ -76,7 +86,7 @@ kubernetes-external-secrets   1/1     1            1           18d
 ### ExternalSecretsおよびSecretの導入確認
 
 default
-```
+```bash
 $ kubectl get ExternalSecrets
 NAME         LAST SYNC   STATUS    AGE
 secret-sqs   5s          SUCCESS   17d
@@ -88,7 +98,7 @@ secret-sqs            Opaque                                2      17d
 ```
 
 nautible-app-ms
-```
+```bash
 $ kubectl get ExternalSecrets -n nautible-app-ms
 NAME                                LAST SYNC   STATUS    AGE
 secret-nautible-app-ms-product-db   5s          SUCCESS   17d
@@ -106,12 +116,12 @@ secret-nautible-app-ms-product-db   Opaque                                2     
 
 AWS
 
-```
+```bash
 $ kubectl delete -f secrets/secret-parameter/aws/application.yaml
 ```
 
 Azure
 
-```
+```bash
 $ kubectl delete -f secrets/secret-parameter/azure/application.yaml
 ```

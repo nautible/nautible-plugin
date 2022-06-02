@@ -2,4 +2,38 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
   - ../../base
+# 外部公開しないように一旦
+patchesJson6902:
+  - target:
+      version: v1alpha1
+      kind: Application
+      name: istio-ingress
+    patch: |-
+      - op: add
+        path: /spec/source/helm/parameters/0
+        value: {"name": "gateways.istio-ingressgateway.type", "value": "ClusterIP"}
+      - op: add
+        path: /spec/source/helm/parameters/0
+        value: {"name": "gateways.istio-ingressgateway.ports[1].port", "value": "80"}
+      - op: add
+        path: /spec/source/helm/parameters/0
+        value: {"name": "gateways.istio-ingressgateway.ports[1].targetPort", "value": "8080"}
+      - op: add
+        path: /spec/source/helm/parameters/0
+        value: {"name": "gateways.istio-ingressgateway.ports[1].name", "value": "http2"}
+      - op: add
+        path: /spec/source/helm/parameters/0
+        value: {"name": "gateways.istio-ingressgateway.ports[1].protocol", "value": "TCP"}
+      - op: add
+        path: /spec/source/helm/parameters/0
+        value: {"name": "gateways.istio-ingressgateway.ports[0].port", "value": "443"}
+      - op: add
+        path: /spec/source/helm/parameters/0
+        value: {"name": "gateways.istio-ingressgateway.ports[0].targetPort", "value": "8443"}
+      - op: add
+        path: /spec/source/helm/parameters/0
+        value: {"name": "gateways.istio-ingressgateway.ports[0].name", "value": "https"}
+      - op: add
+        path: /spec/source/helm/parameters/0
+        value: {"name": "gateways.istio-ingressgateway.ports[0].protocol", "value": "TCP"}
 

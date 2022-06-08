@@ -19,11 +19,4 @@ patches:
   target:
     kind: Application
     name: nautible-app-ms-product
-- patch: |
-    $patch: delete
-    kind: dummy
-    metadata:
-      name: dummy
-  target:
-    kind: Application
-    name: nautible-app-ms-payment.*
+

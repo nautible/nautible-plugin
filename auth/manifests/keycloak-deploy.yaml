@@ -65,7 +65,7 @@ spec:
         - name: KC_IMPORT_VAL_FRONTEND_URL # fix me
           value: https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth
         - name: KC_IMPORT_VAL_ROOR_URL # fix me
-          value: http://localhost:3000
+          value: https://dr1d1engi0lfa.cloudfront.net
         volumeMounts:
           - name: realm
             mountPath: "/opt/keycloak/data/import"

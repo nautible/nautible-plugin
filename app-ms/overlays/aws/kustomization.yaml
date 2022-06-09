@@ -28,3 +28,7 @@ patches:
   target:
     kind: Application
     name: nautible-app-ms-payment-credit
+- path: patch.json
+  target:
+    kind: Application
+    name: nautible-app-ms-product

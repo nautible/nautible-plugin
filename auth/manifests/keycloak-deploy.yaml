@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  namespace: keycloak
+  labels:
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/instance: keycloak
+    app.kubernetes.io/version: 1.0.0
+    app.kubernetes.io/component: auth
+    app.kubernetes.io/part-of: nautible
+    app.kubernetes.io/managed-by: manual
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: keycloak
+      app.kubernetes.io/component: auth
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: keycloak
+        app.kubernetes.io/instance: keycloak
+        app.kubernetes.io/version: 1.0.0
+        app.kubernetes.io/component: auth
+        app.kubernetes.io/part-of: nautible
+        app.kubernetes.io/managed-by: manual
+    spec:
+      containers:
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:18.0.0
+        args: ["start","--import-realm","--hostname-strict=false","--auto-build","--db=postgres","--http-relative-path /auth","--proxy edge"]
+        # args: ["start-dev","--import-realm","--hostname-strict=false","--db=postgres","--http-relative-path /auth"]
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+        env:
+        - name: KEYCLOAK_ADMIN
+          valueFrom:
+            secretKeyRef:
+              name: secret-keycloak
+              key: KEYCLOAK_USER
+        - name: KEYCLOAK_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-keycloak
+              key: KEYCLOAK_PASSWORD
+        - name: KC_DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: secret-keycloak
+              key: DB_USER
+        - name: KC_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-keycloak
+              key: DB_PASSWORD
+        - name: KC_DB_URL_HOST
+          valueFrom:
+            secretKeyRef:
+              name: secret-keycloak
+              key: DB_HOST
+        - name: PROXY_ADDRESS_FORWARDING
+          value: "true"
+        - name: KC_IMPORT_VAL_FRONTEND_URL # fix me
+          value: https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth
+        - name: KC_IMPORT_VAL_ROOR_URL # fix me
+          value: http://localhost:3000
+        volumeMounts:
+          - name: realm
+            mountPath: "/opt/keycloak/data/import"
+            readOnly: true
+        ports:
+        - name: http
+          containerPort: 8080
+      volumes:
+        - name: realm
+          emptyDir: {}
+        - name: secret-keycloak-realm
+          secret:
+            secretName: secret-keycloak-realm
+      initContainers:
+      - name: touch
+        image: busybox
+        command: ["sh", "-c","cp /secret-keycloak-realm/realm.json /realm/realm.json"]
+        volumeMounts:
+          - name: realm
+            mountPath: /realm
+          - name: secret-keycloak-realm
+            mountPath: "/secret-keycloak-realm"
+            readOnly: true
+

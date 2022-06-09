@@ -62,10 +62,10 @@ spec:
               key: DB_HOST
         - name: PROXY_ADDRESS_FORWARDING
           value: "true"
-        - name: KC_IMPORT_VAL_FRONTEND_URL # fix me
-          value: https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth
-        - name: KC_IMPORT_VAL_ROOR_URL # fix me
-          value: https://dr1d1engi0lfa.cloudfront.net
+        - name: KC_IMPORT_VAL_FRONTEND_URL
+          value: https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth # fix me
+        - name: KC_IMPORT_VAL_ROOR_URL
+          value: https://dr1d1engi0lfa.cloudfront.net # fix me
         volumeMounts:
           - name: realm
             mountPath: "/opt/keycloak/data/import"

@@ -11,7 +11,7 @@ spec:
   source:
     path: app-ms/overlays/azure
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/issue53
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

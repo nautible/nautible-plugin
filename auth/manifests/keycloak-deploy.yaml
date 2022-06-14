@@ -64,7 +64,7 @@ spec:
           value: "true"
         - name: KC_IMPORT_VAL_FRONTEND_URL
           value: https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth # fix me
-        - name: KC_IMPORT_VAL_ROOR_URL
+        - name: KC_IMPORT_VAL_ROOT_URL
           value: https://dr1d1engi0lfa.cloudfront.net # fix me
         volumeMounts:
           - name: realm

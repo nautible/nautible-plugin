@@ -36,7 +36,7 @@ keycloak-deploy.yaml
 ```yaml
 - name: KC_IMPORT_VAL_FRONTEND_URL
   value: https://xxx.com/api/v1.0/nautible-auth/auth #Keycloakのfrontend urlを設定する
-- name: KC_IMPORT_VAL_ROOR_URL
+- name: KC_IMPORT_VAL_ROOT_URL
   value: https://xxx.com #Keycloakのroot urlを設定する
 ```
 keycloak-istio-auth.yaml

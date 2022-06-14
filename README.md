@@ -9,10 +9,10 @@ Kubernetesへエコシステムやアプリケーションを導入するため�
 
 |プラグイン|概要|依存関係|備考|
 |:--|:--|:--|:--|
-|auth|認証(keycloak)の導入|service-mesh||
 |albc|AWS LoadBalancer Controller||AWSのみ必要|
 |app-bookinfo|Istio動作確認アプリケーション|service-mesh||
 |app-ms|マイクロサービスアプリケーション|distributed-application<br>secrets<br>service-mesh||
+|auth|認証(keycloak)の導入|service-mesh||
 |cluster-autoscaler|クラスタのNode数調整||AWSのみ必要|
 |container-registry|Harborの導入|||
 |distributed-application|Daprの導入|||

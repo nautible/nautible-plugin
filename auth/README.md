@@ -10,10 +10,10 @@
 
 ## 2. 導入
 
-2.1 terraformを実行してkeycloakに必要なリソースを作成する。手順については
+### 2.1 terraformを実行してkeycloakに必要なリソースを作成する。手順については
 [nautible-infra/aws/plugin](https://github.com/nautible/nautible-infra/tree/main/aws/plugin)、[nautible-infra/azure/plugin](https://github.com/nautible/nautible-infra/tree/main/azure/plugin)参照。  
 
-2.2 ssmのパラメータストアに以下の値を登録する。  
+### 2.2 ssmのパラメータストアに以下の値を登録する。  
 keycloakはパラメータストアの値をExternalSecrets経由で参照する。
 
 |  キー  |  設定値  |
@@ -25,13 +25,13 @@ keycloakはパラメータストアの値をExternalSecrets経由で参照する
 | nautible-infra-keycloak-db-host| keycloakのDBのHost |
 
 
-2.3 keycloakにインポートするrealmのシークレットを作成する。
+### 2.3 keycloakにインポートするrealmのシークレットを作成する。
 ```bash
 $ kubectl create namespace keycloak
 $ kubectl create secret generic secret-keycloak-realm -n keycloak --from-file=manifests/realm.json
 ```
 
-2.4 環境に合わせてkeycloakの設定を行う。  
+### 2.4 環境に合わせてkeycloakの設定を行う。  
 keycloak-deploy.yaml
 ```yaml
 - name: KC_IMPORT_VAL_FRONTEND_URL
@@ -51,13 +51,13 @@ keycloak-istio-auth.yaml
 ```
 ※istioの認証設定については公式参照([RequestAuthentication](https://istio.io/latest/docs/reference/config/security/request_authentication/)、[Authorization Policy](https://istio.io/latest/docs/reference/config/security/authorization-policy/))。  
 
-2.5 デプロイする。
+### 2.5 デプロイする。
 
 ```bash
 $ kubectl apply -f auth/application.yaml
 ```
 
-2.5 フロントエンドの設定変更と公開。
+### 2.6 フロントエンドの設定変更と公開。
 
 nautible-app-ms-front/app/.env.auth-sampleの値を環境に合わせて変更し、ファイル名を「.env」に変更する。修正後にcloudfrontに公開する。
 ```

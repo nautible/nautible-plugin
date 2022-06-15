@@ -1,0 +1,51 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: keycloak-gateway
+  namespace: keycloak
+  labels:
+    app.kubernetes.io/name: keycloak-gateway
+    app.kubernetes.io/instance: keycloak-gateway
+    app.kubernetes.io/version: 1.0.0
+    app.kubernetes.io/component: gateway
+    app.kubernetes.io/part-of: nautible
+    app.kubernetes.io/managed-by: manual
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: keycloak-vs
+  namespace: keycloak
+  labels:
+    app.kubernetes.io/name: keycloak-vs
+    app.kubernetes.io/instance: keycloak-vs
+    app.kubernetes.io/version: 1.0.0
+    app.kubernetes.io/component: virtualservice
+    app.kubernetes.io/part-of: nautible
+    app.kubernetes.io/managed-by: manual
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - keycloak-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /api/v1.0/nautible-auth/auth
+    rewrite:
+      uri: "/auth"
+    route:
+    - destination:
+        host: keycloak
+        port:
+          number: 8080

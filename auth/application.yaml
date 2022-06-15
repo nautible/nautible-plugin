@@ -11,7 +11,7 @@ spec:
   source:
     path: auth/manifests
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/keycloak
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

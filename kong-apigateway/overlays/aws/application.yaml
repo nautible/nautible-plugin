@@ -7,7 +7,7 @@ spec:
   destination:
     namespace: default
     server: https://kubernetes.default.svc
-  project: application
+  project: default
   source:
     path: kong-apigateway/overlays/aws
     repoURL: https://github.com/nautible/nautible-plugin

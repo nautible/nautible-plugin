@@ -2,21 +2,56 @@
 
 ## 1. 概要
 
-Kong社が提供するOSSのApiGateway
+Kong社が提供するOSSのAPIGatewayにカスタムプラグインを追加したAPIGateway
 
-nginxベースのApiGatewayをKubernetes内にデプロイして稼働するため、オンプレ/クラウドどちらでも利用することが可能
+### カスタムプラグイン（serverless）
 
+バックエンドのアプリケーションコンテナをサーバレス化（未使用時はコンテナ数を０にする）するための機能。
+
+APIGatewayでリクエストを受信した際に、バックエンド
 
 ## 2. 導入
 
+### 事前準備
+
+[KEDA](https://github.com/nautible/nautible-plugin/tree/main/pod-autoscaler)を事前に導入しておく。
+
+### base/application.yaml
+
+リポジトリおよびタグを標準のkongから変更する。また、プラグインの起動に必要な環境変数を設定する。
+
+```yaml
+    helm:
+      parameters:
+        - name: 'image.repository'
+          value: 'public.ecr.aws/nautible/nautible-kong-serverless'
+        - name: 'image.tag'
+          value: 'v0.1.4'
+        - name: 'env.plugins'
+          value: 'bundled, serverless'
+        - name: 'env.pluginserver_names'
+          value: 'serverless'
+        - name: 'env.pluginserver_serverless_query_cmd'
+          value: '/usr/local/bin/serverless -dump'
 ```
-$ kubectl apply -f kong-apigateway/application.yaml
+
+- AWS環境にデプロイ
+
+```bash
+kubectl apply -f kong-apigateway/overlays/aws/application.yaml
 ```
+
+- Azure環境にデプロイ
+
+```bash
+kubectl apply -f kong-apigateway/overlays/azure/application.yaml
+```
+
 ### （参考）導入元の定義ファイル
 
-DB不要版の導入ファイルは下記のものを使用している
+Kong-APIGatewayはDB不要版の書きマニフェストをベースに導入している。
 
-```
+```bash
 https://raw.githubusercontent.com/Kong/kubernetes-ingress-controller/master/deploy/single/all-in-one-dbless.yaml
 ```
 
@@ -34,6 +69,10 @@ ingress-kong   1/1     1            1           8d
 
 ## 4. 削除
 
+```bash
+kubectl delete -f kong-apigateway/application.yaml
 ```
-$ kubectl delete -f kong-apigateway/application.yaml
-```
+
+## 5. 参考
+
+カスタムプラグインの開発リポジトリは[こちら](https://github.com/nautible/nautible-kong-serverless)

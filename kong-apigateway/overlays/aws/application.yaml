@@ -1,19 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kong-apigateway
+  name: nautible-kong-apigateway
   namespace: argocd
 spec:
-  project: default
   destination:
+    namespace: default
     server: https://kubernetes.default.svc
-    namespace: kong
+  project: application
   source:
-    path: kong-apigateway/manifests
+    path: kong-apigateway/overlays/aws
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: develop
+    targetRevision: feature/issue41
   syncPolicy:
     automated:
       prune: true
-    syncOptions:
-      - CreateNamespace=true

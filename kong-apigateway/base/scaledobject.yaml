@@ -1,0 +1,18 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: consumer-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: consumer
+  pollingInterval: 0   # Optional. Default: 30 seconds
+  cooldownPeriod: 10   # Optional. Default: 300 seconds
+  minReplicaCount: 0   # Optional. Default: 0
+  maxReplicaCount: 3   # Optional. Default: 100
+  triggers:
+  - type: rabbitmq
+    metadata:
+      queueName: serverless
+      host: 'amqp://user:<password>@keda-queue-rabbitmq.default.svc.cluster.local:5672'
+      queueLength  : '10'

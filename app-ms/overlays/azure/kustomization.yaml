@@ -8,25 +8,9 @@ patches:
 - path: patch.json
   target:
     kind: Application
-    name: nautible-app-ms-stock
-- path: patch.json
-  target:
-    kind: Application
-    name: nautible-app-ms-order
-- path: patch.json
-  target:
-    kind: Application
-    name: nautible-app-ms-customer
-- path: patch_payment.json
-  target:
-    kind: Application
-    name: nautible-app-ms-payment
-- path: patch_credit.json
-  target:
-    kind: Application
-    name: nautible-app-ms-payment-credit
+    name: nautible-app-ms-.*
 
-# azure対応が完了したら以下の定義を削除して上記にパッチを追加する
+# azure対応が完了したら以下の定義を削除する
 - patch: |
     $patch: delete
     kind: dummy

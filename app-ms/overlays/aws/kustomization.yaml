@@ -20,3 +20,11 @@ patches:
   target:
     kind: Application
     name: nautible-app-ms-order
+- path: patch.json
+  target:
+    kind: Application
+    name: nautible-app-ms-payment
+- path: patch.json
+  target:
+    kind: Application
+    name: nautible-app-ms-payment-credit

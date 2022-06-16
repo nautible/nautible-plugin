@@ -1,3 +1,15 @@
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-trigger-auth-aws-credentials
+  namespace: default
+spec:
+  secretTargetRef:
+  - parameter: awsRoleArn    # The property in KEDA.
+    name: secret-nautible-plugin-kong       # The name of the kubernetes secret.
+    key: KONG_IAM_ARN        # The key from the kubernetes secret.
+---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -12,6 +24,8 @@ spec:
   maxReplicaCount: 3   # Optional. Default: 100
   triggers:
   - type: aws-sqs-queue
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
     metadata:
       queueURL: "kong-apigatway-pubsub"
       queueLength: "10"

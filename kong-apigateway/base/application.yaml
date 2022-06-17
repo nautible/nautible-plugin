@@ -15,16 +15,18 @@ spec:
     chart: 'kong'
     helm:
       parameters:
-        - name: 'image.repository'
-          value: 'public.ecr.aws/nautible/nautible-kong-serverless'
-        - name: 'image.tag'
-          value: 'v0.1.5'
-        - name: 'env.plugins'
-          value: 'bundled, serverless'
-        - name: 'env.pluginserver_names'
-          value: 'serverless'
-        - name: 'env.pluginserver_serverless_query_cmd'
-          value: '/usr/local/bin/serverless -dump'
+      - name: 'ingressController.installCRDs'
+        value: false
+      - name: 'image.repository'
+        value: 'public.ecr.aws/nautible/nautible-kong-serverless'
+      - name: 'image.tag'
+        value: 'v0.1.5'
+      - name: 'env.plugins'
+        value: 'bundled, serverless'
+      - name: 'env.pluginserver_names'
+        value: 'serverless'
+      - name: 'env.pluginserver_serverless_query_cmd'
+        value: '/usr/local/bin/serverless -dump'
   syncPolicy:
     automated:
       prune: true

@@ -1,11 +1,11 @@
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: kong-apigatway-pubsub
+  name: kong-serverless-plugin-pubsub
   namespace: default
   labels:
-    app.kubernetes.io/name: kong-apigatway-pubsub
-    app.kubernetes.io/instance: kong-apigatway-pubsub
+    app.kubernetes.io/name: nautible-kong-apigateway
+    app.kubernetes.io/instance: nautible-kong-apigateway
     app.kubernetes.io/version: 1.0.0
     app.kubernetes.io/component: pubsub
     app.kubernetes.io/part-of: nautible

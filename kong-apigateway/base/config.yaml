@@ -8,6 +8,6 @@ config:
   backend:
   - target: /kong/consumer
     health: /healthz
-    pubsub: consumer-pubsub
+    pubsub: kong-apigatway-pubsub
     topic: serverless
 plugin: serverless

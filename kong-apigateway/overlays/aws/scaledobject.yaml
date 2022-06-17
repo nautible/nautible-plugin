@@ -25,6 +25,6 @@ spec:
     authenticationRef:
       name: keda-trigger-auth-aws-credentials
     metadata:
-      queueURL: "kong-apigatway-pubsub"
+      queueURL: secret-nautible-plugin-kong-sqs
       queueLength: "10"
       awsRegion: "ap-northeast-1"

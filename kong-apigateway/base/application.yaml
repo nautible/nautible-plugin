@@ -15,8 +15,6 @@ spec:
     chart: 'kong'
     helm:
       parameters:
-      - name: 'ingressController.installCRDs'
-        value: false
       - name: 'image.repository'
         value: 'public.ecr.aws/nautible/nautible-kong-serverless'
       - name: 'image.tag'

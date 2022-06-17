@@ -8,7 +8,8 @@ config:
   interval: 100
   backend:
   - target: /kong/consumer
-    health: /healthz
+#    health: /healthz
+    health: /
     pubsub: kong-apigatway-pubsub
     topic: serverless
 plugin: serverless

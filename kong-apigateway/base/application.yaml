@@ -16,8 +16,12 @@ spec:
     helm:
       # https://github.com/Kong/charts
       parameters:
-      - name: 'podAnnotations'
-        value: ['kuma.io/gateway: enabled', 'traffic.sidecar.istio.io/includeInboundPorts: ""', 'dapr.io/enabled: "true"', 'dapr.io/app-id: "serverless"', 'dapr.io/app-port: "8000"']
+      - name: 'podAnnotations.dapr\.io/enabled'
+        value: true
+      - name: 'podAnnotations.dapr\.io/app-id'
+        value: "serverless"
+      - name: 'podAnnotations.dapr\.io/app-port'
+        value: "8000"
       - name: 'image.repository'
         value: 'public.ecr.aws/nautible/nautible-kong-serverless'
       - name: 'image.tag'

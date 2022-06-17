@@ -4,8 +4,8 @@ metadata:
   name: kong-serverless-plugin-pubsub
   namespace: default
   labels:
-    app.kubernetes.io/name: nautible-kong-apigateway
-    app.kubernetes.io/instance: nautible-kong-apigateway
+    app.kubernetes.io/name: kong-serverless-plugin-pubsub
+    app.kubernetes.io/instance: kong-serverless-plugin-pubsub
     app.kubernetes.io/version: 1.0.0
     app.kubernetes.io/component: pubsub
     app.kubernetes.io/part-of: nautible

@@ -5,10 +5,8 @@ metadata:
   name: keda-trigger-auth-aws-credentials
   namespace: default
 spec:
-  secretTargetRef:
-  - parameter: awsRoleArn    # The property in KEDA.
-    name: secret-nautible-plugin-kong       # The name of the kubernetes secret.
-    key: KONG_IAM_ARN        # The key from the kubernetes secret.
+  podIdentity:
+    provider: aws-eks
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject

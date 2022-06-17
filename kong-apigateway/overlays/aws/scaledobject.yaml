@@ -1,13 +1,13 @@
----
-apiVersion: keda.sh/v1alpha1
-kind: TriggerAuthentication
-metadata:
-  name: keda-trigger-auth-aws-credentials
-  namespace: default
-spec:
-  podIdentity:
-    provider: aws-eks
----
+# ---
+# apiVersion: keda.sh/v1alpha1
+# kind: TriggerAuthentication
+# metadata:
+#   name: keda-trigger-auth-aws-credentials
+#   namespace: default
+# spec:
+#   podIdentity:
+#     provider: aws-eks
+# ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -22,9 +22,8 @@ spec:
   maxReplicaCount: 3   # Optional. Default: 100
   triggers:
   - type: aws-sqs-queue
-    authenticationRef:
-      name: keda-trigger-auth-aws-credentials
     metadata:
       queueURL: secret-nautible-plugin-kong-sqs
       queueLength: "10"
       awsRegion: "ap-northeast-1"
+      identityOwner: operator

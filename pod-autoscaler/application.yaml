@@ -15,6 +15,9 @@ spec:
     helm:
       version: v3
       releaseName: keda
+      parameters:
+      - name: 'serviceAccount.annotations.eks\.amazonaws\.com\/role-arn'
+        value: 'nautible-dev-AmazonEKSNodeRole'
   project: default
   syncPolicy:
     automated:

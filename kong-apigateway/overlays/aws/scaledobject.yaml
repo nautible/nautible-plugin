@@ -23,7 +23,7 @@ spec:
   triggers:
   - type: aws-sqs-queue
     metadata:
-      queueURL: secret-nautible-plugin-kong-sqs
+      queueURL: "{secret-nautible-plugin-kong-sqs}"
       queueLength: "10"
       awsRegion: "ap-northeast-1"
       identityOwner: operator

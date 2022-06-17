@@ -16,5 +16,5 @@ spec:
             name: consumer
             port:
               number: 8080
-        path: /kong/
+        path: /
         pathType: ImplementationSpecific

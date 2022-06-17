@@ -16,3 +16,5 @@ spec:
   metadata:
   - name: region
     value: ap-northeast-1
+  - name: disableEntityManagement
+    value: "true"

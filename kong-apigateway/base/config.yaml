@@ -7,9 +7,8 @@ config:
   count: 300
   interval: 100
   backend:
-  - target: /kong
-#    health: /healthz
+  - target: /
     health: /
-    pubsub: kong-apigatway-pubsub
-    topic: serverless
+    pubsub: kong-serverless-plugin-pubsub
+    topic: kong-serverless-plugin
 plugin: serverless

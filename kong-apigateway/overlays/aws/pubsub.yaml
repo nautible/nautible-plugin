@@ -2,7 +2,7 @@ apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
   name: kong-apigatway-pubsub
-  namespace: kong
+  namespace: default
   labels:
     app.kubernetes.io/name: kong-apigatway-pubsub
     app.kubernetes.io/instance: kong-apigatway-pubsub

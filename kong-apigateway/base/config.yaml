@@ -2,6 +2,7 @@ apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
   name: serverless
+  namespace: default
 config:
   count: 300
   interval: 100

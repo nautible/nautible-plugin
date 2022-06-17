@@ -7,7 +7,7 @@ spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: kong
+    namespace: default
   source:
     path: ''
     repoURL: https://charts.konghq.com

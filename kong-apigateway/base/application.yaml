@@ -16,7 +16,7 @@ spec:
     helm:
       # https://github.com/Kong/charts
       parameters:
-      - name: 'podAnnotations.dapr.io/enabled'
+      - name: 'podAnnotations.dapr\.io\/enabled'
         value: '"true"'
       - name: 'image.repository'
         value: 'public.ecr.aws/nautible/nautible-kong-serverless'

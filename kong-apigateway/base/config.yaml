@@ -7,7 +7,7 @@ config:
   count: 300
   interval: 100
   backend:
-  - target: /kong/consumer
+  - target: /kong
 #    health: /healthz
     health: /
     pubsub: kong-apigatway-pubsub

@@ -18,7 +18,3 @@ spec:
               number: 8080
         path: /kong/
         pathType: ImplementationSpecific
-status:
-  loadBalancer:
-    ingress:
-    - ip: 127.0.0.1

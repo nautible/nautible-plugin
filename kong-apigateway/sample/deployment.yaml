@@ -39,8 +39,8 @@ spec:
               path: "index.html"
         - name: healthz-file
           configMap:
-            name: healethz-html
+            name: healthz-html
             items:
-            - key: "healethz.html"
-              path: "healethz.html"
+            - key: "healthz.html"
+              path: "healthz.html"
 status: {}

@@ -9,6 +9,6 @@ config:
   backend:
   - target: /
     health: /
-    pubsub: kong-serverless-plugin-pubsub
+    pubsub: kong-serverless-plugin
     topic: kong-root-request
 plugin: serverless

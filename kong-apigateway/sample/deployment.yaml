@@ -28,7 +28,7 @@ spec:
           readOnly: true
         - name: healthz-file
           mountPath: /usr/share/nginx/html/kong/healthz.html
-          subPath: helthez.html
+          subPath: healthz.html
           readOnly: true
       volumes:
         - name: index-file

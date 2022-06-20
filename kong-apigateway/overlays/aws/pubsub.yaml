@@ -1,11 +1,11 @@
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: kong-serverless-plugin-pubsub
+  name: kong-serverless-plugin
   namespace: default
   labels:
-    app.kubernetes.io/name: kong-serverless-plugin-pubsub
-    app.kubernetes.io/instance: kong-serverless-plugin-pubsub
+    app.kubernetes.io/name: kong-serverless-plugin
+    app.kubernetes.io/instance: kong-serverless-plugin
     app.kubernetes.io/version: 1.0.0
     app.kubernetes.io/component: pubsub
     app.kubernetes.io/part-of: nautible
@@ -16,5 +16,3 @@ spec:
   metadata:
   - name: region
     value: ap-northeast-1
-  # - name: disableEntityManagement
-  #   value: "true"

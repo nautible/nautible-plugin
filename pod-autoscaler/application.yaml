@@ -11,13 +11,10 @@ spec:
   source:
     chart: keda
     repoURL: 'https://kedacore.github.io/charts'
-    targetRevision: 2.5.1
+    targetRevision: 2.7.2
     helm:
       version: v3
       releaseName: keda
-      parameters:
-      - name: 'serviceAccount.annotations.eks\.amazonaws\.com\/role-arn'
-        value: 'nautible-dev-AmazonEKSNodeRole'
   project: default
   syncPolicy:
     automated:

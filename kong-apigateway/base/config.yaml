@@ -7,8 +7,8 @@ config:
   count: 300
   interval: 100
   backend:
-  - target: /
-    health: /
+  - target: /kong/
+    health: /kong/healthz.html
     pubsub: kong-serverless-plugin
     topic: kong-root-request
 plugin: serverless

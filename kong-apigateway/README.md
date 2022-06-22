@@ -209,7 +209,7 @@ terraform destroy
 
 HELMでkong Gatewayをデプロイした場合、ロードバランサはデフォルトではインターネット向けのELB（ClassicLoadBalancer）がデプロイされます。内部向けロードバランサやALB、TLS対応などロードバランサをカスタマイズして導入する場合はbase/application.yamlのHELMでパラメータを変更する必要があります。
 
-- 参考：https://github.com/Kong/charts/blob/main/charts/kong/values.yaml
+- 参考：[https://github.com/Kong/charts/blob/main/charts/kong/values.yaml](https://github.com/Kong/charts/blob/main/charts/kong/values.yaml)
 
 ```yaml
 proxy:

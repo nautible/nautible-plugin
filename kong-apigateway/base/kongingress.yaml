@@ -2,7 +2,7 @@ apiVersion: configuration.konghq.com/v1
 kind: KongIngress
 metadata:
   name: kong-ingress
-  namespace: default
+  namespace: kong
 upstream:
   slots: 10
   hash_on: none

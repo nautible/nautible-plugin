@@ -2,7 +2,7 @@ apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
   name: kong-serverless-plugin
-  namespace: default
+  namespace: kong
   labels:
     app.kubernetes.io/name: kong-serverless-plugin
     app.kubernetes.io/instance: kong-serverless-plugin

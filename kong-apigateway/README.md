@@ -81,7 +81,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: serverless
-  namespace: default
+  namespace: kong
   annotations:
     konghq.com/override: kong-ingress
     konghq.com/plugins: serverless
@@ -118,7 +118,7 @@ apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
   name: serverless
-  namespace: default
+  namespace: kong
 config:
   count: 300
   interval: 100

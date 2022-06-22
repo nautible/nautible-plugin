@@ -5,6 +5,7 @@ metadata:
     app: nginx-app
     name: consumer
   name: index-html
+  namespace: kong
 data:
   index.html: |
     <html>
@@ -24,6 +25,7 @@ metadata:
     app: nginx-app
     name: consumer
   name: healthz-html
+  namespace: kong
 data:
   healthz.html: |
     <html>

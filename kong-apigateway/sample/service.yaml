@@ -4,6 +4,7 @@ metadata:
   labels:
     app: consumer
   name: consumer
+  namespace: kong
 spec:
   ports:
   - name: 8080-8080

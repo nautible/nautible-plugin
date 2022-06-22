@@ -17,5 +17,3 @@ spec:
       queueLength: "10"
       awsRegion: "ap-northeast-1"
       identityOwner: operator
-    authenticationRef:
-      name: queue-url

@@ -46,7 +46,7 @@ terraform apply
 
 - base/application.yaml
 
-リポジトリおよびタグを標準のkongから変更する。また、Daprおよびプラグインの起動に必要な環境変数を設定します。
+リポジトリおよびタグを標準のkongから変更します。また、Daprおよびプラグインの起動に必要な環境変数を設定します。
 
 ```yaml
     helm:

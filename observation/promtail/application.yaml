@@ -18,6 +18,7 @@ spec:
       version: v3
       releaseName: promtail
       values: |
+        priorityClassName: promtail-priority
         serviceMonitor:
           enabled: true
         config:

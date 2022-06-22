@@ -147,8 +147,8 @@ kubectl apply -f kong-apigateway/sample/.
 
 kongおよびconsumerがデプロイされていることを確認。また、consumerはPod数が0になっていることも確認します。
 
-```text
-kubectl get deploy
+```bash
+kubectl get deploy -n kong
 
 NAME           READY   UP-TO-DATE   AVAILABLE   AGE
 consumer               0/0     0            0           40h
@@ -157,7 +157,7 @@ kong-apigateway-kong   1/1     1            1           43m
 
 IngressのURLを確認します。
 
-```text
+```bash
 kubectl get ingress
 
 NAME         CLASS   HOSTS   ADDRESS                                                                       PORTS   AGE
@@ -168,6 +168,16 @@ Ingressにリクエストを送信します。
 
 ```bash
 curl http://<IngressのURL>
+
+<html>
+  <head>
+    <title>
+      kong-apigateway sample
+    </title>
+  <body>
+    kong-apigateway sample
+  </body>
+</html>
 ```
 
 ## 4. 削除

@@ -16,7 +16,7 @@ Kubernetesへエコシステムやアプリケーションを導入するため�
 |cluster-autoscaler|クラスタのNode数調整||AWSのみ必要|
 |container-registry|Harborの導入|||
 |distributed-application|Daprの導入|||
-|kong-apigateway|KongApiGatewayの導入|||
+|kong-apigateway|KongApiGatewayの導入|pod-autoscaler||
 |metrics-server|メトリクスサーバーの導入||AWSのみ必要|
 |observation|Grafana,Prometheusによる監視|metrics-server（AWSのみ）||
 |pod-autoscaler|KEDAの導入|||

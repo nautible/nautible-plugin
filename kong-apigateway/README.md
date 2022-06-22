@@ -222,10 +222,3 @@ proxy:
 ### (2) カスタムプラグインの開発リポジトリ
 
 カスタムプラグインの開発リポジトリは[こちら](https://github.com/nautible/nautible-kong-serverless)
-
-### (3) 導入元の定義ファイル
-
-Kong-APIGatewayはDB不要版の書きマニフェストをベースに導入している。
-
-```bash
-https://raw.githubusercontent.com/Kong/kubernetes-ingress-controller/master/deploy/single/all-in-one-dbless.yaml

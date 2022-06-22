@@ -190,9 +190,13 @@ kubectl delete -f kong-apigateway/sample/.
 
 Kong Gatewayの削除
 
-```bash
-kubectl delete -f kong-apigateway/application.yaml
-```
+App of Appsで導入しているため、ArgoCDを参照して個別に削除してください。
+
+### 削除手順
+
+(1) nautible-kong-apigatewayのApplicationマニフェストを参照し、SYNC POLICY.AUTOMATEDをdisableに変更する
+(2) kong-apigatewayを削除
+(3) nautible-kong-apigatewayを削除
 
 SNS・SQSの削除
 

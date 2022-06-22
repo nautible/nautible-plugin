@@ -71,7 +71,7 @@ terraform apply
         value: '/usr/local/bin/serverless -dump'
 ```
 
-※ 標準のKong Gatewayを導入する場合はimage.repositoryおよびimage.tagに標準のkongイメージを指定してください。また、その他の項目は削除してください。
+※ 標準のKong Gatewayを導入する場合はパラメータをすべて削除してデプロイしてください。
 
 - base/ingress.yaml
 

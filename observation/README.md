@@ -4,15 +4,16 @@
 
 ```text
 observation
-├docs                :ドキュメント 
-├loki                :GrafanaLokiデプロイ用マニフェスト 
-├monitors            :ServiceMonitorデプロイ用マニフェスト
-├prometheus-operator :kube-prometheus-stackデプロイ用マニフェスト
-├promtail            :Promtailデプロイ用マニフェスト
-├rules               :Prometheusの設定を行うカスタムリソースデプロイ用マニフェスト
-├application.yaml    :observation配下一括導入用applicationマニフェスト
-├kustomization.yaml  :observation配下一括導入用kustomizeファイル
-└README.md           :本ファイル
+├ common              :共通利用マニフェスト（PriorityClass） 
+├ docs                :ドキュメント 
+├ loki                :GrafanaLokiデプロイ用マニフェスト 
+├ monitors            :ServiceMonitorデプロイ用マニフェスト
+├ prometheus-operator :kube-prometheus-stackデプロイ用マニフェスト
+├ promtail            :Promtailデプロイ用マニフェスト
+├ rules               :Prometheusの設定を行うカスタムリソースデプロイ用マニフェスト
+├ application.yaml    :observation配下一括導入用applicationマニフェスト
+├ kustomization.yaml  :observation配下一括導入用kustomizeファイル
+└ README.md           :本ファイル
 ```
 
 ## [セットアップ](./docs/setup.md)

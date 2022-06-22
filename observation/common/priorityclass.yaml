@@ -1,7 +1,7 @@
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
-  name: promtail-priority
+  name: daemonset-priority
 value: 1000000
 globalDefault: false
-description: "Promtail用Priority"
+description: "Daemonset用Priority"

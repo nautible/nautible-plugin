@@ -34,6 +34,7 @@ spec:
         - --collector.netdev.device-exclude=^(veth.*|[a-f0-9]{15})$
         image: quay.io/prometheus/node-exporter:v1.2.2
         name: node-exporter
+        priorityClassName: daemonset-priority
         resources:
           limits:
             cpu: 250m

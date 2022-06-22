@@ -4,5 +4,6 @@ resources:
   - loki/application.yaml
   - prometheus-operator/application.yaml
   - promtail/application.yaml
+  - promtail/priorityclass.yaml
   - monitors/application.yaml
   - rules/application.yaml

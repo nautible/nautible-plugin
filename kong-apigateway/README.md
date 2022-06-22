@@ -2,15 +2,13 @@
 
 ## 1. 概要
 
-Kong社が提供するOSSのKong Gatewayにカスタムプラグインを追加したAPIGatewayです。
+Kong社が提供するOSSのKong Gatewayにカスタムプラグイン（Severless機能）を追加したAPIGatewayです。本プラグインではAPIGatewayおよび動作確認用のサンプルアプリケーション(consumer)を導入します。
 
-なお、本プラグインは現在AWS環境にのみ対応しています。（Azure,GCPにも後日対応予定）
+なお、本プラグインは現在AWS環境にのみ対応しています。
 
-### カスタムプラグイン（serverless）
+### カスタムプラグイン（serverless機能）
 
-バックエンドのアプリケーションコンテナをサーバレス化（未使用時はコンテナ数を０にする）するための機能。
-
-APIGatewayでリクエストを受信した際に、バックエンド
+バックエンドのアプリケーションコンテナをサーバレス化（未使用時はコンテナ数を０にする）するための機能です。KEDAを使いリクエストがないときはPodを0にし、リクエスト発生時はKongからキューにデータを送ることでPodを起動する仕組みになります。
 
 ### 構成図
 
@@ -72,6 +70,8 @@ terraform apply
       - name: 'env.pluginserver_serverless_query_cmd'
         value: '/usr/local/bin/serverless -dump'
 ```
+
+※ 標準のKong Gatewayを導入する場合はimage.repositoryおよびimage.tagに標準のkongイメージを指定してください。また、その他の項目は削除してください。
 
 - base/ingress.yaml
 
@@ -218,6 +218,8 @@ proxy:
   # "service.beta.kubernetes.io/aws-load-balancer-ssl-ports": "kong-proxy-tls",
   # "service.beta.kubernetes.io/aws-load-balancer-type": "elb"
   ```
+
+設定項目の詳細は[AWS公式ドキュメント](https://docs.aws.amazon.com/ja_jp/eks/latest/userguide/network-load-balancing.html)を参照してください。
 
 ### (2) カスタムプラグインの開発リポジトリ
 

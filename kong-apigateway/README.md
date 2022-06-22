@@ -182,23 +182,23 @@ curl http://<IngressのURL>
 
 ## 4. 削除
 
-サンプルアプリケーションの削除
+### サンプルアプリケーションの削除
 
 ```bash
 kubectl delete -f kong-apigateway/sample/.
 ```
 
-Kong Gatewayの削除
+### Kong Gatewayの削除
 
 App of Appsで導入しているため、ArgoCDを参照して個別に削除してください。
 
-### 削除手順
+#### 削除手順
 
 (1) nautible-kong-apigatewayのApplicationマニフェストを参照し、SYNC POLICY.AUTOMATEDをdisableに変更する
 (2) kong-apigatewayを削除
 (3) nautible-kong-apigatewayを削除
 
-SNS・SQSの削除
+### SNS・SQSの削除
 
 nautible-infraのリポジトリで下記を実行
 

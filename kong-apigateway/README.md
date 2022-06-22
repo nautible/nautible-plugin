@@ -71,8 +71,6 @@ terraform apply
         value: '/usr/local/bin/serverless -dump'
 ```
 
-※ 標準のKong Gatewayを導入する場合はパラメータをすべて削除してデプロイしてください。
-
 - base/ingress.yaml
 
 バックエンドへのルーティング設定を記述します。また、annotationsにプラグイン設定を記述することで、Ingressでリクエストを受けた際にプラグインに処理を流すことが可能になります。  

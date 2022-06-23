@@ -11,7 +11,7 @@ spec:
   source:
     path: kong-apigateway/overlays/aws
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/issue41
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: consumer-scaledobject
+  namespace: default   # target application namespace
+spec:
+  scaleTargetRef:
+    name: consumer     # target application name
+  pollingInterval: 0   # Optional. Default: 30 seconds
+  cooldownPeriod: 10   # Optional. Default: 300 seconds
+  minReplicaCount: 0   # Optional. Default: 0
+  maxReplicaCount: 3   # Optional. Default: 100
+  triggers:
+  - type: aws-sqs-queue
+    metadata:
+      queueURL: kong-serverless-plugin
+      queueLength: "10"
+      awsRegion: "ap-northeast-1"
+      identityOwner: operator

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: nginx-app
+    name: consumer
+  name: index-html
+  namespace: kong
+data:
+  index.html: |
+    <html>
+      <head>
+        <title>
+          kong-apigateway sample
+        </title>
+      <body>
+        kong-apigateway sample
+      </body>
+    </html>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: nginx-app
+    name: consumer
+  name: healthz-html
+  namespace: kong
+data:
+  healthz.html: |
+    <html>
+      <head>
+        <title>
+          kong-apigateway healthz
+        </title>
+      <body>
+        OK
+      </body>
+    </html>

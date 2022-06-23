@@ -1,0 +1,18 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: kong-serverless-plugin
+  namespace: kong
+  labels:
+    app.kubernetes.io/name: kong-serverless-plugin
+    app.kubernetes.io/instance: kong-serverless-plugin
+    app.kubernetes.io/version: 1.0.0
+    app.kubernetes.io/component: pubsub
+    app.kubernetes.io/part-of: nautible
+    app.kubernetes.io/managed-by: manual
+spec:
+  type: pubsub.snssqs
+  version: v1
+  metadata:
+  - name: region
+    value: ap-northeast-1

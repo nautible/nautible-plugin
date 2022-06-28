@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: servicemonitor-payment-credit-service
-  namespace: nautible-app-ms
+  namespace: monitoring
   labels:
     serviceapp: payment-credit-service
     release: prometheus-operator

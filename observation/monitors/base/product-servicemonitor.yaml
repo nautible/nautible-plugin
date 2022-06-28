@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: servicemonitor-product-service
-  namespace: nautible-app-ms
+  namespace: monitoring
   labels:
     serviceapp: product-service
     release: prometheus-operator

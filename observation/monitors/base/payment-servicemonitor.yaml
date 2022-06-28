@@ -13,7 +13,7 @@ spec:
   endpoints:
   - port: http
     interval: 30s
-    path: /health
+    path: /healthz
   namespaceSelector:
     matchNames:
     - nautible-app-ms

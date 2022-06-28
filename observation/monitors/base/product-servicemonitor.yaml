@@ -11,7 +11,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: nautible-app-ms-product
   endpoints:
-  - port: http
+  - port: nautible-app-ms-product-port
     interval: 30s
   namespaceSelector:
     matchNames:

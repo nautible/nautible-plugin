@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: servicemonitor-order-service
+  namespace: nautible-app-ms
+  labels:
+    serviceapp: order-service
+    release: prometheus-operator
+spec:
+  selector:
+    matchLabels:
+      service: nautible-app-ms-order
+  endpoints:
+  - port: http
+    interval: 30s
+  namespaceSelector:
+    matchNames:
+    - nautible-app-ms

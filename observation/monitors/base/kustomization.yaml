@@ -8,9 +8,3 @@ resources:
   # https://istio.io/latest/docs/ops/best-practices/observability/
   #- istio-federation.yaml
   - demo-service-servicemonitor.yaml
-  - product-servicemonitor.yaml
-  - stock-servicemonitor.yaml
-  - customer-servicemonitor.yaml
-  - order-servicemonitor.yaml
-  - payment-servicemonitor.yaml
-  - payment-credit-servicemonitor.yaml

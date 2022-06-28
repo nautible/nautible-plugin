@@ -9,7 +9,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      service: nautible-app-ms-order
+      app.kubernetes.io/name: nautible-app-ms-order
   endpoints:
   - port: http
     interval: 30s

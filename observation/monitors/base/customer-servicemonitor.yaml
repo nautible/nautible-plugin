@@ -9,7 +9,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      service: nautible-app-ms-customer
+      app.kubernetes.io/name: nautible-app-ms-customer
   endpoints:
   - port: http
     interval: 30s

@@ -10,7 +10,7 @@ spec:
   groups:
   - name: rules-payment-credit-alert1
     rules:
-    - alert: ApplicationDown
+    - alert: PaymentCreditApplicationDown
       expr: >-
           count(kube_pod_status_phase{phase="Running", namespace="nautible-app-ms", pod=~"nautible-app-ms-payment-credit.*"}) < 1
       for: 5m
@@ -21,7 +21,7 @@ spec:
           {{ $labels.job }}/{{ $labels.service }} targets in {{ $labels.namespace }} namespace are down.
   - name: rules-payment-credit-alert2
     rules:
-    - alert: ApplicationError
+    - alert: PaymentCreditApplicationError
       expr: >-
           ( count (payment_credit_log_error_total) > 0 ) or ( count (payment_credit_log_severe_total) > 0 )
       for: 1m

@@ -8,3 +8,7 @@ resources:
   - customer-rule.yaml
   - stock-rule.yaml
   - order-rule.yaml
+  - payment-rule.yaml
+  - payment-credit-rule.yaml
+  - product-rule.yaml
+  - delivery-rule.yaml

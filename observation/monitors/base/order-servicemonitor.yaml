@@ -13,7 +13,7 @@ spec:
   endpoints:
   - port: http-nautible-app-ms-order-port
     interval: 30s
-    path: /health
+    path: /q/health
   namespaceSelector:
     matchNames:
     - nautible-app-ms

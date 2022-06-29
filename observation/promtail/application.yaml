@@ -50,7 +50,7 @@ spec:
                         value: ERROR
                         action: inc
             - match:
-                selector: '{app=~"nautible-app-.*"}'
+                selector: '{app=~"nautible-app-ms-.*"}'
                 stages:
                 - json:
                     expressions:
@@ -133,6 +133,86 @@ spec:
                       type: Counter
                       description: error number
                       prefix: order_
+                      source: level
+                      config:
+                        value: SEVERE
+                        action: inc
+            - match:
+                selector: '{app=~"nautible-app-ms-product.*"}'
+                stages:
+                - metrics:
+                    log_error_total:
+                      type: Counter
+                      description: error number
+                      prefix: product_
+                      source: level
+                      config:
+                        value: ERROR
+                        action: inc
+                    log_severe_total:
+                      type: Counter
+                      description: error number
+                      prefix: product_
+                      source: level
+                      config:
+                        value: SEVERE
+                        action: inc
+            - match:
+                selector: '{app=~"nautible-app-ms-payment.*"}'
+                stages:
+                - metrics:
+                    log_error_total:
+                      type: Counter
+                      description: error number
+                      prefix: payment_
+                      source: level
+                      config:
+                        value: ERROR
+                        action: inc
+                    log_severe_total:
+                      type: Counter
+                      description: error number
+                      prefix: payment_
+                      source: level
+                      config:
+                        value: SEVERE
+                        action: inc
+            - match:
+                selector: '{app=~"nautible-app-ms-payment-cache.*"}'
+                stages:
+                - metrics:
+                    log_error_total:
+                      type: Counter
+                      description: error number
+                      prefix: payment_cache_
+                      source: level
+                      config:
+                        value: ERROR
+                        action: inc
+                    log_severe_total:
+                      type: Counter
+                      description: error number
+                      prefix: payment_cache_
+                      source: level
+                      config:
+                        value: SEVERE
+                        action: inc
+            - match:
+                selector: '{app=~"nautible-app-ms-delivery.*"}'
+                stages:
+                - metrics:
+                    log_error_total:
+                      type: Counter
+                      description: error number
+                      prefix: delivery_
+                      source: level
+                      config:
+                        value: ERROR
+                        action: inc
+                    log_severe_total:
+                      type: Counter
+                      description: error number
+                      prefix: delivery_
                       source: level
                       config:
                         value: SEVERE

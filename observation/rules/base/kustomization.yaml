@@ -5,10 +5,5 @@ resources:
   # https://istio.io/latest/docs/ops/best-practices/observability/
   - istio-metrics-aggregation.yaml
   - demo-rule.yaml
-  - customer-rule.yaml
-  - stock-rule.yaml
-  - order-rule.yaml
-  - payment-rule.yaml
-  - payment-credit-rule.yaml
-  - product-rule.yaml
-  - delivery-rule.yaml
+  - application-down-rule.yaml
+  - application-log-rule.yaml

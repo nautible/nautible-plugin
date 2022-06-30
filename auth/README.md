@@ -3,9 +3,13 @@
 
 ## 1. 概要
 
-アプリケーションへのアクセスに認証を導入するため、KeycloakとIstioの導入・設定を行う。Keycloakについては[公式参照](https://www.keycloak.org/)。Istioの認証関連の機能については[公式参照](https://istio.io/latest/docs/reference/config/security/)。サンプルではIstioのIngressでアプリケーションへのアクセスに対して認証を強制し、Keycloakでサインイン、JWTの発行を行う構成にしています。また、Reactのクライアントアプリではkeycloak-jsライブラリを利用して認証制御を行っています。
-![認証設定イメージ](keycloak.png)
+アプリケーションへのアクセスに認証を導入するため、KeycloakとIstioの導入・設定を行う。Keycloakについては[公式参照](https://www.keycloak.org/)。Istioの認証関連の機能については[公式参照](https://istio.io/latest/docs/reference/config/security/)。サンプルではIstioのIngressでアプリケーションへのアクセスに対して認証を強制し、Keycloakでサインイン、JWTの発行を行う構成にしています。また、Reactのクライアントアプリではkeycloak-jsライブラリを利用して認証制御を行っています。  
+AWS
+![認証設定イメージ](keycloak-aws.png)
+Azure
+![認証設定イメージ](keycloak-azure.png)
 
+※istioの認証設定については公式参照([RequestAuthentication](https://istio.io/latest/docs/reference/config/security/request_authentication/)、[Authorization Policy](https://istio.io/latest/docs/reference/config/security/authorization-policy/))。  
 ※サンプルのrealm設定はkubernetesのSecretとして作成し、deploymentにVolumeMountしてkeycloak起動時にimportしている。VolumeMountを利用するとファイルはシンボリックリンクとなるが、Keycloakの18.0.0ではシンボリックリンクに対応していないためimportできずにエラーになる。initContainerでシンボリックリンクのファイルをコピーして通常のファイルに変換することで対応している。
 
 ## 2. 導入
@@ -18,11 +22,11 @@ keycloakはパラメータストアの値をExternalSecrets経由で参照する
 
 |  キー  |  設定値  |
 | ---- | ---- |
-| nautible-infra-keycloak-user | keycloakの管理ユーザー |
-| nautible-infra-keycloak-password | keycloakの管理ユーザーのパスワード |
-| nautible-infra-keycloak-db-user | keycloakのDBユーザー |
-| nautible-infra-keycloak-db-password| keycloakのDBユーザーのパスワード |
-| nautible-infra-keycloak-db-host| keycloakのDBのHost |
+| nautible-plugin-keycloak-user | keycloakの管理ユーザー |
+| nautible-plugin-keycloak-password | keycloakの管理ユーザーのパスワード |
+| nautible-plugin-keycloak-db-user | keycloakのDBユーザー |
+| nautible-plugin-keycloak-db-password| keycloakのDBユーザーのパスワード |
+| nautible-plugin-keycloak-db-host| keycloakのDBのHost |
 
 
 ### 2.3 keycloakにインポートするrealmのシークレットを作成する。
@@ -32,29 +36,41 @@ $ kubectl create secret generic secret-keycloak-realm -n keycloak --from-file=ma
 ```
 
 ### 2.4 環境に合わせてkeycloakの設定を行う。  
-keycloak-deploy.yaml
+kustomizeのpatchで環境個別の設定が必要な値を定義する
+
+AWS  
+auth/overlays/aws/kustomization.yaml  
+Azure  
+auth/overlays/azure/kustomization.yaml
+
 ```yaml
-- name: KC_IMPORT_VAL_FRONTEND_URL
-  value: https://xxx.com/api/v1.0/nautible-auth/auth #Keycloakのfrontend urlを設定する
-- name: KC_IMPORT_VAL_ROOT_URL
-  value: https://xxx.com #Keycloakのroot urlを設定する
-```
-keycloak-istio-auth.yaml
-```yaml
-  jwtRules:
-  - issuer: https://xxx.com/api/v1.0/nautible-auth/auth/realms/nautible-auth # issuerにkeycloakのURLを指定する
-～略～
-    when:
-    - key: request.auth.claims[iss]
-      values: ["https://xxx.com/api/v1.0/nautible-auth/auth/realms/nautible-auth"] # 認証設定にkeycloakのURLを指定する
+# 設定箇所の詳細は「base\keycloak-deploy.yaml」参照。
+- op: replace
+  path: /spec/template/spec/containers/0/env/0/value
+  value: https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth #Keycloakのrealm設定のfrontend urlを設定する
+- op: replace
+  path: /spec/template/spec/containers/0/env/1/value
+  value: https://dr1d1engi0lfa.cloudfront.net #Keycloakのclient設定のRoot urlを設定する
+# 設定箇所の詳細は「base\keycloak-istio-auth.yaml」参照。
+- op: replace
+  path: /spec/jwtRules/0/issuer
+  value: https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth # istioのRequestAuthentication設定のissuerにkeycloakのURLを指定する
+# 設定箇所の詳細は「base\keycloak-secrets.yaml」参照。
+- op: replace
+  path: /spec/rules/0/when/0/values
+  value: ["https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth"] # istioのAuthorizationPolicy設定のrequest.auth.claims[iss]にkeycloakのURLを指定する
 
 ```
-※istioの認証設定については公式参照([RequestAuthentication](https://istio.io/latest/docs/reference/config/security/request_authentication/)、[Authorization Policy](https://istio.io/latest/docs/reference/config/security/authorization-policy/))。  
-
+  
 ### 2.5 デプロイする。
-
+AWS
 ```bash
-$ kubectl apply -f auth/application.yaml
+$ kubectl apply -f auth/overlays/aws/application.yaml
+```
+
+Azure
+```bash
+$ kubectl apply -f auth/overlays/azure/application.yaml
 ```
 
 ### 2.6 フロントエンドの設定変更と公開。

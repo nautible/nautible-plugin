@@ -1,0 +1,51 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+  - ../../base
+patchesJson6902:
+  # see base\keycloak-deploy.yaml
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: keycloak
+    # fix value
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/env/0/value
+        value: https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth
+      - op: replace
+        path: /spec/template/spec/containers/0/env/1/value
+        value: https://dr1d1engi0lfa.cloudfront.net
+  # see base\keycloak-istio-auth.yaml
+  - target:
+      group: security.istio.io
+      version: v1beta1
+      kind: RequestAuthentication
+      name: keycloak
+    # fix value
+    patch: |-
+      - op: replace
+        path: /spec/jwtRules/0/issuer
+        value: https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth
+  # see base\keycloak-secrets.yaml
+  - target:
+      group: security.istio.io
+      version: v1beta1
+      kind: AuthorizationPolicy
+      name: keycloak
+    # fix value
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/when/0/values
+        value: ["https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth"]
+  # see base\keycloak-istio-auth.yaml
+  - target:
+      group: kubernetes-client.io
+      version: v1
+      kind: ExternalSecret
+      name: secret-keycloak
+    patch: |-
+      - op: add
+        path: /spec/backendType
+        value: systemManager

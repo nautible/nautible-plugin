@@ -19,14 +19,3 @@ spec:
       annotations:
         message: >-
           {{ $labels.pod }} pod in {{ $labels.namespace }} namespace are {{ $labels.phase }} status.
-  - name: rules-application-restart-alert
-    rules:
-    - alert: ApplicationManyRestart
-      expr: >-
-          kube_pod_container_status_restarts_total{namespace="nautible-app-ms", container=~"nautible-app-ms-.*"} >= 10
-      for: 5m
-      labels:
-        severity: critical
-      annotations:
-        message: >-
-          {{ $labels.container }}/{{ $labels.pod }} container in {{ $labels.namespace }} namespace are many restart.

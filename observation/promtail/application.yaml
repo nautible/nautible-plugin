@@ -50,7 +50,7 @@ spec:
                         value: ERROR
                         action: inc
             - match:
-                selector: '{app=~"nautible-app-ms-.*"}'
+                selector: '{app.kubernetes.io/name=~"nautible-app-ms-.*"}'
                 stages:
                 - json:
                     expressions:
@@ -78,7 +78,7 @@ spec:
                     http_method:
                     gRPC_method:
             - match:
-                selector: '{app=~"nautible-app-ms-customer.*"}'
+                selector: '{app.kubernetes.io/name="nautible-app-ms-customer"}'
                 stages:
                 - metrics:
                     log_error_total:
@@ -98,7 +98,7 @@ spec:
                         value: SEVERE
                         action: inc
             - match:
-                selector: '{app=~"nautible-app-ms-stock.*"}'
+                selector: '{app.kubernetes.io="nautible-app-ms-stock"}'
                 stages:
                 - metrics:
                     log_error_total:
@@ -118,7 +118,7 @@ spec:
                         value: SEVERE
                         action: inc
             - match:
-                selector: '{app=~"nautible-app-ms-order.*"}'
+                selector: '{app.kubernetes.io="nautible-app-ms-order"}'
                 stages:
                 - metrics:
                     log_error_total:
@@ -138,7 +138,7 @@ spec:
                         value: SEVERE
                         action: inc
             - match:
-                selector: '{app=~"nautible-app-ms-product.*"}'
+                selector: '{app.kubernetes.io="nautible-app-ms-product"}'
                 stages:
                 - metrics:
                     log_error_total:
@@ -158,7 +158,7 @@ spec:
                         value: SEVERE
                         action: inc
             - match:
-                selector: '{app=~"nautible-app-ms-payment.*"}'
+                selector: '{app.kubernetes.io="nautible-app-ms-payment"}'
                 stages:
                 - metrics:
                     log_error_total:
@@ -178,7 +178,7 @@ spec:
                         value: SEVERE
                         action: inc
             - match:
-                selector: '{app=~"nautible-app-ms-payment-cache.*"}'
+                selector: '{app.kubernetes.io="nautible-app-ms-payment-cache"}'
                 stages:
                 - metrics:
                     log_error_total:
@@ -198,7 +198,7 @@ spec:
                         value: SEVERE
                         action: inc
             - match:
-                selector: '{app=~"nautible-app-ms-delivery.*"}'
+                selector: '{app.kubernetes.io="nautible-app-ms-delivery"}'
                 stages:
                 - metrics:
                     log_error_total:

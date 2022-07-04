@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: keycloak
   source:
-    path: auth/manifests
+    path: auth/overlays/aws
     repoURL: https://github.com/nautible/nautible-plugin
     targetRevision: develop
   syncPolicy:

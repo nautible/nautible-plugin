@@ -4,6 +4,5 @@ resources:
   # Workload-level aggregation via recording rules
   # https://istio.io/latest/docs/ops/best-practices/observability/
   - istio-metrics-aggregation.yaml
-  - demo-rule.yaml
   - application-down-rule.yaml
   - application-log-rule.yaml

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: consumer
+  name: consumer
+  namespace: kong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: consumer
+        ports:
+        - containerPort: 80
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: index-file
+          mountPath: /usr/share/nginx/html/kong/index.html
+          subPath: index.html
+          readOnly: true
+        - name: healthz-file
+          mountPath: /usr/share/nginx/html/kong/healthz.html
+          subPath: healthz.html
+          readOnly: true
+      volumes:
+        - name: index-file
+          configMap:
+            name: index-html
+            items:
+            - key: "index.html"
+              path: "index.html"
+        - name: healthz-file
+          configMap:
+            name: healthz-html
+            items:
+            - key: "healthz.html"
+              path: "healthz.html"
+status: {}

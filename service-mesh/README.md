@@ -76,6 +76,8 @@ $ helm install istiod manifests/charts/istio-control/istio-discovery \
 
 ※ 公式ドキュメントに、1.9以降では `global.hub`、`global.tag` の指定は不要と記載されているが、values.yaml の設定が、zip ファイルでは `docker.io/istio`、`1.13.3` だが、GitHub のタグでは `gcr.io/istio-testing`、`latest` となっているため、ArgoCD で GitHub 上の Helm Chart を指定する場合、このオプションの指定が必要。
 
+※ AWS環境のIngressのHelmパラメータについて  
+AWS環境では、Istio Ingressの前段にAWS LoadBalancer Controllerを配置するため、Ingressの種類をNordPortに変更し、ヘルスチェック用ポートの固定化設定を行っています。
 
 ## 3. Traffic management (トラフィック管理)
 

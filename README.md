@@ -9,17 +9,19 @@ Kubernetesへエコシステムやアプリケーションを導入するため�
 
 |プラグイン|概要|依存関係|備考|
 |:--|:--|:--|:--|
+|albc|AWS LoadBalancer Controller||AWSのみ必要|
 |app-bookinfo|Istio動作確認アプリケーション|service-mesh||
 |app-ms|マイクロサービスアプリケーション|distributed-application<br>secrets<br>service-mesh||
+|auth|認証(keycloak)の導入|service-mesh||
 |cluster-autoscaler|クラスタのNode数調整||AWSのみ必要|
 |container-registry|Harborの導入|||
 |distributed-application|Daprの導入|||
-|kong-apigateway|KongApiGatewayの導入|||
+|kong-apigateway|KongApiGatewayの導入|distributed-application<br>pod-autoscaler||
 |metrics-server|メトリクスサーバーの導入||AWSのみ必要|
 |observation|Grafana,Prometheusによる監視|metrics-server（AWSのみ）||
 |pod-autoscaler|KEDAの導入|||
 |secrets|kubernetes-external-secretsの導入|||
-|service-mesh|Istioの導入|||
+|service-mesh|Istioの導入|albc（AWSのみ）||
 
 ※依存関係のあるものは、依存先のプラグインを先に導入しておく必要があります。
 

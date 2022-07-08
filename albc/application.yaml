@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-load-balancer-controller
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: kube-system
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'https://aws.github.io/eks-charts/'
+    targetRevision: 1.4.1
+    chart: 'aws-load-balancer-controller'
+    helm:
+      parameters:
+        - name: 'serviceAccount.create'
+          value: 'true'
+        - name: 'serviceAccount.name'
+          value: 'aws-load-balancer-controller'
+        - name: 'serviceAccount.annotations.eks\.amazonaws\.com/role-arn'
+          value: 'arn:aws:iam::XXXXXXXXXXXX:role/XXXXXXXXXXXX-AmazonEKSLoadBalancerControllerRole' # 対象のロールarnに変更する。
+        - name: 'clusterName'
+          value: 'nautible-dev-cluster'
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+

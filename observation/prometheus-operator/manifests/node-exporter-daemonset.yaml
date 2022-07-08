@@ -94,6 +94,7 @@ spec:
       - hostPath:
           path: /
         name: root
+      priorityClassName: daemonset-priority
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 10%

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aws-load-balancer-controller-ingress
+  namespace: istio-system
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/group.name: nautible-alb-ingress
+    alb.ingress.kubernetes.io/healthcheck-port: '31234'
+    alb.ingress.kubernetes.io/healthcheck-path: '/healthz/ready'
+    alb.ingress.kubernetes.io/security-groups: 'nautible-dev-albc-sg' # 対象のセキュリティグループに変更する。idまたは名称を指定する。
+spec:
+  rules:
+    - 
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: istio-ingressgateway
+                port: 
+                  number: 80

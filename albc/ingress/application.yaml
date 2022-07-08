@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-load-balancer-controller-ingress
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  source:
+    path: albc/ingress/manifest
+    repoURL: https://github.com/nautible/nautible-plugin
+    targetRevision: develop
+  syncPolicy:
+    automated:
+      prune: true

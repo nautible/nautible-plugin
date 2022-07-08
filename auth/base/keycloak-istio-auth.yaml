@@ -1,0 +1,36 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: keycloak
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      app: istio-ingressgateway
+  jwtRules:
+  - issuer: http://localhost:8080/api/v1.0/nautible-auth/auth/realms/nautible-auth # fix me
+    jwksUri: http://keycloak.keycloak.svc.cluster.local:8080/auth/realms/nautible-auth/protocol/openid-connect/certs
+    fromHeaders:
+    - name: Authorization
+      prefix: "Bearer "
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: keycloak
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      app: istio-ingressgateway
+  rules:
+  - to:
+    - operation:
+        paths: ["/api/v1.0/nautible-app-ms/*"]
+    when:
+    - key: request.auth.claims[iss]
+      values: ["http://localhost:8080/api/v1.0/nautible-auth/auth/realms/nautible-auth"] # fix me
+  - to:
+    - operation:
+        paths: ["/api/v1.0/nautible-auth/*"]
+ 

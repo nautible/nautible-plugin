@@ -41,7 +41,7 @@ $ kubectl create secret generic external-secrets-azure-credentials -n kubernetes
 ```
 
 ```bash
-$ kubectl apply secrets/external-secrets/azure/application.yaml
+$ kubectl apply -f secrets/external-secrets/azure/application.yaml
 ```
 
 ### クラウドサービスへシークレットを登録する

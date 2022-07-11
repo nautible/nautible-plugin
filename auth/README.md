@@ -32,7 +32,7 @@ keycloakはパラメータストアの値をExternalSecrets経由で参照する
 ### 2.3 keycloakにインポートするrealmのシークレットを作成する。
 ```bash
 $ kubectl create namespace keycloak
-$ kubectl create secret generic secret-keycloak-realm -n keycloak --from-file=manifests/realm.json
+$ kubectl create secret generic secret-keycloak-realm -n keycloak --from-file=auth/base/realm.json
 ```
 
 ### 2.4 環境に合わせてkeycloakの設定を行う。  

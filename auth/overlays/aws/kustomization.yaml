@@ -2,6 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
   - ../../base
+resource:
+  - secretstore.yaml
 patchesJson6902:
   # see base\keycloak-deploy.yaml
   - target:

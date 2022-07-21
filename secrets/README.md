@@ -58,7 +58,7 @@ app-msの稼働に必要なシークレットを登録する。AWSの場合は�
 | ---- | ---- | ---- | ---- |
 | nautible-app-ms-product-db-user | 商品サービスDBのユーザー | aws/azure | |
 | nautible-app-ms-product-db-password | 商品サービスDBのパスワード | aws/azure | |
-| nautible-app-ms-order-elasticache-password | 注文サービスelasticacheのパスワード（Token） | aws/azure | |
+| nautible-app-ms-order-dapr-statestore-password | 注文サービスelasticacheのパスワード（Token） | aws/azure | |
 | nautible-app-ms-cosmosdb-user | Cosmosdbのアクセスユーザー | azure | |
 | nautible-app-ms-cosmosdb-password | Cosmosdbのパスワード | azure | |
 | nautible-app-ms-servicebus-connectionstring| Azure Servicebus 接続文字列  | azure | Azureの管理コンソール＞Service Bus＞共有アクセスポリシー＞RootManageSharedAccessKey 参照 |
@@ -104,8 +104,19 @@ secret-sqs            Opaque                                2      17d
 ```
 
 nautible-app-ms
+
 ```bash
-$ kubectl get ExternalSecrets -n nautible-app-ms
+kubectl get secrets -n nautible-app-ms
+
+NAME                                TYPE                                  DATA   AGE
+default-token-xc77w                 kubernetes.io/service-account-token   3      7d7h
+secret-nautible-app-ms-common       Opaque                                1      10m
+secret-nautible-app-ms-cosmosdb     Opaque                                2      10m
+secret-nautible-app-ms-order        Opaque                                1      10m
+secret-nautible-app-ms-product-db   Opaque                                2      10m
+
+kubectl get ExternalSecrets -n nautible-app-ms
+
 NAME                                LAST SYNC   STATUS    AGE
 secret-nautible-app-ms-product-db   5s          SUCCESS   17d
 $ kubectl get secrets -n nautible-app-ms
@@ -120,14 +131,26 @@ secret-nautible-app-ms-product-db   Opaque                                2     
 
 前提：事前にシークレットを利用しているアプリケーションの削除が完了していること
 
-AWS
+#### AWS
+
+- ArgoCDのコンソールよりsecret-parameterを削除
+
+- SecretStoreのマニフェストを削除
 
 ```bash
-$ kubectl delete -f secrets/secret-parameter/aws/application.yaml
+kubectl delete -f secrets/external-secrets/aws/secretstore.yaml
 ```
 
-Azure
+- ArgoCDのコンソールよりexternal-secrets-operatorを削除
+
+#### Azure
+
+- ArgoCDのコンソールよりsecret-parameterを削除
+
+- SecretStoreのマニフェストを削除
 
 ```bash
-$ kubectl delete -f secrets/secret-parameter/azure/application.yaml
+kubectl delete -f secrets/external-secrets/azure/secretstore.yaml
 ```
+
+- ArgoCDのコンソールよりexternal-secrets-operatorを削除

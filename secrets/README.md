@@ -1,18 +1,14 @@
 # Secrets
 
-```
-Deplicated : kubernetes-external-secretsはDeplicatedになっているため、External Secrets Operatorを利用するように変更する。
-```
-
-Kubernetesのsecret機構は暗号化されないため（base64のみ）、シークレットを暗号化された環境で管理するための仕組みを提供する。
+Kubernetes内で利用する機密情報の実体をクラウドの機密情報管理サービス（AWS:SecretsManager Azure:KeyVault GoogleCloud:SecretManager）で管理し、Kubernetesから機密情報へアクセスする機構を提供する。
 
 ## 1. 概要
 
 ### シークレットの管理機構
 
-シークレットの管理にはkubernetes-external-secretsを利用する。
+シークレットの管理にはexternal-secrets-operatorを利用する。
 
-構成図等は[公式ドキュメント](https://github.com/external-secrets/kubernetes-external-secrets)を参照。
+構成図等は[公式ドキュメント](https://external-secrets.io/)を参照。
 
 ### シークレットの作成と管理
 
@@ -24,27 +20,38 @@ kubernetes-external-secretsを導入し、シークレットをクラウドサ�
 
 ## 2. 導入
 
-### kubernetes-external-secretsの導入
-
-AWS
+### external-secrets-operatorの導入
 
 ```bash
-$ kubectl apply -f secrets/external-secrets/aws/application.yaml
+kubectl apply -f secrets/external-secrets/application.yaml
 ```
 
-Azure
+### SecretStore
 
-kubernetes-external-secretsからAzure Key vaultへ接続するためのk8s secretを作成する。詳細については[公式ドキュメント](https://github.com/external-secrets/kubernetes-external-secrets)参照。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定してください。
+機密情報を格納しているサービスへのアクセス情報をデプロイする。
+
+AWS（SecretsManager）
+
 ```bash
-$ kubectl create secret generic external-secrets-azure-credentials -n kubernetes-external-secrets --from-literal=tenantid=$TENANTID --from-literal=clientid=$CLIENTID --from-literal=clientsecret=$CLIENTSECRET 
-
+kubectl apply -f secrets/external-secrets/aws/secretstore.yaml
 ```
 
+Azure（AzureKeyVault）
+
+external-secrets-operatorからAzure Key vaultへ接続するためのk8s secretおよびClusterSecretStoreを作成する。（namespace単位で作成する場合はSecretStore）詳細については[公式ドキュメント](https://external-secrets.io/)参照。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定してください。
+
 ```bash
-$ kubectl apply -f secrets/external-secrets/azure/application.yaml
+kubectl create secret generic external-secrets-azure-credentials -n external-secrets --from-literal=clientid=$CLIENTID --from-literal=clientsecret=$CLIENTSECRET 
+```
+
+secrets/external-secrets/azure/secretstore.yaml内の$TENANT_ID、$VAULT_URLに値を設定の上マニフェストを実行する。（$TENANT_IDにはAzureコンソール＞AzureAD＞テナントIDの値を設定、$VAULT_URLにはAzureコンソール＞キー コンテナー＞コンテナ名ー＞コンテナーの URIの値を設定してください。）
+
+```bash
+kubectl apply -f secrets/external-secrets/azure/secretstore.yaml
 ```
 
 ### クラウドサービスへシークレットを登録する
+
 app-msの稼働に必要なシークレットを登録する。AWSの場合はパラメータストア、Azureの場合はAzureKeyvaultに登録する。
 
 | name | value | aws/azure | 備考 |
@@ -56,7 +63,6 @@ app-msの稼働に必要なシークレットを登録する。AWSの場合は�
 | nautible-app-ms-cosmosdb-password | Cosmosdbのパスワード | azure | |
 | nautible-app-ms-servicebus-connectionstring| Azure Servicebus 接続文字列  | azure | Azureの管理コンソール＞Service Bus＞共有アクセスポリシー＞RootManageSharedAccessKey 参照 |
 
-
 ### ExternalSecretリソースの導入
 
 app-msの稼働に必要なシークレットを導入する
@@ -64,13 +70,13 @@ app-msの稼働に必要なシークレットを導入する
 AWS
 
 ```bash
-$ kubectl apply -f secrets/secret-parameter/aws/application.yaml
+kubectl apply -f secrets/secret-parameter/aws/application.yaml
 ```
 
 Azure
 
 ```bash
-$ kubectl apply -f secrets/secret-parameter/azure/application.yaml
+kubectl apply -f secrets/secret-parameter/azure/application.yaml
 ```
 
 ## 3. 確認

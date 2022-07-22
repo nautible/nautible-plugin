@@ -14,13 +14,28 @@ Azure
 
 ## 2. 導入
 
-### 2.1 terraformを実行してkeycloakに必要なリソースを作成する。手順については
+### 2.1 terraformを実行してkeycloakに必要なリソースを作成する。
+
+手順については
 [nautible-infra/aws/plugin](https://github.com/nautible/nautible-infra/tree/main/aws/plugin)、[nautible-infra/azure/plugin](https://github.com/nautible/nautible-infra/tree/main/azure/plugin)参照。  
 
-### 2.2 ssmのパラメータストアに以下の値を登録する。  
-keycloakはパラメータストアの値をExternalSecrets経由で参照する。
+### 2.2 クラウドのシークレット管理サービスに以下の値を登録する。
 
-|  キー  |  設定値  |
+keycloakはクラウドで管理しているシークレットの値をExternalSecrets経由で参照する。
+
+#### AWS(SecretsManager)
+
+|  シークレット名  | キー |  設定値  |
+| ---- | ---- | ---- |
+| nautible-plugin-keycloak    | user | keycloakの管理ユーザー |
+|                             | password | keycloakの管理ユーザーのパスワード |
+| nautible-plugin-keycloak-db | user | keycloakのDBユーザー |
+|                             | password| keycloakのDBユーザーのパスワード |
+|                             | host| keycloakのDBのHost |
+
+#### Azure(AzureKeyVault)
+
+|  キー |  設定値  |
 | ---- | ---- |
 | nautible-plugin-keycloak-user | keycloakの管理ユーザー |
 | nautible-plugin-keycloak-password | keycloakの管理ユーザーのパスワード |
@@ -55,7 +70,7 @@ auth/overlays/azure/kustomization.yaml
 - op: replace
   path: /spec/jwtRules/0/issuer
   value: https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth # istioのRequestAuthentication設定のissuerにkeycloakのURLを指定する
-# 設定箇所の詳細は「base\keycloak-secrets.yaml」参照。
+# 設定箇所の詳細は「base\keycloak-istio-auth.yaml」参照。
 - op: replace
   path: /spec/rules/0/when/0/values
   value: ["https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth"] # istioのAuthorizationPolicy設定のrequest.auth.claims[iss]にkeycloakのURLを指定する

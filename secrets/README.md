@@ -1,22 +1,14 @@
 # Secrets
 
-Kubernetes内で利用する機密情報の実体をクラウドの機密情報管理サービス（AWS:SecretsManager Azure:KeyVault GoogleCloud:SecretManager）で管理し、Kubernetesから機密情報へアクセスする機構を提供する。
+クラウドの機密情報管理サービス（AWS:SecretsManager / Azure:KeyVault / GoogleCloud:SecretManager）で管理している機密情報にKubernetesからアクセスする機構を提供する。
 
 ## 1. 概要
 
-### シークレットの管理機構
+Kubernetesで機密情報を扱うための仕組みとしてSecretリソースがあるが、Secretのマニフェストは値をbase64エンコーディングして格納するだけで暗号化の仕組みはない。そのため、マニフェストをGit等で管理する場合Git上に機密情報が登録されるためリスクが高い。
 
-シークレットの管理にはexternal-secrets-operatorを利用する。
+本プラグインではSecretの管理機構としてexternal-secret-operatorを利用し、機密情報の実体をクラウド上の機密情報管理サービスで安全に管理した上で、KubernetesのSecretリソースを動的に作成する仕組みを導入する。
 
-構成図等は[公式ドキュメント](https://external-secrets.io/)を参照。
-
-### シークレットの作成と管理
-
-シークレットは各クラウドサービスのシークレット管理機能上で作成および管理する。
-
-### シークレットの取得
-
-kubernetes-external-secretsを導入し、シークレットをクラウドサービスのシークレット管理機能から取得する。
+external-secret-operatorの構成図等は[公式ドキュメント](https://external-secrets.io/)を参照。
 
 ## 2. 導入
 
@@ -26,25 +18,29 @@ kubernetes-external-secretsを導入し、シークレットをクラウドサ�
 kubectl apply -f secrets/external-secrets/application.yaml
 ```
 
-### SecretStore
+### ClusterSecretStore
 
-機密情報を格納しているサービスへのアクセス情報をデプロイする。
+機密情報を格納しているサービスへのアクセス情報をデプロイする。全namespaceから共通で利用する場合はClusterSecretStoreリソース、namespaceごとにアクセスできるキーを絞る場合はSecretStoreリソースを利用する。（その場合SecretStoreごとに異なるアクセス権限を付与する）
 
-AWS（SecretsManager）
+サンプルではClusterSecretStoreをデプロイする。
+
+#### AWS（SecretsManager）
+
+external-secrets-operatorからSecretsManagerへ接続するためのClusterSecretStoreを作成する。
 
 ```bash
 kubectl apply -f secrets/external-secrets/aws/secretstore.yaml
 ```
 
-Azure（AzureKeyVault）
+#### Azure（AzureKeyVault）
 
-external-secrets-operatorからAzure Key vaultへ接続するためのk8s secretおよびClusterSecretStoreを作成する。（namespace単位で作成する場合はSecretStore）詳細については[公式ドキュメント](https://external-secrets.io/)参照。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定してください。
+external-secrets-operatorからAzure Key vaultへ接続するためのk8s secretおよびClusterSecretStoreを作成する。詳細については[公式ドキュメント](https://external-secrets.io/)参照。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定してください。
 
 ```bash
 kubectl create secret generic external-secrets-azure-credentials -n external-secrets --from-literal=clientid=$CLIENTID --from-literal=clientsecret=$CLIENTSECRET 
 ```
 
-secrets/external-secrets/azure/secretstore.yaml内の$TENANT_ID、$VAULT_URLに値を設定の上マニフェストを実行する。（$TENANT_IDにはAzureコンソール＞AzureAD＞テナントIDの値を設定、$VAULT_URLにはAzureコンソール＞キー コンテナー＞コンテナ名ー＞コンテナーの URIの値を設定してください。）
+secrets/external-secrets/azure/secretstore.yaml内の$TENANT_ID、$VAULT_URLに値を設定の上マニフェストを実行する。$TENANT_IDにはAzureコンソール＞AzureAD＞テナントIDの値を設定、$VAULT_URLにはAzureコンソール＞キー コンテナー＞コンテナ名ー＞コンテナーの URIの値を設定してください。
 
 ```bash
 kubectl apply -f secrets/external-secrets/azure/secretstore.yaml
@@ -79,59 +75,46 @@ Azure
 kubectl apply -f secrets/secret-parameter/azure/application.yaml
 ```
 
-## 3. 確認
+## 3. 確認（AWSでの確認例）
 
-### kubernetes-external-secretsの導入確認
+### external-secrets-operatorの導入確認
 
 ```bash
-$ kubectl get deploy -n kubernetes-external-secrets
-NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
-kubernetes-external-secrets   1/1     1            1           18d
+kubectl get deploy -n external-secrets
+
+NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
+external-secrets-operator                   1/1     1            1           16h
+external-secrets-operator-cert-controller   1/1     1            1           16h
+external-secrets-operator-webhook           1/1     1            1           16h
 ```
 
 ### ExternalSecretsおよびSecretの導入確認
 
-default
 ```bash
-$ kubectl get ExternalSecrets
-NAME         LAST SYNC   STATUS    AGE
-secret-sqs   5s          SUCCESS   17d
+kubectl get externalsecrets -n nautible-app-ms
 
-$ kubectl get secrets
-NAME                  TYPE                                  DATA   AGE
-default-token-99nmc   kubernetes.io/service-account-token   3      271d
-secret-sqs            Opaque                                2      17d
+NAME                                                                 AGE
+clustersecretstore.external-secrets.io/nautible-plugin-secretstore   16h
+
+NAME                                                                   STORE                         REFRESH INTERVAL   STATUS
+externalsecret.external-secrets.io/secret-nautible-app-ms-order        nautible-plugin-secretstore   1h                 SecretSynced
+externalsecret.external-secrets.io/secret-nautible-app-ms-product-db   nautible-plugin-secretstore   1h                 SecretSynced
 ```
-
-nautible-app-ms
 
 ```bash
 kubectl get secrets -n nautible-app-ms
 
 NAME                                TYPE                                  DATA   AGE
-default-token-xc77w                 kubernetes.io/service-account-token   3      7d7h
-secret-nautible-app-ms-common       Opaque                                1      10m
-secret-nautible-app-ms-cosmosdb     Opaque                                2      10m
-secret-nautible-app-ms-order        Opaque                                1      10m
-secret-nautible-app-ms-product-db   Opaque                                2      10m
-
-kubectl get ExternalSecrets -n nautible-app-ms
-
-NAME                                LAST SYNC   STATUS    AGE
-secret-nautible-app-ms-product-db   5s          SUCCESS   17d
-$ kubectl get secrets -n nautible-app-ms
-NAME                                TYPE                                  DATA   AGE
-default-token-m8rtv                 kubernetes.io/service-account-token   3      17d
-secret-nautible-app-ms-product-db   Opaque                                2      17d
+default-token-hh2jx                 kubernetes.io/service-account-token   3      10d
+secret-nautible-app-ms-order        Opaque                                1      16h
+secret-nautible-app-ms-product-db   Opaque                                2      16h
 ```
 
 ## 4. 削除
 
-### ExternalSecretリソースの削除
-
 前提：事前にシークレットを利用しているアプリケーションの削除が完了していること
 
-#### AWS
+### AWS
 
 - ArgoCDのコンソールよりsecret-parameterを削除
 
@@ -143,7 +126,7 @@ kubectl delete -f secrets/external-secrets/aws/secretstore.yaml
 
 - ArgoCDのコンソールよりexternal-secrets-operatorを削除
 
-#### Azure
+### Azure
 
 - ArgoCDのコンソールよりsecret-parameterを削除
 

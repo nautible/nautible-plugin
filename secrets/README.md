@@ -48,7 +48,7 @@ kubectl apply -f secrets/external-secrets/azure/secretstore.yaml
 
 ### クラウドサービスへシークレットを登録する
 
-app-msの稼働に必要なシークレットを登録する。AWSの場合はパラメータストア、Azureの場合はAzureKeyvaultに登録する。
+app-msの稼働に必要なシークレットを登録する。AWSの場合はSecretsManager、Azureの場合はAzureKeyvaultに登録する。
 
 | name | value | aws/azure | 備考 |
 | ---- | ---- | ---- | ---- |

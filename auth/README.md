@@ -57,7 +57,7 @@ ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat auth/overlays/aws/secret
 
 #### Azure（AzureKeyVault）
 
-external-secrets-operatorからAzure Key vaultへ接続するためのk8s secretおよびClusterSecretStoreを作成する。詳細については[公式ドキュメント](https://external-secrets.io/)参照。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定してください。
+external-secrets-operatorからAzure Key vaultへ接続するためのk8s secretおよびSecretStoreを作成する。詳細については[公式ドキュメント](https://external-secrets.io/)参照。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定してください。
 
 ```bash
 kubectl create secret generic external-secrets-azure-credentials -n keycloak --from-literal=$CLIENTID --from-literal=$CLIENTSECRET

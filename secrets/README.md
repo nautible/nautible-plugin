@@ -18,34 +18,6 @@ external-secret-operatorの構成図等は[公式ドキュメント](https://ext
 kubectl apply -f secrets/external-secrets/application.yaml
 ```
 
-### ClusterSecretStore
-
-機密情報を格納しているサービスへのアクセス情報をデプロイする。全namespaceから共通で利用する場合はClusterSecretStoreリソース、namespaceごとにアクセスできるキーを絞る場合はSecretStoreリソースを利用する。（その場合SecretStoreごとに異なるアクセス権限を付与する）
-
-サンプルではClusterSecretStoreをデプロイする。
-
-#### AWS（SecretsManager）
-
-external-secrets-operatorからSecretsManagerへ接続するためのClusterSecretStoreを作成する。
-
-```bash
-kubectl apply -f secrets/external-secrets/aws/secretstore.yaml
-```
-
-#### Azure（AzureKeyVault）
-
-external-secrets-operatorからAzure Key vaultへ接続するためのk8s secretおよびClusterSecretStoreを作成する。詳細については[公式ドキュメント](https://external-secrets.io/)参照。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定してください。
-
-```bash
-kubectl create secret generic external-secrets-azure-credentials -n external-secrets --from-literal=clientid=$CLIENTID --from-literal=clientsecret=$CLIENTSECRET 
-```
-
-secrets/external-secrets/azure/secretstore.yaml内の$TENANT_ID、$VAULT_URLに値を設定の上マニフェストを実行する。$TENANT_IDにはAzureコンソール＞AzureAD＞テナントIDの値を設定、$VAULT_URLにはAzureコンソール＞キー コンテナー＞コンテナ名ー＞コンテナーの URIの値を設定してください。
-
-```bash
-kubectl apply -f secrets/external-secrets/azure/secretstore.yaml
-```
-
 ### クラウドサービスへシークレットを登録する
 
 app-msの稼働に必要なシークレットを登録する。AWSの場合はSecretsManager、Azureの場合はAzureKeyvaultに登録する。
@@ -58,6 +30,38 @@ app-msの稼働に必要なシークレットを登録する。AWSの場合はSe
 | nautible-app-ms-cosmosdb-user | Cosmosdbのアクセスユーザー | azure | |
 | nautible-app-ms-cosmosdb-password | Cosmosdbのパスワード | azure | |
 | nautible-app-ms-servicebus-connectionstring| Azure Servicebus 接続文字列  | azure | Azureの管理コンソール＞Service Bus＞共有アクセスポリシー＞RootManageSharedAccessKey 参照 |
+
+### SecretStoreをデプロイ
+
+機密情報を格納しているサービスへのアクセス情報をデプロイする。ExternalSecretsはこのSecretStoreからアクセス情報を取得して機密情報にアクセスし、Secretリソースを作成する流れになる。全namespaceから共通で利用する場合はClusterSecretStoreリソース、namespaceごとにアクセスできるキーを絞る場合はSecretStoreリソースを利用する。（その場合SecretStoreごとに異なるアクセス権限を付与する）
+
+サンプルではnamedspace単位のSecretStoreをデプロイする。
+
+#### AWS（SecretsManager）
+
+SecretStoreを作成する。
+
+```bash
+ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat secrets/external-secrets/aws/secretstore.yaml)\"" | kubectl apply -f -
+```
+
+なお、紐づくロールについてはnautible-infraプロジェクトのaws/app-ms/modules/common/main.tf内にあるapp_secret_access_role及びapp_secret_access_role_policyを参照。（事前にこのロール及びポリシーをTerraformで作成しておく）
+
+#### Azure（AzureKeyVault）
+
+external-secrets-operatorからAzure Key vaultへ接続するためのk8s secretおよびClusterSecretStoreを作成する。詳細については[公式ドキュメント](https://external-secrets.io/)参照。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定してください。
+
+```bash
+kubectl create secret generic external-secrets-azure-credentials -n nautible-app-ms --from-literal=$CLIENTID --from-literal=$CLIENTSECRET
+```
+
+SecretStoreを作成する。
+
+TENANT_IDにはAzureコンソール＞AzureAD＞テナントIDの値を設定、APP_MS_VAULT_URLにはAzureコンソール＞キー コンテナー＞nautibledevappms＞コンテナーのURIの値を設定してください。
+
+```bash
+TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat secrets/external-secrets/azure/secretstore.yaml)\"" | kubectl apply -f -
+```
 
 ### ExternalSecretリソースの導入
 

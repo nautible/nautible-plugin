@@ -43,14 +43,41 @@ keycloakはクラウドで管理しているシークレットの値をExternalS
 | nautible-plugin-keycloak-db-password| keycloakのDBユーザーのパスワード |
 | nautible-plugin-keycloak-db-host| keycloakのDBのHost |
 
+### 2.3 SecretStoreを作成する。
 
-### 2.3 keycloakにインポートするrealmのシークレットを作成する。
+#### AWS（SecretsManager）
+
+SecretStoreを作成する。
+
+```bash
+ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat auth/overlays/aws/secretstore.yaml)\"" | kubectl apply -f -
+```
+
+なお、ロールについてはnautible-infraプロジェクトのaws/plugin/modules/auth/main.tf内にあるauth_secret_access_role及びauth_secret_access_role_policyを参照。（事前にこのロール及びポリシーをTerraformで作成しておく）
+
+#### Azure（AzureKeyVault）
+
+external-secrets-operatorからAzure Key vaultへ接続するためのk8s secretおよびClusterSecretStoreを作成する。詳細については[公式ドキュメント](https://external-secrets.io/)参照。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定してください。
+
+```bash
+kubectl create secret generic external-secrets-azure-credentials -n keycloak --from-literal=$CLIENTID --from-literal=$CLIENTSECRET
+```
+
+SecretStoreを作成する。
+
+TENANT_IDにはAzureコンソール＞AzureAD＞テナントIDの値を設定、AUTH_VAULT_URLにはAzureコンソール＞キー コンテナー＞nautibledevauth＞コンテナーのURIの値を設定してください。
+
+```bash
+TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat auth/overlays/azure/secretstore.yaml)\"" | kubectl apply -f -
+```
+
+### 2.4 keycloakにインポートするrealmのシークレットを作成する。
 ```bash
 $ kubectl create namespace keycloak
 $ kubectl create secret generic secret-keycloak-realm -n keycloak --from-file=auth/base/realm.json
 ```
 
-### 2.4 環境に合わせてkeycloakの設定を行う。  
+### 2.5 環境に合わせてkeycloakの設定を行う。  
 kustomizeのpatchで環境個別の設定が必要な値を定義する
 
 AWS  
@@ -77,7 +104,7 @@ auth/overlays/azure/kustomization.yaml
 
 ```
   
-### 2.5 デプロイする。
+### 2.6 デプロイする。
 AWS
 ```bash
 $ kubectl apply -f auth/overlays/aws/application.yaml
@@ -88,7 +115,7 @@ Azure
 $ kubectl apply -f auth/overlays/azure/application.yaml
 ```
 
-### 2.6 フロントエンドの設定変更と公開。
+### 2.7 フロントエンドの設定変更と公開。
 
 nautible-app-ms-front/app/.env.auth-sampleの値を環境に合わせて変更し、ファイル名を「.env」に変更する。修正後にcloudfrontに公開する。
 ```

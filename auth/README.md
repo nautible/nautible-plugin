@@ -68,7 +68,7 @@ SecretStoreを作成する。
 TENANT_IDにはAzureコンソール＞AzureAD＞テナントIDの値を設定、AUTH_VAULT_URLにはAzureコンソール＞キー コンテナー＞nautibledevauth＞コンテナーのURIの値を設定してください。
 
 ```bash
-TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat auth/overlays/azure/secretstore.yaml)\"" | kubectl apply -f -
+TENANT_ID=<テナントID> && AUTH_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat auth/overlays/azure/secretstore.yaml)\"" | kubectl apply -f -
 ```
 
 ### 2.4 keycloakにインポートするrealmのシークレットを作成する。

@@ -29,7 +29,10 @@ kubectl apply -f secrets/external-secrets/application.yaml
 SecretStoreを作成する。
 
 ```bash
-ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat secrets/external-secrets/aws/secretstore.yaml)\"" | kubectl apply -f -
+ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat <secretstore.yamlへのパス>)\"" | kubectl apply -f -
+
+# 例
+ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat app-ms/overlays/aws/secretstore.yaml)\"" | kubectl apply -f -
 ```
 
 なお、紐づくロールについてはnautible-infraプロジェクトのaws/app-ms/modules/common/main.tf内にあるapp_secret_access_role及びapp_secret_access_role_policyを参照。（事前にこのロール及びポリシーをTerraformで作成しておく）
@@ -47,98 +50,23 @@ SecretStoreを作成する。
 TENANT_IDにはAzureコンソール＞AzureAD＞テナントIDの値を設定、APP_MS_VAULT_URLにはAzureコンソール＞キー コンテナー＞nautibledevappms＞コンテナーのURIの値を設定する。
 
 ```bash
-TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat secrets/external-secrets/azure/secretstore.yaml)\"" | kubectl apply -f -
-```
+TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat <secretstore.yamlへのパス>)\"" | kubectl apply -f -
 
-### クラウドサービスへシークレットを登録する
-
-app-msの稼働に必要なシークレットを登録する。AWSの場合はSecretsManager、Azureの場合はAzureKeyvaultに登録する。
-
-| name | value | aws/azure | 備考 |
-| ---- | ---- | ---- | ---- |
-| nautible-app-ms-product-db-user | 商品サービスDBのユーザー | aws/azure | |
-| nautible-app-ms-product-db-password | 商品サービスDBのパスワード | aws/azure | |
-| nautible-app-ms-order-dapr-statestore-password | 注文サービスelasticacheのパスワード（Token） | aws/azure | |
-| nautible-app-ms-cosmosdb-user | Cosmosdbのアクセスユーザー | azure | |
-| nautible-app-ms-cosmosdb-password | Cosmosdbのパスワード | azure | |
-| nautible-app-ms-servicebus-connectionstring| Azure Servicebus 接続文字列  | azure | Azureの管理コンソール＞Service Bus＞共有アクセスポリシー＞RootManageSharedAccessKey 参照 |
-
-### ExternalSecretリソースの導入
-
-app-msの稼働に必要なシークレットを導入する
-
-AWS
-
-```bash
-kubectl apply -f secrets/secret-parameter/aws/application.yaml
-```
-
-Azure
-
-```bash
-kubectl apply -f secrets/secret-parameter/azure/application.yaml
-```
-
-## 3. 確認（AWSでの確認例）
-
-### external-secrets-operatorの導入確認
-
-```bash
-kubectl get deploy -n external-secrets
-
-NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
-external-secrets-operator                   1/1     1            1           3d1h
-external-secrets-operator-cert-controller   1/1     1            1           3d1h
-external-secrets-operator-webhook           1/1     1            1           3d1h
-```
-
-### ExternalSecretsおよびSecretの導入確認
-
-```bash
-kubectl get externalsecrets -n nautible-app-ms
-
-NAME                                            AGE   STATUS
-secretstore.external-secrets.io/secret-app-ms   3d    Valid
-
-NAME                                                                   STORE           REFRESH INTERVAL   STATUS
-externalsecret.external-secrets.io/secret-nautible-app-ms-order        secret-app-ms   1h                 SecretSynced
-externalsecret.external-secrets.io/secret-nautible-app-ms-product-db   secret-app-ms   1h                 SecretSynced
-```
-
-```bash
-kubectl get secrets -n nautible-app-ms
-
-NAME                                TYPE                                  DATA   AGE
-default-token-hh2jx                 kubernetes.io/service-account-token   3      20d
-secret-nautible-app-ms-order        Opaque                                1      3d
-secret-nautible-app-ms-product-db   Opaque                                2      3d
-secretstore-token-qqwx8             kubernetes.io/service-account-token   3      3d
+# 例
+TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat app-ms/overlays/aws/secretstore.yaml)\"" | kubectl apply -f -
 ```
 
 ## 4. 削除
 
-前提：事前にシークレットを利用しているアプリケーションの削除が完了していること
-
-### AWS
-
-- ArgoCDのコンソールよりsecret-parameterを削除
-
-- SecretStoreのマニフェストを削除
+### SecretStoreの削除
 
 ```bash
-kubectl delete -f secrets/external-secrets/aws/secretstore.yaml
+kubectl delete -f <secretstore.yamlへのパス>
+
+# 例
+kubectl delete -f app-ms/overlays/aws/secretstore.yaml
 ```
 
-- ArgoCDのコンソールよりexternal-secrets-operatorを削除
+### external-secrets-operatorの削除
 
-### Azure
-
-- ArgoCDのコンソールよりsecret-parameterを削除
-
-- SecretStoreのマニフェストを削除
-
-```bash
-kubectl delete -f secrets/external-secrets/azure/secretstore.yaml
-```
-
-- ArgoCDのコンソールよりexternal-secrets-operatorを削除
+ArgoCDのコンソールよりexternal-secrets-operatorを削除

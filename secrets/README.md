@@ -56,6 +56,20 @@ TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo 
 TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat app-ms/overlays/aws/secretstore.yaml)\"" | kubectl apply -f -
 ```
 
+## 3. 確認
+
+
+### external-secrets-operatorの導入確認（AWSでの確認例）
+
+```bash
+kubectl get deploy -n external-secrets
+
+NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
+external-secrets-operator                   1/1     1            1           3d1h
+external-secrets-operator-cert-controller   1/1     1            1           3d1h
+external-secrets-operator-webhook           1/1     1            1           3d1h
+```
+
 ## 4. 削除
 
 ### SecretStoreの削除

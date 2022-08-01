@@ -4,6 +4,9 @@ kind: Kustomization
 bases:
 - ../../base
 
+resources:
+- ./secret-parameter/application.yaml
+
 patches:
 - path: patch.json
   target:

@@ -43,14 +43,17 @@ keycloakはクラウドで管理しているシークレットの値をExternalS
 | nautible-plugin-keycloak-db-password| keycloakのDBユーザーのパスワード |
 | nautible-plugin-keycloak-db-host| keycloakのDBのHost |
 
+### 2.3 SecretStoreを作成する。
 
-### 2.3 keycloakにインポートするrealmのシークレットを作成する。
+手順は[secretsのドキュメント](../secrets/README.md)を参照。
+
+### 2.4 keycloakにインポートするrealmのシークレットを作成する。
 ```bash
 $ kubectl create namespace keycloak
 $ kubectl create secret generic secret-keycloak-realm -n keycloak --from-file=auth/base/realm.json
 ```
 
-### 2.4 環境に合わせてkeycloakの設定を行う。  
+### 2.5 環境に合わせてkeycloakの設定を行う。  
 kustomizeのpatchで環境個別の設定が必要な値を定義する
 
 AWS  
@@ -77,7 +80,7 @@ auth/overlays/azure/kustomization.yaml
 
 ```
   
-### 2.5 デプロイする。
+### 2.6 デプロイする。
 AWS
 ```bash
 $ kubectl apply -f auth/overlays/aws/application.yaml
@@ -88,7 +91,7 @@ Azure
 $ kubectl apply -f auth/overlays/azure/application.yaml
 ```
 
-### 2.6 フロントエンドの設定変更と公開。
+### 2.7 フロントエンドの設定変更と公開。
 
 nautible-app-ms-front/app/.env.auth-sampleの値を環境に合わせて変更し、ファイル名を「.env」に変更する。修正後にcloudfrontに公開する。
 ```
@@ -105,6 +108,12 @@ keycloak   1/1     1            1           54m
 ```
 
 ## 4. 削除
+
+### SecretStoreを削除する。
+
+手順は[secretsのドキュメント](../secrets/README.md)を参照。
+
+### アプリケーションを削除する。
 
 ```
 $ kubectl delete -f auth/application.yaml

@@ -38,6 +38,7 @@ app-msの稼働に必要なシークレットを登録する。AWSの場合はSe
 | nautible-app-ms-cosmosdb-user | Cosmosdbのアクセスユーザー | azure | |
 | nautible-app-ms-cosmosdb-password | Cosmosdbのパスワード | azure | |
 | nautible-app-ms-servicebus-connectionstring| Azure Servicebus 接続文字列  | azure | Azureの管理コンソール＞Service Bus＞共有アクセスポリシー＞RootManageSharedAccessKey 参照 |
+
 ※AzureのKeyvaultのシークレット編集方法については[こちら](../docs/azure/keyvault/README.md)を参照してください
 ### SecretStoreの導入
 

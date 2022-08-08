@@ -42,6 +42,7 @@ keycloakはクラウドで管理しているシークレットの値をExternalS
 | nautible-plugin-keycloak-db-user | keycloakのDBユーザー |
 | nautible-plugin-keycloak-db-password| keycloakのDBユーザーのパスワード |
 | nautible-plugin-keycloak-db-host| keycloakのDBのHost |
+※AzureのKeyvaultのシークレット編集方法については[こちら](../docs/azure/keyvault/README.md)を参照してください
 
 ### 2.3 SecretStoreを作成する。
 

@@ -15,7 +15,7 @@ external-secret-operatorの構成図等は[公式ドキュメント](https://ext
 ### external-secrets-operatorの導入
 
 ```bash
-kubectl apply -f secrets/external-secrets/application.yaml
+kubectl apply -f secrets/application.yaml
 ```
 
 ### SecretStoreをデプロイ

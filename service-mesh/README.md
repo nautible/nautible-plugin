@@ -79,6 +79,29 @@ $ helm install istiod manifests/charts/istio-control/istio-discovery \
 ※ AWS環境のIngressのHelmパラメータについて  
 AWS環境では、Istio Ingressの前段にAWS LoadBalancer Controllerを配置するため、Ingressの種類をNordPortに変更し、ヘルスチェック用ポートの固定化設定を行っています。
 
+### 2-3. Argocdマニフェストのデプロイ
+
+AWS
+```bash
+kubectl apply -f service-mesh/overlays/aws/application.yaml
+```
+
+Azure  
+kustomizeのpatchで環境個別の設定が必要な値を定義する  
+service-mesh/overlays/azure/kustomization.yaml
+
+```yaml
+    # Azure frontdoorのidを設定する
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/when/0/values
+        value: ["f294b480-a3a9-45c9-86c0-e646fce7a8aa"]
+```
+マニフェストを適用する
+```bash
+kubectl apply -f service-mesh/overlays/azure/application.yaml
+```
+
 ## 3. Traffic management (トラフィック管理)
 
 　以下の機能を提供します。詳細は [公式ドキュメント](https://istio.io/latest/docs/) を参照してください。

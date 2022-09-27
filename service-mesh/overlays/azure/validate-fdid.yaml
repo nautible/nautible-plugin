@@ -1,0 +1,14 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: validate-fdid
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      app: istio-ingressgateway
+  rules:
+  - to:
+    when:
+    - key: request.headers[X-Azure-FDID]
+      values: ["00000000-0000-0000-0000-000000000000"]

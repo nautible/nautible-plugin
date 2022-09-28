@@ -4,6 +4,7 @@ metadata:
   name: validate-fdid
   namespace: istio-system
 spec:
+  action: DENY
   selector:
     matchLabels:
       app: istio-ingressgateway
@@ -11,4 +12,4 @@ spec:
   - to:
     when:
     - key: request.headers[X-Azure-FDID]
-      values: ["00000000-0000-0000-0000-000000000000"]
+      notValues: ["00000000-0000-0000-0000-000000000000"]

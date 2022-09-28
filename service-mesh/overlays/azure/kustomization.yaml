@@ -22,5 +22,5 @@ patchesJson6902:
     # Azure frontdoorのidを設定する。IstioのAuthorizationPolicyでヘッダーのfrontdoorのidを検証し、Frontdoorからのアクセスのみ許容する。
     patch: |-
       - op: replace
-        path: /spec/rules/0/when/0/values
+        path: /spec/rules/0/when/0/notValues
         value: ["f294b480-a3a9-45c9-86c0-e646fce7a8aa"]

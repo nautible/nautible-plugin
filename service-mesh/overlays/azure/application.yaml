@@ -11,7 +11,7 @@ spec:
   source:
     path: service-mesh/overlays/azure
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/ignore-auth-policy
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

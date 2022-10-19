@@ -2,6 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
   - ../../base
+resources:
+  - keycloak-secrets.yaml
 patchesJson6902:
   # see base\keycloak-deploy.yaml
   - target:
@@ -13,10 +15,10 @@ patchesJson6902:
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/env/0/value
-        value: http://localhost:8080/api/v1.0/nautible-auth/auth
+        value: https://nautibledevfrontdoor.azurefd.net/api/v1.0/nautible-auth/auth
       - op: replace
         path: /spec/template/spec/containers/0/env/1/value
-        value: http://localhost:3000
+        value: https://nautibledevfrontdoor.azurefd.net
   # see base\keycloak-istio-auth.yaml
   - target:
       group: security.istio.io
@@ -27,7 +29,7 @@ patchesJson6902:
     patch: |-
       - op: replace
         path: /spec/jwtRules/0/issuer
-        value: http://localhost:8080/api/v1.0/nautible-auth/auth/realms/nautible-auth
+        value: https://nautibledevfrontdoor.azurefd.net/api/v1.0/nautible-auth/auth/realms/nautible-auth
   # see base\keycloak-istio-auth.yaml
   - target:
       group: security.istio.io
@@ -38,7 +40,7 @@ patchesJson6902:
     patch: |-
       - op: replace
         path: /spec/rules/0/when/0/values
-        value: ["http://localhost:8080/api/v1.0/nautible-auth/auth/realms/nautible-auth"]
+        value: ["https://nautibledevfrontdoor.azurefd.net/api/v1.0/nautible-auth/auth/realms/nautible-auth"]
   # see base\keycloak-istio-auth.yaml
   - target:
       group: kubernetes-client.io
@@ -52,4 +54,3 @@ patchesJson6902:
       - op: add
         path: /spec/keyVaultName
         value: nautibledevkeyvault
-       

@@ -2,6 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
   - ../../base
+resources:
+  - keycloak-secrets.yaml
 patchesJson6902:
   # see base\keycloak-deploy.yaml
   - target:
@@ -28,7 +30,7 @@ patchesJson6902:
       - op: replace
         path: /spec/jwtRules/0/issuer
         value: https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth
-  # see base\keycloak-secrets.yaml
+  # see base\keycloak-istio-auth.yaml
   - target:
       group: security.istio.io
       version: v1beta1
@@ -39,13 +41,3 @@ patchesJson6902:
       - op: replace
         path: /spec/rules/0/when/0/values
         value: ["https://dr1d1engi0lfa.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth"]
-  # see base\keycloak-istio-auth.yaml
-  - target:
-      group: kubernetes-client.io
-      version: v1
-      kind: ExternalSecret
-      name: secret-keycloak
-    patch: |-
-      - op: add
-        path: /spec/backendType
-        value: systemManager

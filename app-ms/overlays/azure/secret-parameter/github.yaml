@@ -1,0 +1,24 @@
+#
+#   For Azure key Vault
+#   Githubをプライベートリポジトリで運用している場合に利用する
+#
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: secret-github
+  namespace: nautible-app-ms
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: secret-app-ms
+  target:
+    name: secret-github                         # Secret Resource
+    creationPolicy: Owner
+  data:
+    - secretKey: github-user                    # SecretResource key
+      remoteRef:
+        key: secret/nautible-infra-github-user  # KeyVault SecretName
+    - secretKey: github-token                   # SecretResource key
+      remoteRef:
+        key: secret/nautible-infra-github-token # KeyVault SecretName

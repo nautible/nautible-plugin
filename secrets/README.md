@@ -1,127 +1,86 @@
 # Secrets
 
-```
-Deplicated : kubernetes-external-secretsはDeplicatedになっているため、External Secrets Operatorを利用するように変更する。
-```
-
-Kubernetesのsecret機構は暗号化されないため（base64のみ）、シークレットを暗号化された環境で管理するための仕組みを提供する。
+クラウドの機密情報管理サービス（AWS:SecretsManager / Azure:KeyVault / GoogleCloud:SecretManager）で管理している機密情報にKubernetesからアクセスする仕組みを提供する。
 
 ## 1. 概要
 
-### シークレットの管理機構
+Kubernetesで機密情報を扱うための仕組みとしてSecretリソースがあるが、Secretのマニフェストは値をbase64エンコーディングして格納するだけで暗号化の仕組みはない。そのため、マニフェストをGit等で管理する場合Git上に機密情報が登録されるためリスクが高い。
 
-シークレットの管理にはkubernetes-external-secretsを利用する。
+そのため、Secretの管理機構としてexternal-secret-operatorを利用し、機密情報の実体をクラウド上の機密情報管理サービスで安全に管理した上で、KubernetesのSecretリソースを動的に作成する仕組みを導入する。
 
-構成図等は[公式ドキュメント](https://github.com/external-secrets/kubernetes-external-secrets)を参照。
-
-### シークレットの作成と管理
-
-シークレットは各クラウドサービスのシークレット管理機能上で作成および管理する。
-
-### シークレットの取得
-
-kubernetes-external-secretsを導入し、シークレットをクラウドサービスのシークレット管理機能から取得する。
+external-secret-operatorの構成図等は[公式ドキュメント](https://external-secrets.io/)を参照。
 
 ## 2. 導入
 
-### kubernetes-external-secretsの導入
-
-AWS
+### external-secrets-operatorの導入
 
 ```bash
-$ kubectl apply external-secrets/aws/application.yaml
+kubectl apply -f secrets/application.yaml
 ```
 
-Azure
+### SecretStoreをデプロイ
 
-kubernetes-external-secretsからAzure Key vaultへ接続するためのk8s secretを作成する。詳細については[公式ドキュメント](https://github.com/external-secrets/kubernetes-external-secrets)参照。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定してください。
+機密情報を格納しているサービスへのアクセス情報をデプロイする。ExternalSecretsはこのSecretStoreからアクセス情報を取得して機密情報にアクセスし、Secretリソースを作成する流れになる。全namespaceから共通で利用する場合はClusterSecretStoreリソース、namespaceごとにアクセスできるキーを絞る場合はSecretStoreリソースを利用する。なお、namespece単位のSecretStoreの場合はアクセスできる機密情報をSecretStoreごとに制限する。
+
+サンプルではnamedspace単位のSecretStoreをデプロイする。
+
+#### AWS（SecretsManager）
+
+SecretStoreを作成する。
+
 ```bash
-$ kubectl create secret generic external-secrets-azure-credentials -n kubernetes-external-secrets --from-literal=tenantid=$TENANTID --from-literal=clientid=$CLIENTID --from-literal=clientsecret=$CLIENTSECRET 
+ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat <secretstore.yamlへのパス>)\"" | kubectl apply -f -
 
+# 例
+ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat app-ms/overlays/aws/secretstore.yaml)\"" | kubectl apply -f -
 ```
 
+なお、紐づくロールについてはnautible-infraプロジェクトのaws/app-ms/modules/common/main.tf内にあるapp_secret_access_role及びapp_secret_access_role_policyを参照。（事前にこのロール及びポリシーをTerraformで作成しておく）
+
+#### Azure（AzureKeyVault）
+
+external-secrets-operatorからAzure Key vaultへ接続するためのk8s secretおよびSecretStoreを作成する。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定する。
+
 ```bash
-$ kubectl apply external-secrets/azure/application.yaml
+kubectl create secret generic external-secrets-azure-credentials -n nautible-app-ms --from-literal=$CLIENTID --from-literal=$CLIENTSECRET
 ```
 
-### クラウドサービスへシークレットを登録する
-app-msの稼働に必要なシークレットを登録する。AWSの場合はパラメータストア、Azureの場合はAzureKeyvaultに登録する。
+SecretStoreを作成する。
 
-| name | value | aws/azure | 備考 |
-| ---- | ---- | ---- | ---- |
-| nautible-app-ms-product-db-user | 商品サービスDBのユーザー | aws/azure | |
-| nautible-app-ms-product-db-password | 商品サービスDBのパスワード | aws/azure | |
-| nautible-app-ms-order-elasticache-password | 注文サービスelasticacheのパスワード（Token） | aws/azure | |
-| nautible-app-ms-cosmosdb-user | Cosmosdbのアクセスユーザー | azure | |
-| nautible-app-ms-cosmosdb-password | Cosmosdbのパスワード | azure | |
-| nautible-app-ms-servicebus-connectionstring| Azure Servicebus 接続文字列  | azure | Azureの管理コンソール＞Service Bus＞共有アクセスポリシー＞RootManageSharedAccessKey 参照 |
-
-
-### ExternalSecretリソースの導入
-
-app-msの稼働に必要なシークレットを導入する
-
-AWS
+TENANT_IDにはAzureコンソール＞AzureAD＞テナントIDの値を設定、APP_MS_VAULT_URLにはAzureコンソール＞キー コンテナー＞nautibledevappms＞コンテナーのURIの値を設定する。
 
 ```bash
-$ kubectl apply -f secrets/secret-parameter/aws/application.yaml
-```
+TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat <secretstore.yamlへのパス>)\"" | kubectl apply -f -
 
-Azure
-
-```bash
-$ kubectl apply -f secrets/secret-parameter/azure/application.yaml
+# 例
+TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat app-ms/overlays/aws/secretstore.yaml)\"" | kubectl apply -f -
 ```
 
 ## 3. 確認
 
-### kubernetes-external-secretsの導入確認
+
+### external-secrets-operatorの導入確認（AWSでの確認例）
 
 ```bash
-$ kubectl get deploy -n kubernetes-external-secrets
-NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
-kubernetes-external-secrets   1/1     1            1           18d
-```
+kubectl get deploy -n external-secrets
 
-### ExternalSecretsおよびSecretの導入確認
-
-default
-```bash
-$ kubectl get ExternalSecrets
-NAME         LAST SYNC   STATUS    AGE
-secret-sqs   5s          SUCCESS   17d
-
-$ kubectl get secrets
-NAME                  TYPE                                  DATA   AGE
-default-token-99nmc   kubernetes.io/service-account-token   3      271d
-secret-sqs            Opaque                                2      17d
-```
-
-nautible-app-ms
-```bash
-$ kubectl get ExternalSecrets -n nautible-app-ms
-NAME                                LAST SYNC   STATUS    AGE
-secret-nautible-app-ms-product-db   5s          SUCCESS   17d
-$ kubectl get secrets -n nautible-app-ms
-NAME                                TYPE                                  DATA   AGE
-default-token-m8rtv                 kubernetes.io/service-account-token   3      17d
-secret-nautible-app-ms-product-db   Opaque                                2      17d
+NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
+external-secrets-operator                   1/1     1            1           3d1h
+external-secrets-operator-cert-controller   1/1     1            1           3d1h
+external-secrets-operator-webhook           1/1     1            1           3d1h
 ```
 
 ## 4. 削除
 
-### ExternalSecretリソースの削除
-
-前提：事前にシークレットを利用しているアプリケーションの削除が完了していること
-
-AWS
+### SecretStoreの削除
 
 ```bash
-$ kubectl delete -f secrets/secret-parameter/aws/application.yaml
+kubectl delete -f <secretstore.yamlへのパス>
+
+# 例
+kubectl delete -f app-ms/overlays/aws/secretstore.yaml
 ```
 
-Azure
+### external-secrets-operatorの削除
 
-```bash
-$ kubectl delete -f secrets/secret-parameter/azure/application.yaml
-```
+ArgoCDのコンソールよりexternal-secrets-operatorを削除

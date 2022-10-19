@@ -20,7 +20,7 @@ Kubernetesへエコシステムやアプリケーションを導入するため�
 |metrics-server|メトリクスサーバーの導入||AWSのみ必要|
 |observation|Grafana,Prometheusによる監視|metrics-server（AWSのみ）||
 |pod-autoscaler|KEDAの導入|||
-|secrets|kubernetes-external-secretsの導入|||
+|secrets|external-secrets-operatorの導入|||
 |service-mesh|Istioの導入|albc（AWSのみ）||
 
 ※依存関係のあるものは、依存先のプラグインを先に導入しておく必要があります。

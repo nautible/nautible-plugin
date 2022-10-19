@@ -1,0 +1,20 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: secret-nautible-app-ms-product-db
+  namespace: nautible-app-ms
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: secret-app-ms
+  target:
+    name: secret-nautible-app-ms-product-db             # Secret Resource
+    creationPolicy: Owner
+  data:
+    - secretKey: DATABASE_USER                          # SecretResource key
+      remoteRef:
+        key: secret/nautible-app-ms-product-db-user     # KeyVault SecretName
+    - secretKey: DATABASE_PW                            # SecretResource key
+      remoteRef:
+        key: secret/nautible-app-ms-product-db-password # KeyVault SecretName

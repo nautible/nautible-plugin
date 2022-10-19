@@ -7,5 +7,4 @@ resources:
   - product/application.yaml
   - stock/application.yaml
   - order/application.yaml
-  - payment/payment/application.yaml
-  - payment/credit/application.yaml
+  - payment/application.yaml

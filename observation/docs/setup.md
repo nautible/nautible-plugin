@@ -38,7 +38,7 @@ cd nautible-plugin
 実行
 
 ```bash
-kubectl apply -f observation/prometheus-operator/application-crd.yaml
+kubectl apply -f observation/prometheus-operator/application_crd.yaml
 ```
 
 確認

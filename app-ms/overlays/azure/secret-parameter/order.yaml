@@ -1,0 +1,17 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: secret-nautible-app-ms-order
+  namespace: nautible-app-ms
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: secret-app-ms
+  target:
+    name: secret-nautible-app-ms-order                             # Secret Resource
+    creationPolicy: Owner
+  data:
+    - secretKey: DAPR_STATESTORE_PW                                # SecretResource key
+      remoteRef:
+        key: secret/nautible-app-ms-order-dapr-statestore-password # KeyVault SecretName

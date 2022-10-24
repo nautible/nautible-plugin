@@ -11,6 +11,7 @@ Kubernetesへエコシステムやアプリケーションを導入するため�
 |:--|:--|:--|:--|
 |albc|AWS LoadBalancer Controller||AWSのみ必要|
 |app-bookinfo|Istio動作確認アプリケーション|service-mesh||
+|app-examples|サンプルアプリケーション|||
 |app-ms|マイクロサービスアプリケーション|distributed-application<br>secrets<br>service-mesh||
 |auth|認証(keycloak)の導入|service-mesh||
 |cluster-autoscaler|クラスタのNode数調整||AWSのみ必要|

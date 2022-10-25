@@ -11,7 +11,7 @@ spec:
   source:
     path: albc/ingress/manifest
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/issues99
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

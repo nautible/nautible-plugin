@@ -12,6 +12,7 @@ base
 |ディレクトリ名|内容|
 |:--|:--|
 |common|共通設定（namespace）|
+|examples-go|Golangのサンプルアプリケーション設定|
 |examples-java|Javaのサンプルアプリケーション設定|
 
 overlays
@@ -22,10 +23,10 @@ overlays
 
 ## 2. 導入
 
-aws
+AWS
 
 ```
-$ kubectl apply -f app-examples/overlays/aws/application.yaml
+kubectl apply -f app-examples/overlays/aws/application.yaml
 ```
 
 ## 3. 確認
@@ -33,13 +34,14 @@ $ kubectl apply -f app-examples/overlays/aws/application.yaml
 ```
 $ kubectl get deploy -n nautible-app-examples
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+nautible-app-examples-go           2/2     2            2           1d
 nautible-app-examples-java         2/2     2            2           1d
 ```
 
 ## 4. 削除
 
-aws
+AWS
 
 ```
-$ kubectl delete -f app-examples/overlays/aws/application.yaml
+kubectl delete -f app-examples/overlays/aws/application.yaml
 ```

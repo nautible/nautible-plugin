@@ -7,3 +7,7 @@ patches:
   target:
     kind: Application
     name: nautible-app-examples-java
+- path: patch-go.json
+  target:
+    kind: Application
+    name: nautible-app-examples-go

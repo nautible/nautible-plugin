@@ -25,14 +25,15 @@ overlays
 
 AWS
 
-```
+```bash
 kubectl apply -f app-examples/overlays/aws/application.yaml
 ```
 
 ## 3. 確認
 
-```
-$ kubectl get deploy -n nautible-app-examples
+```bash
+kubectl get deploy -n nautible-app-examples
+
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
 nautible-app-examples-go           2/2     2            2           1d
 nautible-app-examples-java         2/2     2            2           1d
@@ -42,6 +43,6 @@ nautible-app-examples-java         2/2     2            2           1d
 
 AWS
 
-```
+```bash
 kubectl delete -f app-examples/overlays/aws/application.yaml
 ```

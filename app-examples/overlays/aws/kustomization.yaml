@@ -11,3 +11,7 @@ patches:
   target:
     kind: Application
     name: nautible-app-examples-go
+- path: patch-node.json
+  target:
+    kind: Application
+    name: nautible-app-examples-node

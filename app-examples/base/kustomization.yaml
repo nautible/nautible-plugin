@@ -4,3 +4,5 @@ resources:
   - common/namespace.yaml
   - examples-java/application.yaml
   - examples-go/application.yaml
+  - examples-node/application.yaml
+  - examples-python/application.yaml

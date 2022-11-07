@@ -11,3 +11,11 @@ patches:
   target:
     kind: Application
     name: nautible-app-examples-go
+- path: patch-node.json
+  target:
+    kind: Application
+    name: nautible-app-examples-node
+- path: patch-python.json
+  target:
+    kind: Application
+    name: nautible-app-examples-python

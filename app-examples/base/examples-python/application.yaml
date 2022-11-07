@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nautible-app-examples-python
+  namespace: argocd
+spec:
+  destination:
+    namespace: nautible-app-examples
+    server: https://kubernetes.default.svc
+  project: examples
+  source:
+    path: nautible-app-examples-manifest-python/overlays/dev/
+    repoURL: https://github.com/nautible/nautible-app-examples-manifest
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true

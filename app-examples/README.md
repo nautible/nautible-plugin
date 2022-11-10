@@ -22,6 +22,7 @@ overlays
 |ディレクトリ名|内容|
 |:--|:--|
 |aws|AWSへの導入アプリケーション|
+|azure|AZureへの導入アプリケーション|
 
 ## 2. 導入
 
@@ -29,6 +30,12 @@ AWS
 
 ```bash
 kubectl apply -f app-examples/overlays/aws/application.yaml
+```
+
+Azure
+
+```bash
+kubectl apply -f app-examples/overlays/azure/application.yaml
 ```
 
 ## 3. 確認
@@ -49,4 +56,10 @@ AWS
 
 ```bash
 kubectl delete -f app-examples/overlays/aws/application.yaml
+```
+
+Azure
+
+```bash
+kubectl delete -f app-examples/overlays/azure/application.yaml
 ```

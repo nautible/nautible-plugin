@@ -8,3 +8,4 @@ resources:
   - stock/application.yaml
   - order/application.yaml
   - payment/application.yaml
+  - delivery/application.yaml

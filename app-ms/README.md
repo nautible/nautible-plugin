@@ -12,6 +12,7 @@ base
 |:--|:--|
 |common|共通設定（namespace,role）|
 |customer|ユーザー管理|
+|delivery|出荷管理|
 |order|受注管理|
 |payment|支払い管理|
 |product|商品管理|
@@ -65,6 +66,7 @@ kubectl get deploy -n nautible-app-ms
 
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
 nautible-app-ms-customer              2/2     2            2           18d
+nautible-app-ms-delivery              2/2     2            2           18d
 nautible-app-ms-order                 2/2     2            2           18d
 nautible-app-ms-payment-bff           1/1     1            1           18d
 nautible-app-ms-payment-cash          1/1     1            1           18d

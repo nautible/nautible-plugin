@@ -9,11 +9,13 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: observation/prometheus-operator/manifests/
-    repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: develop
+    # https://github.com/prometheus-community/helm-charts/
+    chart: kube-prometheus-stack
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 45.0.0
   syncPolicy:
     automated:
       prune: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true

@@ -11,7 +11,7 @@ spec:
   source:
     path: observation/
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: develop
+    targetRevision: feature/dashboard
   syncPolicy:
     automated:
       prune: true

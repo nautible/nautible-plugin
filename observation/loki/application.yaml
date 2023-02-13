@@ -10,10 +10,10 @@ spec:
     namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
-    # ref https://github.com/grafana/helm-charts/blob/main/charts/loki/
+    # ref https://github.com/grafana/loki/tree/main/production/helm/loki
     chart: 'loki'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 2.10.1   # application v2.4.2
+    targetRevision: 4.6.0   # application v2.7.3
     helm:
       version: v3
       releaseName: loki

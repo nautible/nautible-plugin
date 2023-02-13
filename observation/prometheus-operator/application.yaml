@@ -10,8 +10,8 @@ spec:
   project: default
   source:
     # https://github.com/prometheus-community/helm-charts/
-    chart: kube-prometheus-stack
     repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
     targetRevision: 45.0.0
   syncPolicy:
     automated:

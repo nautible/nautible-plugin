@@ -19,6 +19,13 @@ argo-workflows-server                1/1     1            1           3m59s
 argo-workflows-workflow-controller   1/1     1            1           3m59s
 ```
 
+
+※ WebUIアクセス
+```
+kubectl -n argowf port-forward deployment/argo-workflows-server 2746:2746
+http://localhost:2746/
+```
+
 ## 4. 削除
 
 ```

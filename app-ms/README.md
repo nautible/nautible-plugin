@@ -45,6 +45,38 @@ app-msの稼働に必要なシークレットを登録する。AWSの場合はSe
 
 手順は[secretsのドキュメント](../secrets/README.md)を参照
 
+### データ登録
+- [商品サービス](https://github.com/nautible/nautible-app-ms-product/blob/main/testdata.md#b-dev%E7%92%B0%E5%A2%83)
+- [在庫サービス](https://github.com/nautible/nautible-app-ms-stock/blob/feature/issue113/testdata.md#%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E7%99%BB%E9%8C%B2)
+
+- 共通  
+  - AWS  
+    aws cliで以下を実行する
+    ```bash
+    aws dynamodb put-item --table-name Sequence --item '{ "Name": { "S": "CreditPayment" }, "SequenceNumber": { "N": "0" }}'
+    aws dynamodb put-item --table-name Sequence --item '{ "Name": { "S": "Customer" }, "SequenceNumber": { "N": "0" }}'
+    aws dynamodb put-item --table-name Sequence --item '{ "Name": { "S": "Delivery" }, "SequenceNumber": { "N": "0" }}'
+    aws dynamodb put-item --table-name Sequence --item '{ "Name": { "S": "Order" }, "SequenceNumber": { "N": "0" }}'
+    aws dynamodb put-item --table-name Sequence --item '{ "Name": { "S": "Payment" }, "SequenceNumber": { "N": "0" }}'
+    aws dynamodb put-item --table-name Sequence --item '{ "Name": { "S": "Stock" }, "SequenceNumber": { "N": "0" }}'
+    aws dynamodb put-item --table-name Sequence --item '{ "Name": { "S": "StockAllocateHistory" }, "SequenceNumber": { "N": "0" }}'
+    ```
+
+  - Azure  
+    Azure CosmosDBコンソール＞データエクスプローラー＞Common選択＞NewShell
+    以下を実行する
+    ```
+    db.Sequence.insertMany([
+    { "_id": "CreditPayment","SequenceNumber":0},
+    { "_id": "Customer","SequenceNumber":0},
+    { "_id": "Delivery","SequenceNumber":0},
+    { "_id": "Order","SequenceNumber":0},
+    { "_id": "Payment","SequenceNumber":0},
+    { "_id": "Stock","SequenceNumber":0},
+    { "_id": "StockAllocateHistory","SequenceNumber":0}
+    ])
+    ```
+
 ### アプリケーションの導入
 
 AWS

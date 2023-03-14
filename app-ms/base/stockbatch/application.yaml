@@ -11,7 +11,7 @@ spec:
   source:
     path: overlays/dev/
     repoURL: https://github.com/nautible/nautible-app-ms-stock-batch-manifest
-    targetRevision: feature/issue110
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

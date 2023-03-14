@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nautible-app-ms-stock
+  name: nautible-app-ms-stock-batch
   namespace: argocd
 spec:
   destination:
@@ -11,7 +11,7 @@ spec:
   source:
     path: overlays/dev/
     repoURL: https://github.com/nautible/nautible-app-ms-stock-batch-manifest
-    targetRevision: develop
+    targetRevision: feature/issue110
   syncPolicy:
     automated:
       prune: true

@@ -6,6 +6,7 @@ resources:
   - customer/application.yaml
   - product/application.yaml
   - stock/application.yaml
+  - stockbatch/application.yaml
   - order/application.yaml
   - payment/application.yaml
   - delivery/application.yaml

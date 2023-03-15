@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - common/namespace.yaml
   - common/dapr-rbac.yaml
+  - common/argowf-accesstoken.yaml
   - customer/application.yaml
   - product/application.yaml
   - stock/application.yaml

@@ -17,6 +17,7 @@ base
 |payment|支払い管理|
 |product|商品管理|
 |stock|在庫管理|
+|stockbatch|在庫管理(バッチ)|
 
 overlays
 

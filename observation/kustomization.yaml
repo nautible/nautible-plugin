@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - common/priorityclass.yaml
   - loki/application.yaml
-  - prometheus-operator/application.yaml
+  - kube-prometheus-stack/application.yaml
   - promtail/application.yaml
   - monitors/application.yaml
   - rules/application.yaml

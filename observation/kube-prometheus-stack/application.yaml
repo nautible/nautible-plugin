@@ -9,8 +9,8 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    chart: 'prometheus-community/kube-prometheus-stack'
-    repoURL: https://prometheus-community.github.io/helm-charts/
+    chart: 'kube-prometheus-stack'
+    repoURL: https://prometheus-community.github.io/helm-charts/prometheus-community/
     targetRevision: 45.7.1
   syncPolicy:
     automated:

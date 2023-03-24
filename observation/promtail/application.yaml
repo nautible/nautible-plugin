@@ -13,7 +13,7 @@ spec:
     # ref https://github.com/grafana/helm-charts/tree/main/charts/promtail/
     chart: 'promtail'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 3.11.0   # application 2.4.2
+    targetRevision: 6.9.3   # application 2.7.4
     helm:
       version: v3
       releaseName: promtail

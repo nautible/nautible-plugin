@@ -1,0 +1,1 @@
+allowedServiceAccounts: "argo-workflows-workflow-controller:argowf"

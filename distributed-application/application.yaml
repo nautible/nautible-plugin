@@ -11,8 +11,11 @@ spec:
   source:
     path: ''
     repoURL: 'https://dapr.github.io/helm-charts/'
-    targetRevision: 1.8.2
+    targetRevision: 1.10.4
     chart: dapr
+    helm:
+      valueFiles:
+      - values.yaml
   ignoreDifferences:
   - group: apps
     kind: Secret

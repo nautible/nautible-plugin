@@ -17,6 +17,9 @@ spec:
     helm:
       version: v3
       values: |
+        alertmanager:
+          alertmanagerSpec:
+            replicas: 2
         prometheus-node-exporter:
           priorityClassName: daemonset-priority
   syncPolicy:

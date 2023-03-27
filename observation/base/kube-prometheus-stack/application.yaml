@@ -17,9 +17,14 @@ spec:
     helm:
       version: v3
       values: |
+        prometheus:
+          prometheusSpec:
+            scrapeInterval: "30s"
+            scrapeTimeout: "10s"
+            replicas: 1
         alertmanager:
           alertmanagerSpec:
-            replicas: 2
+            replicas: 1
         prometheus-node-exporter:
           priorityClassName: daemonset-priority
   syncPolicy:

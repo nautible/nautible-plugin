@@ -18,7 +18,34 @@ observation
 
 ## [セットアップ](./docs/setup.md)
 
-- 監視系ツール（Prometheus/Alertmanager/Grafana/GrafanaLoki etc）の導入
+### CRD
+
+```bash
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.63.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagerconfigs.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.63.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.63.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.63.0/example/prometheus-operator-crd/monitoring.coreos.com_probes.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.63.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheuses.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.63.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.63.0/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.63.0/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml
+```
+
+参考：[ArtifactHub](https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack)
+
+### 監視系ツール（Prometheus/Alertmanager/Grafana/GrafanaLoki etc）の導入
+
+AWS
+
+```bash
+kubectl apply -f observation/overlays/aws/application.yaml
+```
+
+Azure
+
+```bash
+kubectl apply -f observation/overlays/azure/application.yaml
+```
 
 ## [監視対象のカスタマイズ](./docs/custom-metrics.md)
 

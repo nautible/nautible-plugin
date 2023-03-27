@@ -12,6 +12,12 @@ spec:
     chart: 'kube-prometheus-stack'
     repoURL: https://prometheus-community.github.io/helm-charts/
     targetRevision: 45.7.1
+    helm:
+      version: v3
+      releaseName: promtail
+      values: |
+        prometheus-node-exporter:
+          priorityClassName: daemonset-priority
   syncPolicy:
     automated:
       prune: true

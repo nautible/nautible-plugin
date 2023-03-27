@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: kube-prometheus-stack
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: monitoring
@@ -14,7 +16,6 @@ spec:
     targetRevision: 45.7.1
     helm:
       version: v3
-      releaseName: promtail
       values: |
         prometheus-node-exporter:
           priorityClassName: daemonset-priority

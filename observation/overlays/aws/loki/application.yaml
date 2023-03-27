@@ -20,12 +20,18 @@ spec:
       values: |
         grobal:
           priorityClassName: daemonset-priority
+        loki:
+          commonConfig:
+            replication_factor: 1
+          storage:
+            type: 'filesystem'
         write:
           replicas: 1
           persistence:
             storageClass: gp2
         read:
           replicas: 1
+          legacyReadTarget: false
           persistence:
             storageClass: gp2
   project: default

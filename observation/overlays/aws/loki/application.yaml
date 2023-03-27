@@ -18,6 +18,8 @@ spec:
       version: v3
       releaseName: loki
       values: |
+        grobal:
+          priorityClassName: daemonset-priority
         write:
           replicas: 1
         read:

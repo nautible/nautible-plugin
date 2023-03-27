@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: rule
+  name: rules
   namespace: argocd
 spec:
   destination:
@@ -11,7 +11,7 @@ spec:
   source:
     path: observation/rules/base
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: develop
+    targetRevision: feature/issues120
   syncPolicy:
     automated:
       prune: true

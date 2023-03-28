@@ -22,6 +22,9 @@ spec:
           priorityClassName: daemonset-priority
         loki:
           auth_enabled: false
+          commonConfig:
+            path_prefix: /var/loki
+            replication_factor: 3
         write:
           replicas: 1
           persistence:

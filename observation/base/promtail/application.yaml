@@ -21,7 +21,7 @@ spec:
         serviceMonitor:
           enabled: true
         config:
-          lokiAddress: http://loki:3100/loki/api/v1/push
+          lokiAddress: http://loki-gateway:8100/loki/api/v1/push
           snippets:
             pipelineStages:
             - docker:

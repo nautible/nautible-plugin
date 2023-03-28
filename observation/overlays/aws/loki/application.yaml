@@ -24,7 +24,7 @@ spec:
           auth_enabled: false
           commonConfig:
             path_prefix: /var/loki
-            replication_factor: 3
+            replication_factor: 1
         write:
           replicas: 1
           persistence:

@@ -29,6 +29,11 @@ observation
 
 - エコシステム（Prometheus/Grafana/GrafanaLoki/Promtail）をKubernetesに導入する
 
+## [ロギング](./docs/logging.md)
+
+- ログの連携方法とGrafanaでのログ確認方法
+- エラーログなどを検知して、AlertManagerからSlackへ通知する
+
 ## [監視対象のカスタマイズ](./docs/custom-metrics.md)
 
 - アプリケーション独自のメトリクスをPrometheusの監視対象に追加する
@@ -37,8 +42,3 @@ observation
 
 - 監視ルールを追加する
 - デフォルトの監視ルールを無効化する
-
-## [ロギング](./docs/logging.md)
-
-- Grafanaでログを確認する
-- エラーログなどを検知して、AlertManagerからSlackへ通知する

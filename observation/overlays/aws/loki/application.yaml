@@ -33,9 +33,6 @@ spec:
           replicas: 1
           persistence:
             storageClass: gp2
-        gateway:
-          service:
-            port: 8100
   project: default
   syncPolicy:
     automated:

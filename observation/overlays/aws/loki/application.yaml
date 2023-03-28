@@ -18,22 +18,21 @@ spec:
       version: v3
       releaseName: loki
       values: |
-        grobal:
+        global:
           priorityClassName: daemonset-priority
         loki:
-          commonConfig:
-            replication_factor: 1
-          storage:
-            type: 'filesystem'
+          auth_enabled: false
         write:
           replicas: 1
           persistence:
             storageClass: gp2
         read:
           replicas: 1
-          legacyReadTarget: false
           persistence:
             storageClass: gp2
+        gateway:
+          service:
+            port: 8100
   project: default
   syncPolicy:
     automated:

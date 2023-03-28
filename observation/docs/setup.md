@@ -38,13 +38,13 @@ cd nautible-plugin
 ### AWS
 
 ```bash
-kubectl apply -f observation/overlays/aws/application.yaml
+kubectl apply -f observation/manifests/overlays/aws/application.yaml
 ```
 
 ### Azure
 
 ```bash
-kubectl apply -f observation/overlays/azure/application.yaml
+kubectl apply -f observation/manifests/overlays/azure/application.yaml
 ```
 
 ## 動作確認

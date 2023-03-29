@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: observation/
+    path: observation/manifests/overlays/aws
     repoURL: https://github.com/nautible/nautible-plugin
     targetRevision: feature/issues120
   syncPolicy:

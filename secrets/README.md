@@ -42,7 +42,7 @@ ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat app-ms/overlays/aws/secr
 external-secrets-operatorからAzure Key vaultへ接続するためのk8s secretおよびSecretStoreを作成する。CLIENTIDにはAzureコンソール＞AzureAD＞アプリのアプリケーション (クライアント) IDの値を設定。CLIENTSECRETにはAzureコンソール＞AzureAD＞アプリの登録＞証明書とシークレットでクライアントシークレットを登録して値を設定する。
 
 ```bash
-kubectl create secret generic external-secrets-azure-credentials -n nautible-app-ms --from-literal=$CLIENTID --from-literal=$CLIENTSECRET
+kubectl create secret generic external-secrets-azure-credentials -n nautible-app-ms --from-literal=clientid=$CLIENTID --from-literal=clientsecret=$CLIENTSECRET
 ```
 
 SecretStoreを作成する。

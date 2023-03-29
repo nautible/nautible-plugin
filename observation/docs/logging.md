@@ -6,6 +6,14 @@
 
 ![logging1](./img/logging1.png)
 
+## GrafanaLokiアーキテクチャ
+
+GrafanaLokiはgateway,read,writeコンポーネントで構成されており、PromtailやGrafanaはgatewayに接続することでログデータへアクセスする。（以前はlokiコンポートネントのみだったため、古い情報に注意）
+
+![LokiArchitecture](https://grafana.com/docs/loki/latest/getting-started/simple-scalable-test-environment.png)
+
+出典：[GrafanaLoki公式ドキュメント](https://grafana.com/docs/loki/latest/getting-started/)
+
 ## アプリケーション側のログ出力
 
 アプリケーション側ではJSONで構造化したログを出力する。  
@@ -24,21 +32,28 @@
 }
 ```
 
+※ 見やすいように改行しているが、実際のログは改行コードを含まずに出力する（改行するとそこで別のログとして扱われる）
+
 ## Promtailの設定
 
-observation/promtail/application.yaml
+observation/base/promtail/application.yaml
 
-HelmのvaluesにpipelineStagesを設定することでログ取得時のラベリングやメトリクスの設定を行う。
+### 接続先設定
+
+kube-prometheus-stackをHEMLからインストールした場合、Lokiのサービス名はloki-gatewayとなる。promtailのデフォルト値もloki-gatewayとなっているが、変更する場合は下記項目を修正する。
+
+```yaml
+        config:
+          clients:
+          - url: http://loki-gateway/loki/api/v1/push
+```
+
+### ルール設定
+
+pipelineStagesを設定することでログ取得時のラベリングやメトリクスの設定を行う。
 
 ```yaml
 ...
-      values: |
-        loki:
-          serviceName: loki
-        syslogService:
-          enabled: false
-        serviceMonitor:
-          enabled: true
         pipelineStages:
         - docker:
         - match:

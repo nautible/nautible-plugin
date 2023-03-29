@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: 'kube-prometheus-stack'
+    repoURL: https://prometheus-community.github.io/helm-charts/
+    targetRevision: 45.7.1
+    helm:
+      version: v3
+      values: |
+        prometheus:
+          prometheusSpec:
+            scrapeInterval: "30s"
+            scrapeTimeout: "10s"
+            replicas: 1
+        alertmanager:
+          alertmanagerSpec:
+            replicas: 1
+        prometheus-node-exporter:
+          priorityClassName: daemonset-priority
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

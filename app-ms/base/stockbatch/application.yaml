@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: rule
+  name: nautible-app-ms-stock-batch
   namespace: argocd
 spec:
   destination:
-    namespace: monitoring
+    namespace: nautible-app-ms
     server: https://kubernetes.default.svc
-  project: default
+  project: application
   source:
-    path: observation/rules/base
-    repoURL: https://github.com/nautible/nautible-plugin
+    path: overlays/dev/
+    repoURL: https://github.com/nautible/nautible-app-ms-stock-batch-manifest
     targetRevision: develop
   syncPolicy:
     automated:

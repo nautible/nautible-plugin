@@ -4,21 +4,35 @@
 
 ```text
 observation
-├ common              :共通利用マニフェスト（PriorityClass） 
-├ docs                :ドキュメント 
-├ loki                :GrafanaLokiデプロイ用マニフェスト 
-├ monitors            :ServiceMonitorデプロイ用マニフェスト
-├ prometheus-operator :kube-prometheus-stackデプロイ用マニフェスト
-├ promtail            :Promtailデプロイ用マニフェスト
-├ rules               :Prometheusの設定を行うカスタムリソースデプロイ用マニフェスト
-├ application.yaml    :observation配下一括導入用applicationマニフェスト
-├ kustomization.yaml  :observation配下一括導入用kustomizeファイル
-└ README.md           :本ファイル
+├ docs                      :ドキュメント
+├ examples                  :ServiceMonitor,PodMonitor,PrometheusRuleの導入例
+├ manifests
+│ ├ base
+│ │ ├ common                :共通利用マニフェスト（PriorityClass） 
+│ │ ├ crd                   :カスタムリソース
+│ │ ├ kube-prometheus-stack :kube-prometheus-stackデプロイ用マニフェスト
+│ │ ├ promtail              :Promtailデプロイ用マニフェスト
+│ │ └ kustomization.yaml    :base配下一括導入用kustomizeファイル
+│ └ overlays
+│   ├ aws
+│   │ ├ loki                :GrafanaLokiデプロイ用マニフェスト 
+│   │ ├ application.yaml    :AWS一括導入用applicationマニフェスト
+│   │ └ kustomization.yaml  :AWS一括導入用kustomizeファイル
+│   └ azure
+│     ├ loki                :GrafanaLokiデプロイ用マニフェスト 
+│     ├ application.yaml    :Azure一括導入用applicationマニフェスト
+│     └ kustomization.yaml  :Azure一括導入用kustomizeファイル
+└ README.md                 :ドキュメント（本ファイル）
 ```
 
 ## [セットアップ](./docs/setup.md)
 
-- 監視系ツール（Prometheus/Alertmanager/Grafana/GrafanaLoki etc）の導入
+- エコシステム（Prometheus/Grafana/GrafanaLoki/Promtail）をKubernetesに導入する
+
+## [ロギング](./docs/logging.md)
+
+- ログの連携方法とGrafanaでのログ確認方法
+- エラーログなどを検知して、AlertManagerからSlackへ通知する
 
 ## [監視対象のカスタマイズ](./docs/custom-metrics.md)
 
@@ -28,8 +42,3 @@ observation
 
 - 監視ルールを追加する
 - デフォルトの監視ルールを無効化する
-
-## [ロギング](./docs/logging.md)
-
-- Grafanaでログを確認する
-- エラーログなどを検知して、AlertManagerからSlackへ通知する

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus-operator
+  name: observation
   namespace: argocd
 spec:
   destination:
@@ -9,10 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    # https://github.com/prometheus-community/helm-charts/
-    repoURL: https://prometheus-community.github.io/helm-charts
-    chart: kube-prometheus-stack
-    targetRevision: 45.0.0
+    path: observation/manifests/overlays/aws
+    repoURL: https://github.com/nautible/nautible-plugin
+    targetRevision: feature/issues120
   syncPolicy:
     automated:
       prune: true

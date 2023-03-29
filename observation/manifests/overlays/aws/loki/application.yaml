@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  source:
+    # ref https://github.com/grafana/loki/tree/main/production/helm/loki
+    chart: 'loki'
+    repoURL: 'https://grafana.github.io/helm-charts'
+    targetRevision: 4.8.0   # application v2.7.3
+    helm: # minimum replicas and default storageClass
+      version: v3
+      releaseName: loki
+      values: |
+        global:
+          priorityClassName: daemonset-priority
+        loki:
+          auth_enabled: false
+          commonConfig:
+            path_prefix: /var/loki
+            replication_factor: 1
+        write:
+          replicas: 1
+          persistence:
+            storageClass: gp2
+        read:
+          replicas: 1
+          persistence:
+            storageClass: gp2
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true

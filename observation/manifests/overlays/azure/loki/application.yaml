@@ -13,14 +13,21 @@ spec:
     # ref https://github.com/grafana/loki/tree/main/production/helm/loki
     chart: 'loki'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 4.6.0   # application v2.7.3
-    helm:
+    targetRevision: 4.8.0   # application v2.7.3
+    helm: # minimum replicas and default storageClass
       version: v3
       releaseName: loki
       values: |
-        replicas: 1
-        persistence:
-          enabled: true
+        grobal:
+          priorityClassName: daemonset-priority
+        write:
+          replicas: 1
+          persistence:
+            storageClass: managed-csi
+        read:
+          replicas: 1
+          persistence:
+            storageClass: managed-csi
   project: default
   syncPolicy:
     automated:

@@ -18,7 +18,7 @@
 ## 前提
 
 ローカルでkubectlが実行できること  
-kubernetesにArgoCDがデプロイされていること
+kubernetesにArgoCDがデプロイされていること（ServerSideApplyを利用するためv2.5以上）
 
 ## 事前準備
 
@@ -33,54 +33,26 @@ git clone https://github.com/nautible/nautible-plugin.git
 cd nautible-plugin
 ```
 
-## CRDのデプロイ
+## エコシステムの導入
 
-実行
+### AWS
 
 ```bash
-kubectl apply -f observation/prometheus-operator/application_crd.yaml
+kubectl apply -f observation/manifests/overlays/aws/application.yaml
 ```
 
-確認
+### Azure
 
 ```bash
-kubectl get crd
-
-NAME                                         CREATED AT
-alertmanagerconfigs.monitoring.coreos.com    2020-11-13T05:52:49Z
-alertmanagers.monitoring.coreos.com          2020-11-13T05:52:57Z
-podmonitors.monitoring.coreos.com            2020-11-13T05:53:04Z
-probes.monitoring.coreos.com                 2020-11-13T05:53:11Z
-prometheuses.monitoring.coreos.com           2020-11-13T05:53:18Z
-prometheusrules.monitoring.coreos.com        2020-11-13T05:53:25Z
-servicemonitors.monitoring.coreos.com        2020-11-13T05:53:32Z
-thanosrulers.monitoring.coreos.com           2020-11-13T05:53:40Z
+kubectl apply -f observation/manifests/overlays/azure/application.yaml
 ```
 
-CRDは上記以外にもあるため、kubectl get crdの結果に上記8個が含まれているかを確認する
+## 動作確認
 
-## 一括デプロイ
-
-Prometheus-Operator,GrafanaLoki,Promtail,ServiceMonitor,PrometheusRuleを一括デプロイする
+### Prometheus確認
 
 ```bash
-kubectl apply -f observation/application.yaml
-```
-
-## 個別デプロイ
-
-### prometheus-operatorのデプロイ
-
-- 実行
-
-```bash
-kubectl apply -f observation/prometheus-operator/application.yaml
-```
-
-- Prometheus確認
-
-```bash
-kubectl port-forward svc/prometheus-operated -n monitoring 9090:9090
+kubectl port-forward svc/kube-prometheus-stack-prometheus -n monitoring 9090:9090
 ```
 
 - ブラウザでアクセス
@@ -94,10 +66,10 @@ http://localhost:9090
 
 ![prometheus1](./img/prometheus1.png)
 
-- Alertmanager確認
+### Alertmanager確認
 
 ```bash
-kubectl port-forward svc/alertmanager-operated -n monitoring 9093:9093
+kubectl port-forward svc/kube-prometheus-stack-alertmanager -n monitoring 9093:9093
 ```
 
 - ブラウザでアクセス
@@ -112,19 +84,19 @@ Prometheusで確認したWatchdogのアラートがこちらも表示される
 
 ![alertmanager2](./img/alertmanager2.png)
 
-- Grafana確認
+### Grafana確認
 
 ```bash
-kubectl port-forward svc/grafana -n monitoring 3000:3000
+kubectl port-forward svc/kube-prometheus-stack-grafana -n monitoring 8080:80
 ```
 
 - ブラウザでアクセス
 
 ```bash
-http://localhost:3000
+http://localhost:8080
 ```
 
-デフォルトのログインID/PWはadmin/admin
+デフォルトのログインID/PWはadmin/prom-operator
 
 ![grafana1](./img/grafana1.png)
 
@@ -132,23 +104,15 @@ http://localhost:3000
 
 ![grafana2](./img/grafana2.png)
 
-### GrafanaLokiのデプロイ
+### GrafanaにLokiのデータソースを追加
 
-- 実行
-
-```bash
-kubectl apply -f observation/loki/application.yaml
-```
-
-- 確認
-
-GrafanaLokiのserviceを表示してサービス名とPORTを確認
+Lokiのデータソースはloki-gatewayから接続する。Serviceの確認は以下の通り。
 
 ```bash
 kubectl get svc -n monitoring
 
-NAME                                           TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
-loki                                           ClusterIP   10.100.84.148    <none>        3100/TCP                     8m26s
+NAME                                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+loki-gateway                                     ClusterIP   10.100.213.93    <none>        80/TCP                       5h48m
 ```
 
 上記で確認したサービス名:PORTでPrometheusのデータソースにLokiを追加する  
@@ -157,37 +121,16 @@ loki                                           ClusterIP   10.100.84.148    <non
 
 ![loki2](./img/loki2.png)
 
-### promtailのデプロイ
+## 各種サンプル設定
 
-- 実行
+### Istio
 
 ```bash
-kubectl apply -f observation/promtail/application.yaml
+kubectl apply -f observation/examples/istio/application.yaml
 ```
 
-- 確認
+### nautible-app-ms（マイクロサービステンプレートアプリケーション）
 
 ```bash
-kubectl get ds -n monitoring
-
-NAME                                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
-promtail                                       3         3         3       3            3           <none>          32s
-```
-
-### ServiceMonitorのデプロイ
-
-- 実行
-
-```bash
-kubectl apply -f observation/monitors/application.yaml
-```
-
-### PrometheusRulesのデプロイ
-
-モニタリングルールのデプロイ
-
-- 実行
-
-```bash
-kubectl apply -f observation/rules/application.yaml
+kubectl apply -f observation/examples/nautible-app-ms/application.yaml
 ```

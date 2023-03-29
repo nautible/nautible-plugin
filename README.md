@@ -16,6 +16,7 @@ Kubernetesへエコシステムやアプリケーションを導入するため�
 |auth|認証(keycloak)の導入|service-mesh||
 |cluster-autoscaler|クラスタのNode数調整||AWSのみ必要|
 |container-registry|Harborの導入|||
+|container-workflow-engine|Argo Workflowsの導入|||
 |distributed-application|Daprの導入|||
 |kong-apigateway|KongApiGatewayの導入|distributed-application<br>pod-autoscaler||
 |metrics-server|メトリクスサーバーの導入||AWSのみ必要|

@@ -4,3 +4,4 @@ bases:
   - ../../base
 resources:
   - loki/application.yaml
+  - tempo/application.yaml

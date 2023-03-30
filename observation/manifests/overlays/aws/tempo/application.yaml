@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  source:
+    # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed
+    chart: 'tempo-distributed'
+    repoURL: 'https://grafana.github.io/helm-charts'
+    targetRevision: 1.2.7   # application v2.0.1
+    helm: # minimum replicas and default storageClass
+      version: v3
+      releaseName: tempo
+      values: |
+        ingester:
+          replicas: 1
+        metricsGenerator:
+          replicas: 1
+        distributor:
+          replicas: 1
+        compactor:
+          replicas: 1
+        querier:
+          replicas: 1
+        queryFrontend:
+          replicas: 1
+        memcached:
+          replicas: 1
+        gateway:
+          replicas: 1
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true

@@ -14,8 +14,9 @@ spec:
     targetRevision: 1.10.4
     chart: dapr
     helm:
-      valueFiles:
-      - values.yaml
+      parameters:
+      - name: "dapr_sidecar_injector.allowedServiceAccounts"
+        value: "argowf:argo-workflows-workflow-controller"
   ignoreDifferences:
   - group: apps
     kind: Secret

@@ -12,7 +12,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    chart: 'opentelemetry-operator'
+    chart: 'opentelemetry-collector'
     repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts/
     targetRevision: 0.51.2
     helm:

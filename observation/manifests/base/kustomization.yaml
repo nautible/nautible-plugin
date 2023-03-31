@@ -3,5 +3,7 @@ kind: Kustomization
 resources:
   - common/priorityclass.yaml
   - crd/application.yaml
+  - otel-collector-operator/application.yaml
   - kube-prometheus-stack/application.yaml
   - promtail/application.yaml
+  - otel-collector/application.yaml

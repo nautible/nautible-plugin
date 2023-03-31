@@ -1,0 +1,43 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: opentelemetry-collector
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: 'opentelemetry-operator'
+    repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts/
+    targetRevision: 0.51.2
+    helm:
+      version: v3
+      values: |
+        mode: daemonset
+        priorityClassName: daemonset-priority
+        config:
+          exporters:
+            logging:
+              loglevel: debug
+            jaeger:
+              endpoint: tempo-distributor:3100
+              tls:
+                insecure: true
+        service:
+          pipelines:
+            traces:
+              receivers: [otlp]
+              processors: [memory_limiter,batch]
+              exporters: [jaeger,logging]
+
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

@@ -6,4 +6,4 @@ resources:
   - otel-collector-operator/application.yaml
   - kube-prometheus-stack/application.yaml
   - promtail/application.yaml
-  - otel-collector/application.yaml
+  - otel-collector/daemonset.yaml

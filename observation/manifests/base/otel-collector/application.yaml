@@ -12,6 +12,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
+    # ref https://github.com/open-telemetry/opentelemetry-helm-charts
     chart: 'opentelemetry-collector'
     repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts/
     targetRevision: 0.51.2
@@ -35,7 +36,7 @@ spec:
             logging:
               loglevel: debug
             jaeger:
-              endpoint: tempo-distributor:9095
+              endpoint: http://tempo-distributor:9095/api/traces
               tls:
                 insecure: true
           service:

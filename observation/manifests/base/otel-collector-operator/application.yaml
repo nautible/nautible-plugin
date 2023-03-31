@@ -1,17 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observation
+  name: opentelemetry-operator
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: monitoring
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: observation/manifests/overlays/aws
-    repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/issues120
+    chart: 'opentelemetry-operator'
+    repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts/
+    targetRevision: 0.25.1
   syncPolicy:
     automated:
       prune: true

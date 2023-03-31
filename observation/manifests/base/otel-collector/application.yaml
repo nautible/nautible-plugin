@@ -28,12 +28,12 @@ spec:
               endpoint: tempo-distributor:3100
               tls:
                 insecure: true
-        service:
-          pipelines:
-            traces:
-              receivers: [otlp]
-              processors: [memory_limiter,batch]
-              exporters: [jaeger,logging]
+          service:
+            pipelines:
+              traces:
+                receivers: [otlp]
+                processors: [memory_limiter,batch]
+                exporters: [jaeger,logging]
 
   syncPolicy:
     automated:

@@ -11,7 +11,7 @@ spec:
   source:
     path: nautible-app-examples-manifest-node/overlays/dev/
     repoURL: https://github.com/nautible/nautible-app-examples-manifest
-    targetRevision: develop
+    targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true

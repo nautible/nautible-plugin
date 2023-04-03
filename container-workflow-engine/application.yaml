@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-workflows
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: argowf
+    server: 'https://kubernetes.default.svc'
+  source:
+    chart: argo-workflows
+    repoURL: 'https://argoproj.github.io/argo-helm'
+    targetRevision: 0.22.11
+    helm:
+      version: v3
+      releaseName: argo-workflows
+      # https://github.com/argoproj/argo-cd/issues/7479
+      parameters:
+        - name: 'server.extraArgs[0]'
+          value: '--auth-mode=server'
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true

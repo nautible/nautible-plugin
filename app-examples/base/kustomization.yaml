@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - common/namespace.yaml
+  - examples-java/application.yaml
+  - examples-go/application.yaml
+  - examples-node/application.yaml
+  - examples-python/application.yaml

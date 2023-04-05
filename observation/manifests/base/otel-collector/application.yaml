@@ -21,30 +21,23 @@ spec:
       values: |
         mode: daemonset
         priorityClassName: daemonset-priority
-        config:
-          receivers:
-            otlp:
-              protocols:
-                grpc:
-                  endpoint: 0.0.0.0:4317
-                http:
-                  endpoint: 0.0.0.0:4318
+        jaeger:
+          protocols:
+            thrift_compact:
           processors:
             batch: {}
             memory_limiter: null
           exporters:
             logging:
               loglevel: debug
-            jaeger:
+            otlp:
               endpoint: http://tempo-distributor:3100
-              tls:
-                insecure: true
           service:
             pipelines:
               traces:
                 receivers: [otlp]
                 processors: [memory_limiter,batch]
-                exporters: [jaeger,logging]
+                exporters: [otlp,logging]
 
   syncPolicy:
     automated:

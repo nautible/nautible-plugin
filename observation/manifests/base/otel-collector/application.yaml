@@ -21,9 +21,11 @@ spec:
       values: |
         mode: daemonset
         priorityClassName: daemonset-priority
-        jaeger:
-          protocols:
-            thrift_compact:
+        config:
+          receivers:
+            jaeger:
+              protocols:
+                thrift_compact:
           processors:
             batch: {}
             memory_limiter: null
@@ -35,7 +37,7 @@ spec:
           service:
             pipelines:
               traces:
-                receivers: [otlp]
+                receivers: [jaeger]
                 processors: [memory_limiter,batch]
                 exporters: [otlp,logging]
 

@@ -36,7 +36,7 @@ spec:
             logging:
               loglevel: debug
             jaeger:
-              endpoint: http://tempo-distributor:9095/api/traces
+              endpoint: http://tempo-distributor:3100
               tls:
                 insecure: true
           service:

@@ -23,4 +23,4 @@ patchesJson6902:
     patch: |-
       - op: replace
         path: /spec/rules/0/when/0/notValues
-        value: ["f294b480-a3a9-45c9-86c0-e646fce7a8aa"]
+        value: ["e115a916-6b69-4e4b-8a6f-02dbb59156b4"]

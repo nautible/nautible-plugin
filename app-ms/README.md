@@ -44,7 +44,23 @@ app-msの稼働に必要なシークレットを登録する。AWSの場合はSe
 ※AzureのKeyvaultのシークレット編集方法については[こちら](../docs/azure/keyvault/README.md)を参照してください
 ### SecretStoreの導入
 
-手順は[secretsのドキュメント](../secrets/README.md)を参照
+[secretsのドキュメント](../secrets/README.md)の手順を参考に以下のリソースを作成する。
+
+- AWS（SecretsManager）
+  ```bash
+  ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat app-ms/overlays/aws/secretstore.yaml)\"" | kubectl apply -f -
+  ```
+  ```bash
+  kubectl appy -f app-ms/overlays/azure/secret-parameter/application.yaml
+  ```
+
+- Azure（AzureKeyVault）
+  ```bash
+  kubectl create secret generic external-secrets-azure-credentials -n nautible-app-ms --from-literal=clientid=$CLIENTID --from-literal=clientsecret=$CLIENTSECRET
+  ```
+  ```bash
+  TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat app-ms/overlays/azure/secretstore.yaml)\"" | kubectl apply -f -
+  ```
 
 ### データ登録
 - [商品サービス](https://github.com/nautible/nautible-app-ms-product/blob/main/testdata.md#b-dev%E7%92%B0%E5%A2%83)

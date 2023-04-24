@@ -11,7 +11,7 @@ base
 |ディレクトリ名|内容|
 |:--|:--|
 |common|共通設定（namespace,role）|
-|customer|ユーザー管理|
+|customer|顧客管理|
 |delivery|出荷管理|
 |order|受注管理|
 |payment|支払い管理|
@@ -64,7 +64,8 @@ app-msの稼働に必要なシークレットを登録する。AWSの場合はSe
 
 ### データ登録
 - [商品サービス](https://github.com/nautible/nautible-app-ms-product/blob/main/testdata.md#b-dev%E7%92%B0%E5%A2%83)
-- [在庫サービス](https://github.com/nautible/nautible-app-ms-stock/blob/feature/issue113/testdata.md#%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E7%99%BB%E9%8C%B2)
+- [顧客サービス](https://github.com/nautible/nautible-app-ms-customer/blob/main/testdata.md#%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E7%99%BB%E9%8C%B2)
+- [在庫サービス](https://github.com/nautible/nautible-app-ms-stock/blob/main/testdata.md#%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E7%99%BB%E9%8C%B2)
 
 - 共通  
   - AWS  

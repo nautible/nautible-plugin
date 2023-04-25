@@ -41,16 +41,3 @@ patchesJson6902:
       - op: replace
         path: /spec/rules/0/when/0/values
         value: ["https://nautibledevfrontdoor.azurefd.net/api/v1.0/nautible-auth/auth/realms/nautible-auth"]
-  # see base\keycloak-istio-auth.yaml
-  - target:
-      group: kubernetes-client.io
-      version: v1
-      kind: ExternalSecret
-      name: secret-keycloak
-    patch: |-
-      - op: add
-        path: /spec/backendType
-        value: azureKeyVault
-      - op: add
-        path: /spec/keyVaultName
-        value: nautibledevkeyvault

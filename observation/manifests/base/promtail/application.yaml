@@ -13,16 +13,16 @@ spec:
     # ref https://github.com/grafana/helm-charts/tree/main/charts/promtail/
     chart: 'promtail'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 6.9.3   # application 2.7.4
+    targetRevision: 6.11.2   # application 2.8.2
     helm:
       version: v3
       values: |
-        priorityClassName: daemonset-priority
+        priorityClassName: high-priority
         serviceMonitor:
           enabled: true
         config:
           clients:
-          - url: http://loki-gateway/loki/api/v1/push
+          - url: http://loki:3100/loki/api/v1/push
           snippets:
             pipelineStages:
             - docker:

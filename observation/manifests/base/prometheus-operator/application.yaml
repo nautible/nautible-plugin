@@ -13,7 +13,7 @@ spec:
   source:
     chart: 'kube-prometheus-stack'
     repoURL: https://prometheus-community.github.io/helm-charts/
-    targetRevision: 45.7.1
+    targetRevision: 46.4.2 # application v0.65.1
     helm:
       version: v3
       values: |
@@ -22,11 +22,21 @@ spec:
             scrapeInterval: "30s"
             scrapeTimeout: "10s"
             replicas: 1
+            additionalScrapeConfigs:
+            - job_name: "springboot3-app"
+              honor_timestamps: true
+              metrics_path: /actuator/prometheus
+              static_configs:
+                - targets: 
+                  - nautible-app-examples-go.nautible-app-examples.svc.cluster.local:8080
+                  - nautible-app-examples-java.nautible-app-examples.svc.cluster.local:8080
+                  - nautible-app-examples-node.nautible-app-examples.svc.cluster.local:8080
+                  - nautible-app-examples-python.nautible-app-examples.svc.cluster.local:8080
         alertmanager:
           alertmanagerSpec:
             replicas: 1
         prometheus-node-exporter:
-          priorityClassName: daemonset-priority
+          priorityClassName: high-priority
   syncPolicy:
     automated:
       prune: true

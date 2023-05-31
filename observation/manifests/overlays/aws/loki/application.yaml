@@ -13,13 +13,13 @@ spec:
     # ref https://github.com/grafana/loki/tree/main/production/helm/loki
     chart: 'loki'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 4.8.0   # application v2.7.3
+    targetRevision: 5.5.11   # application v2.8.2
     helm: # minimum replicas and default storageClass
       version: v3
       releaseName: loki
       values: |
         global:
-          priorityClassName: daemonset-priority
+          priorityClassName: high-priority
         loki:
           auth_enabled: false
           commonConfig:

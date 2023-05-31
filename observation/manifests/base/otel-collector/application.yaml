@@ -15,32 +15,29 @@ spec:
     # ref https://github.com/open-telemetry/opentelemetry-helm-charts
     chart: 'opentelemetry-collector'
     repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts/
-    targetRevision: 0.51.2
+    targetRevision: 0.59.1
     helm:
       version: v3
       values: |
-        mode: daemonset
-        priorityClassName: daemonset-priority
+        mode: deployment
         config:
           receivers:
-            jaeger:
-              protocols:
-                thrift_compact:
-          processors:
-            batch: {}
-            memory_limiter: null
-          exporters:
-            logging:
-              loglevel: debug
             otlp:
-              endpoint: http://tempo-distributor:3100
+              protocols:
+                grpc:
+                  endpoint: 0.0.0.0:4317
+                http:
+                  endpoint: 0.0.0.0:4318
+          processors:
+          exporters:
+            otlphttp:
+              endpoint: http://tempo-distributor:4318
           service:
             pipelines:
               traces:
-                receivers: [jaeger]
-                processors: [memory_limiter,batch]
-                exporters: [otlp,logging]
-
+                receivers: [otlp]
+                processors: []
+                exporters: [otlphttp]
   syncPolicy:
     automated:
       prune: true

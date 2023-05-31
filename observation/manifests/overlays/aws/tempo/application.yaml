@@ -13,27 +13,23 @@ spec:
     # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed
     chart: 'tempo-distributed'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 1.2.7   # application v2.0.1
+    targetRevision: 1.4.2   # application v2.1.1
     helm: # minimum replicas and default storageClass
       version: v3
       releaseName: tempo
       values: |
-        ingester:
-          replicas: 1
-        metricsGenerator:
-          replicas: 1
+        traces:
+          otlp:
+            http:
+              enabled: true
+            grpc:
+              enabled: true
         distributor:
-          replicas: 1
-        compactor:
-          replicas: 1
-        querier:
-          replicas: 1
-        queryFrontend:
-          replicas: 1
-        memcached:
-          replicas: 1
-        gateway:
-          replicas: 1
+          receivers:
+            otlp:
+              protocols:
+                grpc:
+                http:
   project: default
   syncPolicy:
     automated:

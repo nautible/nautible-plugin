@@ -19,7 +19,7 @@ spec:
       releaseName: loki
       values: |
         grobal:
-          priorityClassName: daemonset-priority
+          priorityClassName: high-priority
         write:
           replicas: 1
           persistence:

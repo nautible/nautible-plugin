@@ -17,23 +17,18 @@ spec:
     helm: # minimum replicas and default storageClass
       version: v3
       releaseName: tempo
+      # require ingester >= 2
       values: |
         ingester:
-          replicas: 1
+          replicas: 3
         metricsGenerator:
-          replicas: 1
-        distributor:
-          replicas: 1
-        compactor:
-          replicas: 1
-        querier:
-          replicas: 1
-        queryFrontend:
-          replicas: 1
-        memcached:
-          replicas: 1
-        gateway:
-          replicas: 1
+          enabled: true
+        traces:
+          otlp:
+            http:
+              enabled: true
+            grpc:
+              enabled: true
   project: default
   syncPolicy:
     automated:

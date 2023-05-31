@@ -19,8 +19,9 @@ spec:
       releaseName: loki
       values: |
         global:
-          priorityClassName: daemonset-priority
+          priorityClassName: high-priority
         loki:
+          auth_enabled: false
           commonConfig:
             replication_factor: 1
           storage:

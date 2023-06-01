@@ -5,4 +5,3 @@ resources:
   - otel-operator/application.yaml
   - otel-collector/application.yaml
   - prometheus-operator/application.yaml
-  - promtail/application.yaml

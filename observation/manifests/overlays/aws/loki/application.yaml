@@ -25,14 +25,17 @@ spec:
           commonConfig:
             path_prefix: /var/loki
             replication_factor: 1
+          storage_config:
+            filesystem:
+              directory: /data/loki/chunks
         write:
           replicas: 1
           persistence:
-            storageClass: gp2
+            storageClass: gp3
         read:
           replicas: 1
           persistence:
-            storageClass: gp2
+            storageClass: gp3
   project: default
   syncPolicy:
     automated:

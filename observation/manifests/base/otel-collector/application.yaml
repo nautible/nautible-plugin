@@ -15,11 +15,11 @@ spec:
     # ref https://github.com/open-telemetry/opentelemetry-helm-charts
     chart: 'opentelemetry-collector'
     repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts/
-    targetRevision: 0.59.1
+    targetRevision: 0.54.0 # last version kubernetes v1.23
     helm:
       version: v3
       values: |
-        mode: deployment
+        mode: daemonset
         config:
           receivers:
             otlp:

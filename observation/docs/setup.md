@@ -5,15 +5,17 @@
 - モニタリング
   - Prometheus-Operator
     - Prometheus
-    - Alertmanager
-    - Grafana
     - Node-Exporter
     - kube-state-metrics
+- アラート
+  - Alertmanager
 - ロギング
-  - GrafanaLoki
+  - Grafana Loki
   - Promtail
 - トレーシング
-  - TODO
+  - Grafana Tempo
+- 可視化
+  - Grafana
 
 ## 前提
 
@@ -22,9 +24,21 @@ kubernetesにArgoCDがデプロイされていること（ServerSideApplyを利�
 
 ## 事前準備
 
+### metrics-server
+
 EKSの場合、デフォルトでメトリクスサーバーのPodがデプロイされていないため、デプロイしておく。
 
 [導入手順はmetrics-serverのドキュメントを参照](../../metrics-server/README.md)
+
+### cert-manager
+
+KubernetesにCertManagerが導入されていない場合は事前に導入しておく
+
+```bash
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.1/cert-manager.yaml
+```
+
+※ v1.12.1の部分は導入時の最新バージョンに置き換える
 
 ## リポジトリのclone
 

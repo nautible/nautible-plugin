@@ -47,7 +47,20 @@ keycloakはクラウドで管理しているシークレットの値をExternalS
 
 ### 2.3 SecretStoreを作成する。
 
-手順は[secretsのドキュメント](../secrets/README.md)を参照。
+[secretsのドキュメント](../secrets/README.md)の手順を参考に以下のリソースを作成する。
+
+- AWS（SecretsManager）
+  ```bash
+  ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat auth/overlays/aws/secretstore.yaml)\"" | kubectl apply -f -
+  ```
+
+- Azure（AzureKeyVault）
+  ```bash
+  kubectl create secret generic external-secrets-azure-credentials -n keycloak --from-literal=clientid=$CLIENTID --from-literal=clientsecret=$CLIENTSECRET
+  ```
+  ```bash
+  TENANT_ID=<テナントID> && AUTH_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat auth/overlays/azure/secretstore.yaml)\"" | kubectl apply -f -
+  ```
 
 ### 2.4 keycloakにインポートするrealmのシークレットを作成する。
 ```bash

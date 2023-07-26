@@ -11,7 +11,7 @@ spec:
   source:
     path: service-mesh/base/kiali/base
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/istio-1.18
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

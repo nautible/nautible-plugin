@@ -11,7 +11,7 @@ spec:
   source:
     chart: keda
     repoURL: 'https://kedacore.github.io/charts'
-    targetRevision: 2.7.2
+    targetRevision: 2.11.1
     helm:
       version: v3
       releaseName: keda
@@ -22,3 +22,4 @@ spec:
       selfHeal: false
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true

@@ -11,7 +11,7 @@ spec:
   source:
     path: ''
     repoURL: 'https://dapr.github.io/helm-charts/'
-    targetRevision: 1.10.4
+    targetRevision: 1.12.2
     chart: dapr
     helm:
       parameters:

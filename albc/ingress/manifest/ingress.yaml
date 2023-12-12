@@ -10,7 +10,7 @@ metadata:
     alb.ingress.kubernetes.io/group.name: nautible-alb-ingress
     alb.ingress.kubernetes.io/healthcheck-port: '31234'
     alb.ingress.kubernetes.io/healthcheck-path: '/healthz/ready'
-    alb.ingress.kubernetes.io/security-groups: 'nautible-dev-cluster-v1_27-albc-sg' # 対象のセキュリティグループに変更する。idまたは名称を指定する。
+    alb.ingress.kubernetes.io/security-groups: 'nautible-dev-cluster-v1_28-albc-sg' # 対象のセキュリティグループに変更する。idまたは名称を指定する。
 spec:
   rules:
     - 

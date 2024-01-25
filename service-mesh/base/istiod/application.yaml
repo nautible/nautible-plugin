@@ -10,13 +10,13 @@ spec:
   source:
     path: 'manifests/charts/istio-control/istio-discovery'
     repoURL: 'https://github.com/istio/istio'
-    targetRevision: 1.13.3
+    targetRevision: 1.18.1
     helm:
       parameters:
         - name: 'global.hub'
           value: 'docker.io/istio'
         - name: 'global.tag'
-          value: '1.13.3'
+          value: '1.18.1'
         # Enable Envoy's access logging
         # https://istio.io/latest/docs/tasks/observability/logs/access-log/
         - name: 'meshConfig.accessLogFile'

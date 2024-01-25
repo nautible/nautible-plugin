@@ -47,6 +47,12 @@ keycloakはクラウドで管理しているシークレットの値をExternalS
 
 ### 2.3 SecretStoreを作成する。
 
+namespaceを作成する
+
+```bash
+$ kubectl create namespace keycloak
+```
+
 [secretsのドキュメント](../secrets/README.md)の手順を参考に以下のリソースを作成する。
 
 - AWS（SecretsManager）
@@ -64,7 +70,6 @@ keycloakはクラウドで管理しているシークレットの値をExternalS
 
 ### 2.4 keycloakにインポートするrealmのシークレットを作成する。
 ```bash
-$ kubectl create namespace keycloak
 $ kubectl create secret generic secret-keycloak-realm -n keycloak --from-file=auth/base/realm.json
 ```
 

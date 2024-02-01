@@ -19,7 +19,7 @@ kubectl apply -f metrics-server/application.yaml
 kubectl get deployment metrics-server -n kube-system
 ```
 
-```text
+```
 NAME             READY   UP-TO-DATE   AVAILABLE   AGE
 metrics-server   1/1     1            1           6m
 ```
@@ -28,7 +28,7 @@ metrics-server   1/1     1            1           6m
 kubectl top node
 ```
 
-```text
+```
 NAME                                               CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
 ip-192-168-1-71.ap-northeast-1.compute.internal    26m          1%     626Mi           19%       
 ip-192-168-2-120.ap-northeast-1.compute.internal   25m          1%     576Mi           18%       
@@ -39,7 +39,7 @@ ip-192-168-2-90.ap-northeast-1.compute.internal    25m          1%     701Mi    
 kubectl top pod -n kube-system
 ```
 
-```text
+```
 NAME                                  CPU(cores)   MEMORY(bytes)   
 aws-node-dsnl5                        3m           56Mi            
 aws-node-m82bm                        2m           56Mi            

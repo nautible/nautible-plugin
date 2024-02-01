@@ -3,7 +3,7 @@
 
 ## 1. 概要
 
-クラスタ内のリソース使用状況を取得するメトリクスサーバー
+クラスタ内のリソース使用状況を取得するメトリクスサーバー。ノード単位、Pod単位の基本的なメトリクス（CPU、メモリなど）を取得することができる。
 
 AWS（EKS）にはデフォルトで導入されないため、メトリクスを取得する際は導入する必要がある。
 
@@ -15,31 +15,35 @@ kubectl apply -f metrics-server/application.yaml
 
 ## 3. 確認
 
+### メトリクスサーバーの動作確認
+
 ```bash
 kubectl get deployment metrics-server -n kube-system
 ```
 
-```
+<pre>
 NAME             READY   UP-TO-DATE   AVAILABLE   AGE
 metrics-server   1/1     1            1           6m
-```
+</pre>
+
+### メトリクスの確認
 
 ```bash
 kubectl top node
 ```
 
-```
+<pre>
 NAME                                               CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
 ip-192-168-1-71.ap-northeast-1.compute.internal    26m          1%     626Mi           19%       
 ip-192-168-2-120.ap-northeast-1.compute.internal   25m          1%     576Mi           18%       
 ip-192-168-2-90.ap-northeast-1.compute.internal    25m          1%     701Mi           22%       
-```
+</pre>
 
 ```bash
 kubectl top pod -n kube-system
 ```
 
-```
+<pre>
 NAME                                  CPU(cores)   MEMORY(bytes)   
 aws-node-dsnl5                        3m           56Mi            
 aws-node-m82bm                        2m           56Mi            
@@ -55,7 +59,7 @@ kube-proxy-hpjnr                      1m           11Mi
 kube-proxy-l9stm                      1m           11Mi            
 kube-proxy-xkp8j                      1m           11Mi            
 metrics-server-967bc8b5c-h6pw7        2m           14Mi       
-```
+</pre>
 
 ## 4. 削除
 

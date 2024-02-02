@@ -42,10 +42,10 @@ cluster-autoscaler-aws-cluster-autoscaler   1/1     1            1           18d
 
 ## 4. 削除
 
-ArgoCDのコンソール画面よりclsuter-autoscalerの削除を行う。
+ArgoCDのコンソール画面よりcluster-autoscalerの削除を行う。
 
 コマンドラインによる削除を行う場合は、Argo CD CLIを使用してApplicationリソースを削除する。
 
 ```BASH
-argocd app delete argocd/clsuter-autoscaler
+argocd app delete argocd/cluster-autoscaler
 ```

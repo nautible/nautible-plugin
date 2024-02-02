@@ -3,14 +3,15 @@
 
 ## 1. 概要
 
-クラスタのノードをオートスケールするための機能を導入する。
+データプレーン（ワーカーノード）のオートスケール機能を導入する。
 
-AWS（EKS）にはデフォルトで導入されないため、Nodeのオートスケールを行う際は導入する必要がある。
+nautible-infraのTerraformコードからEKSをデプロイした場合、オートスケールの基盤としてEC2AutoScalingGroupを導入している。
+Cluster AutoscalerはPodのスケジュールに失敗した場合などにEC2AutoScalingGroupを使用してオートスケールを実現する。
 
 ## 2. 導入
 
 helm.parameters.valueの値を対象のクラスタ名、ロールarnに変更する。  
-※ロールはterraformで作成されます。
+※ロールはterraformで作成されます。terraformのoutputを参照してください。
 
 <pre>
     helm:

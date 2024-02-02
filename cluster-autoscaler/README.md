@@ -6,7 +6,8 @@
 データプレーン（ワーカーノード）のオートスケール機能を導入する。
 
 nautible-infraのTerraformコードからEKSをデプロイした場合、オートスケールの基盤としてEC2AutoScalingGroupを導入している。
-Cluster AutoscalerはPodのスケジュールに失敗した場合などにEC2AutoScalingGroupを使用してオートスケールを実現する。
+Cluster AutoscalerはPodのスケジュールに失敗した場合などにEC2AutoScalingGroupを使用してオートスケールを実現する。  
+（Karpenterを利用してオートスケールを実現する場合、本機能は必要ありません。）
 
 ## 2. 導入
 

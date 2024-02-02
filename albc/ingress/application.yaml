@@ -7,7 +7,7 @@ spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: kube-system
+    namespace: istio-system
   source:
     path: albc/ingress/manifest
     repoURL: https://github.com/nautible/nautible-plugin
@@ -15,3 +15,5 @@ spec:
   syncPolicy:
     automated:
       prune: true
+    syncOptions:
+      - CreateNamespace=true

@@ -64,7 +64,11 @@ aws-load-balancer-controller-ingress   <none>   *       k8s-nautiblealbingres-e1
 
 ## 4. 削除
 
+ArgoCDのコンソール画面よりaws-load-balancer-controller-ingressおよびaws-load-balancer-controllerの削除を行う。
+
+コマンドラインによる削除を行う場合は、Argo CD CLIを使用してApplicationリソースを削除する。
+
 ```BASH
-$ kubectl delete -f albc/ingress/application.yaml
-$ kubectl delete -f albc/application.yaml
+$ argocd app delete argocd/aws-load-balancer-controller-ingress
+$ argocd app delete argocd/aws-load-balancer-controller
 ```

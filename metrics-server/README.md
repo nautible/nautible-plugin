@@ -65,9 +65,8 @@ metrics-server-967bc8b5c-h6pw7        2m           14Mi
 
 ArgoCDのコンソール画面よりmetrics-serverの削除を行う。
 
-kubectlによる削除を行う場合は、Applicationリソースおよびmetrics-serverリソースの両方を削除する。
+コマンドラインによる削除を行う場合は、Argo CD CLIを使用してApplicationリソースを削除する。
 
 ```
-kubectl delete -f metrics-server/application.yaml
-kubectl delete -f metrics-server/manifests/.
+argocd app delete argocd/metrics-server
 ```

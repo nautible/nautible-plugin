@@ -1,6 +1,6 @@
 # Secrets
 
-クラウドの機密情報管理サービス（AWS:AWS Secrets Manager / Azure:Azure Key Vault / GoogleCloud:SecretManager）で管理している機密情報にKubernetesからアクセスする仕組みを提供する。
+クラウドの機密情報管理サービス（AWS: AWS Secrets Manager / Azure: Azure Key Vault / GoogleCloud: SecretManager）で管理している機密情報にKubernetesからアクセスする仕組みを提供する。
 
 ## 1. 概要
 

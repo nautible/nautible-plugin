@@ -44,7 +44,7 @@ examples
   └ Redisにイベントを送信するテストジョブ
 </pre>
 
-### KEDA ScaleObjectの導入（イベントソースとしてRedisを設定）
+### 動作確認用リソースの導入
 
 ```bash
 kubectl apply -f examples/setup/.
@@ -107,6 +107,8 @@ keda-test-job-lq2ld        0/1     Completed   0          9s
 receiver-f7f5c78c5-cf894   1/1     Running     0          2s
 redis-78dbb788cf-ld4ft     1/1     Running     0          110s
 </pre>
+
+なお、本サンプルではreceiverに単純な nginx Pod を用いているため、スケールアウトの確認のみでスケールインの確認はできません。スケールインの確認をする場合はreceiverとなるアプリケーション側でキューからイベントデータを取得し、キュー側のデータを削除する処理を実装する必要があります。
 
 ## 5. 削除
 

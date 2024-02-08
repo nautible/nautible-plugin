@@ -15,6 +15,16 @@ spec:
     helm:
       version: v3
       releaseName: keda
+      # parameter https://github.com/kedacore/charts/blob/main/keda/values.yaml
+      parameters:
+      - name: 'operator.replicaCount'
+        value: '1'
+      - name: 'metricsServer.replicaCount'
+        value: '1'
+      - name: 'webhooks.enabled'
+        value: 'true'
+      - name: 'webhooks.replicaCount'
+        value: '1'
   project: default
   syncPolicy:
     automated:

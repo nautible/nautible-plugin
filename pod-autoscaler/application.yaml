@@ -11,7 +11,7 @@ spec:
   source:
     chart: keda
     repoURL: 'https://kedacore.github.io/charts'
-    targetRevision: 2.11.1
+    targetRevision: 2.13.1
     helm:
       version: v3
       releaseName: keda
@@ -21,8 +21,6 @@ spec:
         value: '1'
       - name: 'metricsServer.replicaCount'
         value: '1'
-      - name: 'webhooks.enabled'
-        value: 'true'
       - name: 'webhooks.replicaCount'
         value: '1'
   project: default

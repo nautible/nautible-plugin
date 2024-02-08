@@ -1,0 +1,20 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: redis-scaledobject
+  namespace: default
+spec:
+  idleReplicaCount: 0
+  minReplicaCount: 0
+  maxReplicaCount: 4
+  pollingInterval: 3  # Optional. Default: 30 seconds
+  cooldownPeriod:  5 # Optional. Default: 300 seconds
+  scaleTargetRef:
+    name: receiver
+  triggers:
+    - type: redis
+      metadata:
+        # KEDAのOperatorからアクセスされるので、Service名を指定する
+        address: redis.default.svc.cluster.local:6379
+        listName: default
+        listLength: "10"

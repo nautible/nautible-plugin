@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: keda-test-job
+  namespace: default
+spec:
+  ttlSecondsAfterFinished: 10
+  template:
+    spec:
+      containers:
+      - name: redis
+        image: kedacore/tests-redis-lists:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: REDIS_ADDRESS
+          value: redis:6379
+        - name: LIST_NAME
+          value: default
+        - name: NO_LIST_ITEMS_TO_WRITE
+          value: "1"
+        args: ["write"]
+      restartPolicy: Never
+  backoffLimit: 4

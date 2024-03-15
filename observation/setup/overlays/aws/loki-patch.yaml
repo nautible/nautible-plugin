@@ -6,6 +6,8 @@ metadata:
 spec:
   source:
     helm: # use S3 strage
+      version: v3
+      releaseName: loki
       parameters:
         - name: 'loki.auth_enabled'
           value: true

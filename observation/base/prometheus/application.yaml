@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    # ref https://github.com/prometheus-community/helm-charts
+    chart: 'kube-prometheus-stack'
+    repoURL: https://prometheus-community.github.io/helm-charts/
+    targetRevision: 57.0.3
+    helm:
+      version: v3
+      values: |
+        prometheus:
+          prometheusSpec:
+            scrapeInterval: "30s"
+            scrapeTimeout: "10s"
+            replicas: 1
+            enableFeatures:
+            - exemplar-storage
+            additionalScrapeConfigs:
+            - job_name: otel
+              metrics_path: "/actuator/prometheus"
+              static_configs:
+              - targets: ['springboot3-front.default.svc.cluster.local:8080','springboot3-back.default.svc.cluster.local:8080'] 
+        alertmanager:
+          alertmanagerSpec:
+            replicas: 1
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

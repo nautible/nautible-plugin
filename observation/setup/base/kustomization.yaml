@@ -6,5 +6,4 @@ resources:
   - promtail/application.yaml
   - loki/application.yaml
   - otel/operator.yaml
-  - otel/collector.yaml
   - tempo/application.yaml

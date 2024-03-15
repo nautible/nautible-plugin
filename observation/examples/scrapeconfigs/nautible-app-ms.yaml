@@ -1,0 +1,9 @@
+- job_name: nautible-app-ms-java
+  metrics_path: '/actuator/prometheus'
+  static_configs:
+    - targets:
+        [
+          'order.nautible-app-ms.svc.cluster.local:8080',
+          'product.nautible-app-ms.svc.cluster.local:8080',
+          'stock.nautible-app-ms.svc.cluster.local:8080',
+        ]

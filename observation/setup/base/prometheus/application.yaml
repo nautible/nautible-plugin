@@ -25,11 +25,6 @@ spec:
             replicas: 1
             enableFeatures:
             - exemplar-storage
-            additionalScrapeConfigs:
-            - job_name: otel
-              metrics_path: "/actuator/prometheus"
-              static_configs:
-              - targets: ['springboot3-front.default.svc.cluster.local:8080','springboot3-back.default.svc.cluster.local:8080'] 
         alertmanager:
           alertmanagerSpec:
             replicas: 1

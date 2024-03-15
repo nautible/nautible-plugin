@@ -17,15 +17,6 @@ spec:
     helm: # minimum replicas and default storageClass
       version: v3
       releaseName: loki
-      values: |
-        loki:
-          auth_enabled: false
-          commonConfig:
-            replication_factor: 1
-          storage:
-            type: 'filesystem'
-        singleBinary:
-          replicas: 1
   project: default
   syncPolicy:
     automated:

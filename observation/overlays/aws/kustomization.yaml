@@ -1,24 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-bases:
-  - ../../base
-patchesJson6902:
-  # see base\loki\application.yaml
-  - target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: Application
-      name: loki
-    # fix value
-    patch: |-
-      - op: replace
-        path: /spec/source/helm/values
-        value: |-
-        loki:
-          auth_enabled: false
-          commonConfig:
-            replication_factor: 1
-          storage:
-            type: 'filesystem'
-        singleBinary:
-          replicas: 1
+resoruces:
+  - ../../base/
+patches:
+  - path: loki-patch.yaml

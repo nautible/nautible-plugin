@@ -18,9 +18,9 @@ spec:
       version: v3
       values: |
         loki:
-          auth_enabled: "false"
+          auth_enabled: false
           commonConfig:
-            replication_factor: "1"
+            replication_factor: 1
           storage:
             bucketNames:
               chunks: nautible-plugin-dev-loki-ap-northeast-1
@@ -30,9 +30,12 @@ spec:
             s3:
               region: ap-northeast-1
           write:
-            replicas: "1"
+            replicas: 1
           read:
-            replicas: "1"
+            replicas: 1
+        serviceAccount:
+          create: true
+          name: loki-sa
   project: default
   syncPolicy:
     automated:

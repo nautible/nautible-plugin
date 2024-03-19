@@ -3,14 +3,11 @@ kind: Application
 metadata:
   name: cert-manager
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
-    # ref https://github.com/grafana/loki/tree/main/production/helm/loki
     chart: 'cert-manager'
     repoURL: 'https://charts.jetstack.io'
     targetRevision: 1.14.4 # application v1.14.4

@@ -16,6 +16,7 @@ spec:
     targetRevision: 5.44.4 # application v2.9.4
     helm: # minimum replicas and default storageClass
       version: v3
+      releaseName: loki
       values: |
         loki:
           auth_enabled: false
@@ -29,14 +30,8 @@ spec:
             type: s3
             s3:
               region: ap-northeast-1
-          storage_config:
-            aws:
-              region: ap-northeast-1
-              bucketnames: nautible-plugin-dev-loki-ap-northeast-1
-              s3forcepathstyle: false
-            boltdb_shipper:
-              shared_store: s3
-              cache_ttl: 24h
+              s3ForcePathStyle: false
+              insecure: false
           write:
             replicas: 1
           read:

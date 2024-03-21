@@ -32,10 +32,14 @@ spec:
               region: ap-northeast-1
               s3ForcePathStyle: false
               insecure: false
-          write:
-            replicas: 1
-          read:
-            replicas: 1
+        gateway:
+          replicas: 1
+        backend:
+          replicas: 1
+        write:
+          replicas: 1
+        read:
+          replicas: 1
         serviceAccount:
           create: true
           name: loki-sa

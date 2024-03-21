@@ -13,11 +13,13 @@ spec:
     # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed
     chart: 'tempo-distributed'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 1.8.5 # application v2.3.1
+    targetRevision: 1.9.0 # application v2.4.0
     helm: # minimum replicas and default storageClass
       version: v3
       releaseName: tempo
       values: |
+        ingester:
+          replicas: 1
         traces:
           otlp:
             http:

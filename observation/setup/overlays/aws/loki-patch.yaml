@@ -36,4 +36,4 @@ spec:
           priorityClassName: daemonset-priority
         serviceAccount:
           create: true
-          name: observation-sa
+          name: loki-sa

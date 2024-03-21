@@ -7,6 +7,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   source:
+    chart: 'tempo-distributed'
     # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed
     helm: # minimum replicas and default storageClass
       values: |
@@ -26,7 +27,7 @@ spec:
                 http:
         serviceAccount:
           create: true
-          name: observation-sa
+          name: tempo-sa
         storage:
           trace:
             backend: s3

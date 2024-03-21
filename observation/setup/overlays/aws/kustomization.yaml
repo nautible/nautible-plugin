@@ -4,3 +4,4 @@ resources:
   - ../../base
 patches:
   - path: loki-patch.yaml
+  - path: tempo-patch.yaml

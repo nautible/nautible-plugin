@@ -17,6 +17,7 @@ spec:
     helm:
       version: v3
       values: |
+        priorityClassName: daemonset-priority
         serviceMonitor:
           enabled: true
         config:

@@ -6,17 +6,9 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  destination:
-    namespace: monitoring
-    server: 'https://kubernetes.default.svc'
   source:
     # ref https://github.com/grafana/loki/tree/main/production/helm/loki
-    chart: 'loki'
-    repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 5.44.4 # application v2.9.4
     helm: # minimum replicas and default storageClass
-      version: v3
-      releaseName: loki
       values: |
         loki:
           auth_enabled: false
@@ -40,16 +32,8 @@ spec:
           replicas: 1
         read:
           replicas: 1
+        lokiCanary:
+          priorityClassName: daemonset-priority
         serviceAccount:
           create: true
-          name: loki-sa
-  #          annotations:
-  #            arn:aws:iam::<ACCOUNT_ID>:role/nautible-plugin-dev-loki-bucket-role
-  project: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: false
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
+          name: observation-sa

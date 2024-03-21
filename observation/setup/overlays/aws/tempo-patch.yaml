@@ -12,8 +12,6 @@ spec:
       values: |
         ingester:
           replicas: 1
-          persistence:
-            enabled: true
         traces:
           otlp:
             http:

@@ -26,7 +26,7 @@ spec:
                 grpc:
                 http:
         serviceAccount:
-          create: true
+          create: false
           name: tempo-sa
         storage:
           trace:

@@ -35,5 +35,5 @@ spec:
         lokiCanary:
           priorityClassName: daemonset-priority
         serviceAccount:
-          create: true
+          create: false
           name: loki-sa

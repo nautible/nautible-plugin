@@ -12,7 +12,7 @@ spec:
     helm: # minimum replicas and default storageClass
       values: |
         ingester:
-          replicas: 1
+          replicas: 2
         traces:
           otlp:
             http:

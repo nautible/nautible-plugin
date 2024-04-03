@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: promtail
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  source:
+    # ref https://github.com/grafana/helm-charts/tree/main/charts/promtail/
+    helm:
+      values: |
+        priorityClassName: daemonset-priority
+        serviceMonitor:
+          enabled: true
+        config:
+          clients:
+          - url: http://loki-gateway:3100/loki/api/v1/push
+          snippets:
+            pipelineStages:
+            - docker:

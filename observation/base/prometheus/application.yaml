@@ -14,20 +14,10 @@ spec:
     # ref https://github.com/prometheus-community/helm-charts
     chart: 'kube-prometheus-stack'
     repoURL: https://prometheus-community.github.io/helm-charts/
-    targetRevision: 57.0.3
+    targetRevision: 58.0.0
     helm:
       version: v3
-      values: |
-        prometheus:
-          prometheusSpec:
-            scrapeInterval: "30s"
-            scrapeTimeout: "10s"
-            replicas: 1
-            enableFeatures:
-            - exemplar-storage
-        alertmanager:
-          alertmanagerSpec:
-            replicas: 1
+      releaseName: prometheus
   syncPolicy:
     automated:
       prune: true

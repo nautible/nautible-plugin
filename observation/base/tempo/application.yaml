@@ -16,21 +16,6 @@ spec:
     helm: # minimum replicas and default storageClass
       version: v3
       releaseName: tempo
-      values: |
-        ingester:
-          replicas: 1
-        traces:
-          otlp:
-            http:
-              enabled: true
-            grpc:
-              enabled: true
-        distributor:
-          receivers:
-            otlp:
-              protocols:
-                grpc:
-                http:
   project: default
   syncPolicy:
     automated:

@@ -16,16 +16,7 @@ spec:
     targetRevision: 6.15.5 # application 2.9.3
     helm:
       version: v3
-      values: |
-        priorityClassName: daemonset-priority
-        serviceMonitor:
-          enabled: true
-        config:
-          clients:
-          - url: http://loki:3100/loki/api/v1/push
-          snippets:
-            pipelineStages:
-            - docker:
+      releaseName: promtail
   project: default
   syncPolicy:
     automated:

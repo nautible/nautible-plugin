@@ -24,12 +24,6 @@ spec:
             - exemplar-storage
             web:
               externalUrl: 
-            serviceMonitorNamespaceSelector:
-              matchLabels:
-              - monitoring: enabled
-            podMonitorNamespaceSelector:
-              matchLabels:
-              - monitoring: enabled
         alertmanager:
           enabled: false
   syncPolicy:

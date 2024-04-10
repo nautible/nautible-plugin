@@ -22,6 +22,14 @@ spec:
             replicas: 1
             enableFeatures:
             - exemplar-storage
+            web:
+              externalUrl: 
+            serviceMonitorNamespaceSelector:
+              matchLabels:
+              - monitoring: enabled
+            podMonitorNamespaceSelector:
+              matchLabels:
+              - monitoring: enabled
         alertmanager:
           enabled: false
   syncPolicy:

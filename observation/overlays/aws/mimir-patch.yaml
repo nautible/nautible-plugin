@@ -10,18 +10,22 @@ spec:
     # ref https://github.com/grafana/mimir/tree/main/operations/helm/charts/mimir-distributed
     helm:
       value: |
-        mimir:
-          alertmanager_storage:
-            backend: s3
-            s3:
-              bucket_name: nautible-plugin-dev-ap-northeast-1-ruler
-          blocks_storage:
-            backend: s3
-            s3:
-              bucket_name: nautible-plugin-dev-ap-northeast-1-tsdb
         serviceAccount:
           create: false
           name: mimir-sa
+        mimir:
+          structuredConfig:
+            common:
+              storage:
+                backend: s3
+                s3:
+                  bucket_name: nautible-plugin-dev-ap-northeast-1-tsdb
+        minio:
+          enabled: false
+        ruler:
+          enabled: false
+        alertmanager:
+          enabled: false
 
   project: default
   syncPolicy:

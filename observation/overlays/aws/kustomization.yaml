@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ../../base
 patches:
+  - path: mimir-patch.yaml
   - path: prometheus-patch.yaml
   - path: loki-patch.yaml
   - path: promtail-patch.yaml

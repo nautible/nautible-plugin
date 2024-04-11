@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tempo
+  name: mimir
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -10,12 +10,13 @@ spec:
     namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
-    # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed
+    # ref https://github.com/grafana/mimir/tree/main/operations/helm/charts/mimir-distributed
+    chart: 'mimir-distributed'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 1.9.1 # application v2.4.1
+    targetRevision: 5.3.0 # application v2.12.0
     helm: # minimum replicas and default storageClass
       version: v3
-      releaseName: tempo
+      releaseName: mimir
   project: default
   syncPolicy:
     automated:

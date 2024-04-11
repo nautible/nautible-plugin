@@ -16,9 +16,9 @@ spec:
             replication_factor: 1
           storage:
             bucketNames:
-              chunks: nautible-plugin-dev-loki-ap-northeast-1
-              ruler: nautible-plugin-dev-loki-ap-northeast-1
-              admin: nautible-plugin-dev-loki-ap-northeast-1
+              chunks: nautible-plugin-dev-loki-ap-northeast-1-chunks
+              ruler: nautible-plugin-dev-loki-ap-northeast-1-ruler
+              admin: nautible-plugin-dev-loki-ap-northeast-1-admin
             type: s3
             s3:
               region: ap-northeast-1

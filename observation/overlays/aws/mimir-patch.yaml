@@ -19,7 +19,9 @@ spec:
               storage:
                 backend: s3
                 s3:
-                  bucket_name: nautible-plugin-dev-ap-northeast-1-tsdb
+                  bucket_name: nautible-plugin-dev-mimir-ap-northeast-1-tsdb
+        store_gateway:
+          priorityClassName: daemonset-priority
         minio:
           enabled: false
         ruler:

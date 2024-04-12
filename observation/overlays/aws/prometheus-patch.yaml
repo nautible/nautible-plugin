@@ -18,7 +18,7 @@ spec:
           agentMode: true
           prometheusSpec:
             remoteWrite: 
-              url: http://mimir-distributor-headless:8080/api/v1/push
+            - url: http://mimir-distributor-headless:8080/api/v1/push
             scrapeInterval: "30s"
             scrapeTimeout: "10s"
             replicas: 1

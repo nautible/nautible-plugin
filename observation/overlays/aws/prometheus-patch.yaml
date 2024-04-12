@@ -19,6 +19,10 @@ spec:
           prometheusSpec:
             remoteWrite: 
             - url: http://mimir-distributor-headless:8080/api/v1/push
+              sendExemplars: true
+              sendNativeHistograms: true
+              headers:
+                X-Scope-OrgID: nautible 
             scrapeInterval: "30s"
             scrapeTimeout: "10s"
             replicas: 1

@@ -17,6 +17,7 @@ spec:
         prometheus:
           agentMode: true
           prometheusSpec:
+            externalUrl: http://mimir-distributor/api/v1/push
             scrapeInterval: "30s"
             scrapeTimeout: "10s"
             replicas: 1

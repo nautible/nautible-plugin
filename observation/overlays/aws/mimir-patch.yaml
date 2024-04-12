@@ -21,13 +21,32 @@ spec:
                 s3:
                   bucket_name: nautible-plugin-dev-mimir-ap-northeast-1-tsdb
         store_gateway:
+          replicas: 1
           priorityClassName: daemonset-priority
         minio:
           enabled: false
+        distributor:
+          replicas: 1
+        ingester:
+          replicas: 1
+        overrides_exporter:
+          replicas: 1
         ruler:
           enabled: false
         alertmanager:
           enabled: false
+        querier:
+          replicas: 1
+        query_frontend: 
+          replicas: 1
+        query_scheduler:
+          replicas: 1
+        compactor:
+          replicas: 1
+        gateway:
+          replicas: 1
+        admin_api:
+          replicas: 1
 
   project: default
   syncPolicy:

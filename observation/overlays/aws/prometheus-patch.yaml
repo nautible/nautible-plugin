@@ -17,14 +17,13 @@ spec:
         prometheus:
           agentMode: true
           prometheusSpec:
-            externalUrl: http://mimir-distributor-headless:8080/api/v1/push
+            remoteWrite: 
+              url: http://mimir-distributor-headless:8080/api/v1/push
             scrapeInterval: "30s"
             scrapeTimeout: "10s"
             replicas: 1
             enableFeatures:
             - exemplar-storage
-            web:
-              externalUrl: 
         alertmanager:
           enabled: false
   syncPolicy:

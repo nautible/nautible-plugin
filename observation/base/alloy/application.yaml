@@ -10,7 +10,7 @@ spec:
     namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
-    # ref https://github.com/grafana/helm-charts/tree/main/charts/grafana
+    # ref https://github.com/grafana/alloy/tree/main/operations/helm/charts/alloy
     chart: 'alloy'
     repoURL: 'https://grafana.github.io/helm-charts'
     targetRevision: 0.1.1 # application v1.0.0

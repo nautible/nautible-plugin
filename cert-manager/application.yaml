@@ -13,6 +13,12 @@ spec:
     targetRevision: 1.14.4 # application v1.14.4
     helm:
       version: v3
+      # installCRDsはvalues.yamlのコメントではdeplicatedとなっているが、1.14.4時点ではtrueを指定しないとCRDが作成されなかった
+      values: |
+        installCRDs: true
+        crds:
+          enabled: true
+          keep: true
   project: default
   syncPolicy:
     automated:

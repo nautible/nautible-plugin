@@ -7,7 +7,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   source:
-    # ref https://github.com/grafana/helm-charts/tree/main/charts/grafana
+    # ref https://github.com/grafana/alloy/tree/main/operations/helm/charts/alloy
     helm:
       values: |
         alloy:

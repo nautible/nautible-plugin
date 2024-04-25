@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: alloy-config
+  name: config.alloy
   namespace: monitoring
-data: |-
+data:
+  config.alloy: |
     // prometheus reciever
     prometheus.scrape "node" {
     targets = [{

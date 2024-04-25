@@ -23,7 +23,7 @@ spec:
           mounts:
             varlog: true
             dockercontainers: true
-        configMap:
-          create: false
-          name: alloy-config
-          key: config.alloy
+          configMap:
+            create: false
+            name: alloy-config
+            key: config.alloy

@@ -1,27 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tempo
+  name: prometheus-node-exporter
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: monitoring
-    server: 'https://kubernetes.default.svc'
+    server: https://kubernetes.default.svc
+  project: default
   source:
-    # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed
-    chart: 'tempo-distributed'
-    repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 1.9.4 # application v2.4.1
+    # ref https://github.com/prometheus-community/helm-charts
+    chart: 'prometheus-node-exporter'
+    repoURL: https://prometheus-community.github.io/helm-charts/
+    targetRevision: 58.0.0
     helm:
       version: v3
-      releaseName: tempo
-  project: default
+      releaseName: prometheus-node-exporter
   syncPolicy:
     automated:
       prune: true
-      selfHeal: false
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true

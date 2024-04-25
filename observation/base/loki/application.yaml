@@ -15,7 +15,7 @@ spec:
     repoURL: 'https://grafana.github.io/helm-charts'
     #targetRevision: 6.1.0 # application v3.0.0
     targetRevision: 5.47.2 # application v2.9.6
-    helm: # minimum replicas and default storageClass
+    helm:
       version: v3
       releaseName: loki
   project: default

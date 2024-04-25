@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: promtail
+  name: grafana
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -10,13 +10,13 @@ spec:
     namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
-    # ref https://github.com/grafana/helm-charts/tree/main/charts/promtail/
-    chart: 'promtail'
+    # ref https://github.com/grafana/helm-charts/tree/main/charts/grafana
+    chart: 'grafana'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 6.15.5 # application 2.9.3
+    targetRevision: 7.3.9 # application 10.4.1
     helm:
       version: v3
-      releaseName: promtail
+      releaseName: grafana
   project: default
   syncPolicy:
     automated:
@@ -24,3 +24,4 @@ spec:
       selfHeal: false
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true

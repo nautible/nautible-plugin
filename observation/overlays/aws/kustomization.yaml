@@ -4,6 +4,7 @@ resources:
   - ../../base
   - ./alloy-config.yaml
 patches:
+  - path: grafana-patch.yaml
   - path: mimir-patch.yaml
   - path: loki-patch.yaml
   - path: alloy-patch.yaml

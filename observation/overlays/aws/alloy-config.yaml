@@ -131,7 +131,7 @@ data:
     }
     tracing {
         // Write all spans. Don't do this in production!
-        sampling_fraction = 1.0
+        sampling_fraction = 0.1
 
         // Forward internal spans to the local Tempo instance.
         write_to = [otelcol.exporter.otlp.tempo.input]

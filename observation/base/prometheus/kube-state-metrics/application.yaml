@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus-node-exporter
+  name: kube-state-metrics
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -12,12 +12,12 @@ spec:
   project: default
   source:
     # ref https://github.com/prometheus-community/helm-charts
-    chart: 'prometheus-node-exporter'
+    chart: 'kube-state-metrics'
     repoURL: https://prometheus-community.github.io/helm-charts/
-    targetRevision: 58.0.0
+    targetRevision: 5.19.0 # application 2.12.0
     helm:
       version: v3
-      releaseName: prometheus-node-exporter
+      releaseName: kube-state-metrics
   syncPolicy:
     automated:
       prune: true

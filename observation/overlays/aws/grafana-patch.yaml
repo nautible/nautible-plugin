@@ -13,10 +13,10 @@ spec:
         persistence:
           type: pvc
           enabled: true
-          storageClassName: default
+          storageClassName: gp2
           accessModes:
             - ReadWriteOnce
-          size: 10Gi
+          size: 2Gi
           # annotations: {}
           finalizers:
             - kubernetes.io/pvc-protection

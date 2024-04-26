@@ -80,8 +80,8 @@ OpenTelemetry は開発言語ごとにサポート状況が異なるため、最
 
 ## 導入手順
 
-[ローカル環境](./LOCAL.md)
+[ローカル環境](./docs/LOCAL.md)
 
-[AWS](./AWS.md)
+[AWS](./docs/AWS.md)
 
 Azure（TODO）

@@ -22,24 +22,6 @@
 
 ![architecture](./docs/architecture.png)
 
-## OpenTelemetry
-
-モニタリング情報、ロギング情報、トレース情報の収集構成には OpenTelemetry を利用している。
-
-OpenTelemetry は開発言語ごとにサポート状況が異なるため、最新の状態は[公式サイト](https://opentelemetry.io/docs/languages/)を参照。
-
-## アプリケーションへの OpenTelemetry 導入
-
-アプリケーションへの OpenTelemetry 機能導入には Auto Instrumentation 機能を利用して実現している。
-
-### Auto Instrumentation
-
-マニフェストファイルにアノテーションを付与しておくことで、デプロイ時に OpenTelemetry Operator が自動的に自動計測ライブラリを挿入する機能。
-
-![auto instrumentation](./docs/autoinstrumentation.png)
-
-参考：[Auto Instrumentation](https://opentelemetry.io/docs/kubernetes/operator/automatic/)
-
 ### モニタリング
 
 ノード情報、Kubernetes のリソース情報、各アプリケーションのステータスを Grafana Alloy から HTTP エンドポイント経由で収集する。収集したメトリクスは Grafana Mimir へ送信する。
@@ -71,6 +53,24 @@ Grafana Alloy を Daemonset で配置し、各ノードの Pod ログをマウ�
 なお、Java の自動計装ライブラリでは otlp/http にて送信で行うが、Node.js では otlp/grpc で送信を行うなど、言語ごとにプロトコルが異なる。（それに伴い Grafana Alloy 側の受信ポートが異なる）
 
 通信プロトコルについては、[Auto Instrumentation](https://opentelemetry.io/docs/kubernetes/operator/automatic/)の各言語の Instrumentation リソース例を参照。
+
+## OpenTelemetry
+
+モニタリング情報、ロギング情報、トレース情報の収集構成には OpenTelemetry を利用している。
+
+OpenTelemetry は開発言語ごとにサポート状況が異なるため、最新の状態は[公式サイト](https://opentelemetry.io/docs/languages/)を参照。
+
+## アプリケーションへの OpenTelemetry 導入
+
+アプリケーションへの OpenTelemetry 機能導入には Auto Instrumentation 機能を利用して実現している。
+
+### Auto Instrumentation
+
+マニフェストファイルにアノテーションを付与しておくことで、デプロイ時に OpenTelemetry Operator が自動的に自動計測ライブラリを挿入する機能。
+
+![auto instrumentation](./docs/autoinstrumentation.png)
+
+参考：[Auto Instrumentation](https://opentelemetry.io/docs/kubernetes/operator/automatic/)
 
 ## 永続化
 

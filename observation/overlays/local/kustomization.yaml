@@ -3,4 +3,7 @@ kind: Kustomization
 resources:
   - ../../base
 patches:
+  - path: grafana-patch.yaml
   - path: loki-patch.yaml
+  - path: tempo-patch.yaml
+  - path: prometheus.yaml

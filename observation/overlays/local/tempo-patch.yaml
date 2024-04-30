@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tempo
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  source:
+    chart: 'tempo'
+    targetRevision: 1.7.2 # application v2.3.1
+    # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo

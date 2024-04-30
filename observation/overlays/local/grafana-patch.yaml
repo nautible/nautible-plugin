@@ -1,0 +1,10 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  source:
+    # ref https://github.com/grafana/helm-charts/tree/main/charts/grafana

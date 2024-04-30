@@ -32,17 +32,13 @@ serviceAccount:
 Grafana Alloy の設定は下記 ConfigMap で実施している。各導入環境に合わせて設定内容を変更する。
 
 ```bash
-observation/overlays/aws/alloy-config.yaml
+observation/base/alloy/alloy-config.yaml
 ```
 
 ### パッチの設定変更
 
 各エコシステムのパッチについても必要に応じて変更を行う。デフォルトでは以下の設定としている。
 
-- observation/overlays/aws/alloy-patch.yaml
-  - 受信ポート設定（gRPC:4317 HTTP:4318）
-  - ログボリュームのマウント
-  - ConfigMap の読み込み
 - observation/overlays/aws/grafana-patch.yaml
   - 設定の永続化設定（2G のボリュームをマウント）
 - observation/overlays/aws/loki-patch.yaml
@@ -64,10 +60,11 @@ kubectl apply -f observation/overlays/aws/application.yaml
 
 ### 4. Auto Instrumentation の有効化
 
-計測を行う namespace に対して Instrumentation リソースをデプロイする。
+計測を行う namespace に対して Instrumentation リソースをデプロイする。  
+サンプルは nautible-app-examples に対して有効化している。
 
 ```bash
-kubectl apply -f observation/examples/otel/instrumentation.yaml
+kubectl apply -f observation/examples/instrumentation/nautible-app-examples.yaml
 ```
 
 ### アプリケーションへのアノテーション付与
@@ -103,7 +100,7 @@ spec:
 ### Instrumentation リソースの削除
 
 ```bash
-kubectl delete -f observation/examples/otel/instrumentation.yaml
+kubectl delete -f observation/examples/instrumentation/nautible-app-examples.yaml
 ```
 
 ### その他リソースの削除

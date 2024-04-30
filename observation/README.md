@@ -5,7 +5,7 @@
 オブザーバビリティでは Grafana プロジェクトをベースとしたモニタリング/ロギング/トレーシングの設定を行う。
 
 - Monitoring
-  - Grafana Mimir
+  - Grafana Mimir（※ローカル実行時は Prometheus）
 - Logging
   - Grafana Loki
 - Tracing
@@ -21,12 +21,14 @@
 ## 全体構成図
 
 ![architecture](./docs/architecture.png)
+※ローカル実行時は Mimir の替わりに Prometheus を導入
 
 ### モニタリング
 
 ノード情報、Kubernetes のリソース情報、各アプリケーションのステータスを Grafana Alloy から HTTP エンドポイント経由で収集する。収集したメトリクスは Grafana Mimir へ送信する。
 
 ![monitoring](./docs/monitoring.png)
+※ローカル実行時は Mimir の替わりに Prometheus を導入
 
 なお、エンドポイントのパスは以下の通り。  
 ※ アプリケーションは実装言語やフレームワークで異なるため、本例では Quarkus のみ参考として紹介。
@@ -50,7 +52,7 @@ Grafana Alloy を Daemonset で配置し、各ノードの Pod ログをマウ�
 
 ![tracing](./docs/tracing.png)
 
-なお、Java の自動計装ライブラリでは otlp/http にて送信で行うが、Node.js では otlp/grpc で送信を行うなど、言語ごとにプロトコルが異なる。（それに伴い Grafana Alloy 側の受信ポートが異なる）
+なお、Java の自動計装ライブラリでは otlp/http にて送信で行うが、Node.js では otlp/grpc で送信を行うなど言語ごとにプロトコルが異なる。（それに伴い Grafana Alloy 側の受信ポートが異なる）
 
 通信プロトコルについては、[Auto Instrumentation](https://opentelemetry.io/docs/kubernetes/operator/automatic/)の各言語の Instrumentation リソース例を参照。
 
@@ -76,7 +78,9 @@ OpenTelemetry は開発言語ごとにサポート状況が異なるため、最
 
 ローカル環境モードでは外部ストレージへの永続化を行わないため、Pod の削除でデータは削除される。
 
-クラウド環境では各クラウドのオブジェクトストレージに永続化を行う。（Mimir/Loki/Tempo ※Grafana の設定はボリュームストレージ）
+クラウド環境では各クラウドのオブジェクトストレージに永続化を行う。（Mimir/Loki/Tempo）
+
+※Grafana はボリュームストレージをノードにアタッチして永続化する
 
 ## 導入手順
 

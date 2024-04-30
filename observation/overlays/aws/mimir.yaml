@@ -29,6 +29,8 @@ spec:
                 s3:
                   bucket_name: nautible-plugin-dev-mimir-ap-northeast-1-tsdb
                   endpoint: s3.ap-northeast-1.amazonaws.com
+          runtimeConfig:
+            max_global_exemplars_per_user: 100000
         store_gateway:
           replicas: 1
           priorityClassName: daemonset-priority

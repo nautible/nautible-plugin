@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  source:
+    # ref https://github.com/grafana/loki/tree/main/production/helm/loki
+    chart: 'loki'
+    repoURL: 'https://grafana.github.io/helm-charts'
+    targetRevision: 6.5.0 # application v3.0.0
+    #targetRevision: 5.47.2 # application v2.9.6
+    helm:
+      version: v3
+      releaseName: loki
+      values: |
+        loki:
+          auth_enabled: false
+          commonConfig:
+            replication_factor: 1
+          storage:
+            type: s3
+          schemaConfig:
+            configs:
+              - from: 2024-04-01
+                store: tsdb
+                object_store: s3
+                schema: v13
+                index:
+                  prefix: loki_index_
+                  period: 24h
+
+        # Enable minio for storage
+        minio:
+          enabled: true
+        gateway:
+          replicas: 1
+        backend:
+          replicas: 1
+        write:
+          replicas: 1
+        read:
+          replicas: 1
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

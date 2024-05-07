@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  destination:
+    namespace: cert-manager
+    server: 'https://kubernetes.default.svc'
+  source:
+    chart: 'cert-manager'
+    repoURL: 'https://charts.jetstack.io'
+    targetRevision: 1.14.4 # application v1.14.4
+    helm:
+      version: v3
+      # installCRDsはvalues.yamlのコメントではdeplicatedとなっているが、1.14.4時点ではtrueを指定しないとCRDが作成されなかった
+      values: |
+        installCRDs: true
+        crds:
+          enabled: true
+          keep: true
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true

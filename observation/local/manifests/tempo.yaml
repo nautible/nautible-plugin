@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tempo
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  source:
+    # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed
+    chart: 'tempo'
+    repoURL: 'https://grafana.github.io/helm-charts'
+    targetRevision: 1.7.2 # application v2.3.1
+    helm:
+      version: v3
+      releaseName: tempo
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

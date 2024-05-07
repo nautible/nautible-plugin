@@ -14,12 +14,13 @@ spec:
     # ref https://github.com/open-telemetry/opentelemetry-helm-charts
     chart: 'opentelemetry-operator'
     repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts/
-    targetRevision: 0.48.0 # application 0.94.0  // 0.49.x以降には https://github.com/open-telemetry/opentelemetry-operator/issues/2582 がcloseしてから移行する
+    targetRevision: 0.56.0 # application 0.98.0
     helm:
       version: v3
       values: |
         manager:
-          featureGates: operator.autoinstrumentation.multi-instrumentation
+          collectorImage:
+            repository: otel/opentelemetry-collector-k8s
   syncPolicy:
     automated:
       prune: true

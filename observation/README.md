@@ -18,43 +18,37 @@
 - View
   - Grafana
 
-## 全体構成図
+## フォルダ構成
 
-![architecture](./docs/architecture.png)
-※ローカル実行時は Mimir の替わりに Prometheus を導入
+```text
+observation
+  ├─ cloud                 ・・・クラウド環境にデプロイするためのマニフェスト
+  │  ├─ base               ・・・クラウド環境に依存しない設定を配置
+  │  │    ├─ alloy         ・・・Grafana Alloy
+  │  │    ├─ grafana       ・・・Grafana
+  │  │    ├─ loki          ・・・Grafana Loki
+  │  │    ├─ otel          ・・・OpenTelemetry Operator
+  │  │    ├─ prometheus    ・・・node-exporter,kube-state-metrics
+  │  │    ├─ tempo
+  │  │    │  variables.tf　・・・開発用の設定値
+  │  └─ overlays           ・・・環境別のパッチを配置
+  │       └─  aws          ・・・AWS用の設定値
+  ├─ common                ・・・Daemonsetを優先配置するためのPriorityClass
+  ├─ docs                  ・・・ドキュメント一式
+  ├─ examples
+  │  └─ instrumentation    ・・・アプリケーションの自動計装を有効化するためのサンプルマニフェスト
+  ├─ local
+  │   └─ manifests         ・・・ローカル環境にデプロイするためのマニフェスト
+  └─ README.md             ・・・README(本ファイル)
+```
 
-### モニタリング
+## 導入手順
 
-ノード情報、Kubernetes のリソース情報、各アプリケーションのステータスを Grafana Alloy から HTTP エンドポイント経由で収集する。収集したメトリクスは Grafana Mimir へ送信する。
+[ローカル環境](./docs/LOCAL.md)
 
-![monitoring](./docs/monitoring.png)
-※ローカル実行時は Mimir の替わりに Prometheus を導入
+[AWS](./docs/AWS.md)
 
-なお、エンドポイントのパスは以下の通り。  
-※ アプリケーションは実装言語やフレームワークで異なるため、本例では Quarkus のみ参考として紹介。
-
-- prometheus-node-exporter
-  - /metrics
-- kube-state-metrics
-  - /metrics
-- Quarkus アプリケーション
-  - /q/metrics
-
-### ロギング
-
-Grafana Alloy を Daemonset で配置し、各ノードの Pod ログをマウントして収集する。収集したログデータは Grafana Alloy 上でラベリングをして Grafana Loki へ送信する。
-
-![logging](./docs/logging.png)
-
-### トレーシング
-
-アプリケーション Pod に導入する自動計装ライブラリから Grafana Alloy へ送信する。収集したデータは Grafana Tempo へ送信する。
-
-![tracing](./docs/tracing.png)
-
-なお、Java の自動計装ライブラリでは otlp/http にて送信で行うが、Node.js では otlp/grpc で送信を行うなど言語ごとにプロトコルが異なる。（それに伴い Grafana Alloy 側の受信ポートが異なる）
-
-通信プロトコルについては、[Auto Instrumentation](https://opentelemetry.io/docs/kubernetes/operator/automatic/)の各言語の Instrumentation リソース例を参照。
+Azure（TODO）
 
 ## OpenTelemetry
 
@@ -78,14 +72,6 @@ OpenTelemetry は開発言語ごとにサポート状況が異なるため、最
 
 ローカル環境モードでは外部ストレージへの永続化を行わないため、Pod の削除でデータは削除される。
 
-クラウド環境では各クラウドのオブジェクトストレージに永続化を行う。（Mimir/Loki/Tempo）
+クラウド環境では各クラウドのオブジェクトストレージに永続化を行う。（Grafana Mimir / Grafana Loki / Grafana Tempo）
 
 ※Grafana はボリュームストレージをノードにアタッチして永続化する
-
-## 導入手順
-
-[ローカル環境](./docs/LOCAL.md)
-
-[AWS](./docs/AWS.md)
-
-Azure（TODO）

@@ -66,6 +66,41 @@ data:
     }
     loki.source.file "podlog" {
         targets    = local.file_match.pods.targets
+        forward_to = [loki.process.docker.receiver]
+    }
+
+    loki.process "docker" {
+        stage.docker {}
+        stage.json {
+            expressions = {
+                level = "level"
+                timestamp = "timestamp"
+                hostName = "hostName"
+                message = "message"
+                mdc = "mdc"
+            }
+        }
+        stage.json {
+            expressions = {
+                x_request_id = "x-request-id",
+                url = "url",
+                http_method = "http-method",
+                gRPC_method = "gRPC-method",
+            }
+        }
+        stage.labels {
+            values = {
+                level = "",
+                timestamp = "",
+                hostName = "",
+                message = "",
+                mdc = "",
+                url = "",
+                x_request_id = "",
+                http_method = "",
+                gRPC_method = "",
+            }
+        }
         forward_to = [loki.write.loki.receiver]
     }
 

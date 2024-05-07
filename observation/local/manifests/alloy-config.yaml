@@ -47,7 +47,7 @@ data:
     // loki exporter
     loki.write "loki" {
         endpoint {
-            url = format("http://%s/loki/api/v1/push", coalesce(env("LOKI_HOST"), "loki-write:3100"),
+            url = format("http://%s/loki/api/v1/push", coalesce(env("LOKI_HOST"), "loki-gateway"),
             )
             headers = {
                 "X-Scope-OrgID" = "example",

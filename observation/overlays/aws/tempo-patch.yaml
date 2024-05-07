@@ -7,8 +7,6 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   source:
-    chart: 'tempo-distributed'
-    targetRevision: 1.9.4 # application v2.4.1
     # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed
     helm: # minimum replicas and default storageClass
       values: |

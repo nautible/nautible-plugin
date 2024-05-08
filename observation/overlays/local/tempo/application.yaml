@@ -10,7 +10,7 @@ spec:
     namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
-    # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed
+    # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo
     chart: 'tempo'
     repoURL: 'https://grafana.github.io/helm-charts'
     targetRevision: 1.7.2 # application v2.3.1

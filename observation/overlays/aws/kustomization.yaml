@@ -4,9 +4,9 @@ resources:
   - ../../base
   - ./alloy/config.yaml
   - ./mimir/application.yaml
-  - ./tempo/application.yaml
   - ./prometheus/kube-state-metrics.yaml
   - ./prometheus/prometheus-node-exporter.yaml
 patches:
   - path: grafana/patch.yaml
   - path: loki/patch.yaml
+  - path: tempo/patch.yaml

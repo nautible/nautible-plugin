@@ -6,3 +6,4 @@ resources:
   - grafana/application.yaml
   - loki/application.yaml
   - otel/application.yaml
+  - tempo/application.yaml

@@ -45,29 +45,24 @@ Grafana Alloy を Daemonset で配置し、各ノードの Pod ログをマウ�
 Grafana Alloy の設定は下記 ConfigMap で実施している。各導入環境に合わせて設定内容を変更する。
 
 ```bash
-observation/local/manifests/alloy-config.yaml
+observation/overlays/local/alloy/config.yaml
 ```
 
 #### HELM の設定変更
 
-各エコシステムの HELM パ r メータについても必要に応じて変更を行う。デフォルトでは以下の設定としている。
+各エコシステムの HELM パラメータについても必要に応じて変更を行う。デフォルトでは以下の設定としている。
 
-- observation/local/manifests/alloy.yaml
-  - 受信ポート指定
-  - ログマウント指定
-  - configMap 指定
-- observation/local/manifests/grafana.yaml
-  - デフォルト
-- observation/local/manifests/loki.yaml
+- observation/overlays/aws/grafana/patch.yaml
+  - 設定の永続化設定（1G のボリュームをマウント）
+- observation/overlays/aws/loki/patch.yaml
   - 認証不要
-  - ストレージ設定
+  - minio への永続設定
   - レプリカ設定（すべて 1）
-- observation/local/manifests/operator.yaml
-  - コレクタのリポジトリ指定
-- observation/local/manifests/prometheus.yaml
+  - キャッシュ無効化
+  - ストレージサイズ変更（2Gi）
+- observation/overlays/local/prometheus/application.yaml
   - スクレイプ設定
-- observation/local/manifests/tempo.yaml
-  - シングルバイナリモードの HELM チャートを利用
+  - ストレージサイズ変更（2Gi）
 
 #### エコシステムのデプロイ
 

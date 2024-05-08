@@ -22,7 +22,7 @@
 
 ### ロギング
 
-Grafana Alloy を Daemonset で配置し、各ノードの Pod ログをマウントして収集する。収集したログデータは Grafana Alloy 上でラベリングをして Grafana Loki へ送信する。
+Grafana Alloy を Daemonset で配置し、各ノードの Pod ログをマウントして収集する。収集したログデータは Grafana Loki へ送信する。
 
 ![logging](logging_local.png)
 
@@ -72,29 +72,5 @@ observation/local/manifests/alloy-config.yaml
 #### エコシステムのデプロイ
 
 ```bash
-kubectl create ns monitoring
-kubectl apply -f observation/local/manifests/.
-```
-
-## 3. 削除
-
-### 3.1 Instrumentation リソースの削除
-
-```bash
-kubectl delete -f observation/examples/instrumentation/nautible-app-examples.yaml
-```
-
-### 3.2 その他リソースの削除
-
-ArgoCD のコンソール画面より 各エコシステム の削除を行う。
-
-コマンドラインによる削除を行う場合は、Argo CD CLI を使用して Application リソースを削除する。
-
-```
-argocd app delete argocd/alloy
-argocd app delete argocd/grafana
-argocd app delete argocd/loki
-argocd app delete argocd/prometheus
-argocd app delete argocd/tempo
-argocd app delete argocd/opentelemetry-operator
+kubectl apply -f observation/overlays/local/application.yaml.
 ```

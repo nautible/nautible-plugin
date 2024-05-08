@@ -19,6 +19,10 @@ spec:
       version: v3
       releaseName: prometheus
       values: |
+        server:
+          persistentVolume: 2Gi
+        alertmanager:
+          persistentVolume: 2Gi
         prometheus-pushgateway:
           enabled: false
         extraScrapeConfigs: |

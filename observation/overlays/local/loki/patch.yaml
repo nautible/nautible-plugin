@@ -38,14 +38,22 @@ spec:
         # Enable minio for storage
         minio:
           enabled: true
+          persistence:
+            size: 2Gi
         gateway:
           replicas: 1
         backend:
           replicas: 1
+          persistence:
+            size: 2Gi
         write:
           replicas: 1
+          persistence:
+            size: 2Gi
         read:
           replicas: 1
+          persistence:
+            size: 2Gi
         chunksCache:
           enabled: false
   project: default

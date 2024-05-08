@@ -124,6 +124,9 @@ data:
         endpoint {
             url = format("http://%s/api/v1/push", coalesce(env("REMOTE_WRITE_HOST"), "mimir-distributor-headless:8080"),
             )
+            headers = {
+                "X-Scope-OrgID" = "nautible",
+            }
         }
     }
 
@@ -132,6 +135,9 @@ data:
         endpoint {
             url = format("http://%s/loki/api/v1/push", coalesce(env("LOKI_HOST"), "loki-gateway"),
             )
+            headers = {
+                "X-Scope-OrgID" = "nautible",
+            }
         }
     }
 
@@ -139,6 +145,9 @@ data:
     otelcol.exporter.otlp "tempo" {
         client {
             endpoint = coalesce(env("TEMPO_HOST"), "tempo:4317")
+            headers = {
+                "X-Scope-OrgID" = "nautible",
+            }
             tls {
                 insecure = true
             }

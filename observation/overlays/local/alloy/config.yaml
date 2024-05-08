@@ -49,9 +49,6 @@ data:
         endpoint {
             url = format("http://%s/loki/api/v1/push", coalesce(env("LOKI_HOST"), "loki-gateway"),
             )
-            headers = {
-                "X-Scope-OrgID" = "example",
-            }
         }
     }
 
@@ -59,9 +56,6 @@ data:
     otelcol.exporter.otlp "tempo" {
         client {
             endpoint = coalesce(env("TEMPO_HOST"), "tempo:4317")
-            headers = {
-                "X-Scope-OrgID" = "example",
-            }
             tls {
                 insecure = true
             }

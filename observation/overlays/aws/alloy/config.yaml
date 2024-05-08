@@ -60,7 +60,32 @@ data:
         forward_to = [loki.process.docker.receiver]
     }
 
+    // otel reciever
+    otelcol.receiver.otlp "otlp" {
+        grpc {
+            endpoint = "0.0.0.0:4317"
+        }
+        http {
+            endpoint = "0.0.0.0:4318"
+        }
+        output {
+            traces  = [otelcol.processor.memory_limiter.otlp.input]
+        }
+    }
+
+    // processer
+    otelcol.processor.memory_limiter "otlp" {
+        check_interval   = "1s"
+        limit_percentage = 90
+        spike_limit_percentage = 95
+        output {
+            traces  = [otelcol.exporter.otlp.tempo.input]
+        }
+    }
+
     loki.process "docker" {
+        forward_to = [loki.write.loki.receiver]
+
         stage.docker {}
         stage.json {
             expressions = {
@@ -92,30 +117,6 @@ data:
                 gRPC_method = "",
             }
         }
-        forward_to = [loki.write.loki.receiver]
-    }
-
-    // otel reciever
-    otelcol.receiver.otlp "otlp" {
-        grpc {
-            endpoint = "0.0.0.0:4317"
-        }
-        http {
-            endpoint = "0.0.0.0:4318"
-        }
-        output {
-            traces  = [otelcol.processor.memory_limiter.otlp.input]
-        }
-    }
-
-    // processer
-    otelcol.processor.memory_limiter "otlp" {
-        check_interval   = "1s"
-        limit_percentage = 90
-        spike_limit_percentage = 95
-        output {
-            traces  = [otelcol.exporter.otlp.tempo.input]
-        }
     }
 
     // mimir exporter
@@ -123,9 +124,6 @@ data:
         endpoint {
             url = format("http://%s/api/v1/push", coalesce(env("REMOTE_WRITE_HOST"), "mimir-distributor-headless:8080"),
             )
-            headers = {
-                "X-Scope-OrgID" = "nautible",
-            }
         }
     }
 
@@ -134,19 +132,13 @@ data:
         endpoint {
             url = format("http://%s/loki/api/v1/push", coalesce(env("LOKI_HOST"), "loki-gateway"),
             )
-            headers = {
-                "X-Scope-OrgID" = "nautible",
-            }
         }
     }
 
     // tempo exporter
     otelcol.exporter.otlp "tempo" {
         client {
-            endpoint = coalesce(env("TEMPO_HOST"), "tempo-distributor:4317")
-            headers = {
-                "X-Scope-OrgID" = "nautible",
-            }
+            endpoint = coalesce(env("TEMPO_HOST"), "tempo:4317")
             tls {
                 insecure = true
             }

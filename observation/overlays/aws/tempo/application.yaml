@@ -11,12 +11,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo
-    chart: 'tempo'
-    repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 1.7.2 # application v2.3.1
     helm:
-      version: v3
-      releaseName: tempo
       values: |
         serviceAccount:
           create: false
@@ -30,11 +25,3 @@ spec:
               region: ap-northeast-1
               insecure: false
               forcepathstyle: false
-  project: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: false
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true

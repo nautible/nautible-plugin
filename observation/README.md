@@ -50,9 +50,9 @@ observation
 
 ## 3. エコシステムの導入手順
 
-[ローカル環境](./docs/LOCAL.md)
+[ローカル環境](./docs/local_create.md)
 
-[AWS](./docs/AWS.md)
+[AWS](./docs/aws_create.md)
 
 Azure（TODO）
 
@@ -128,3 +128,11 @@ OpenTelemetry は開発言語ごとにサポート状況が異なるため、最
 - HTTP headers
   - Header : X-Scope-OrgID
   - Value : nautible(alloy-config(ConfigMap)で指定している値)
+
+## 5. 削除手順
+
+[ローカル環境](./docs/local_delete.md)
+
+[AWS](./docs/aws_delete.md)
+
+Azure（TODO）

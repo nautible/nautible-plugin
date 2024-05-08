@@ -22,14 +22,14 @@
 
 ```text
 observation
-  ├─ base                ・・・環境に依存しない設定を配置
+  ├─ base
   │    ├─ alloy          ・・・Grafana Alloy
   │    ├─ common         ・・・Daemonsetを優先配置するためのPriorityClass
   │    ├─ grafana        ・・・Grafana
   │    ├─ loki           ・・・Grafana Loki
   │    ├─ otel           ・・・OpenTelemetry Operator
-  │    └─ tempo          ・・・Grafana Tempo導入
-  ├─ overlays            ・・・環境別のパッチを配置
+  │    └─ tempo          ・・・Grafana Tempo
+  ├─ overlays
   │    ├─ aws            ・・・AWS用の設定値
   │    │   ├─ alloy      ・・・Grafana Alloy用設定ファイル
   │    │   ├─ grafana    ・・・Grafana パラメータ
@@ -41,7 +41,7 @@ observation
   │        ├─ alloy      ・・・Grafana Alloy用設定ファイル
   │        ├─ grafana    ・・・Grafana パラメータ
   │        ├─ loki       ・・・Grafana Lokiパラメータ
-  │        └─ prometheus ・・・Prometheus導入（kube-statemetrics,prometheus-node-exporterも同梱）
+  │        └─ prometheus ・・・Prometheus（kube-statemetrics,prometheus-node-exporterも同梱）
   ├─ docs                ・・・ドキュメント一式
   ├─ examples
   │  └─ instrumentation  ・・・アプリケーションの自動計装を有効化するためのサンプルマニフェスト
@@ -70,11 +70,11 @@ Azure（TODO）
 
 ### 4.2 Auto Instrumentation の有効化
 
-計測を行う namespace に対して Instrumentation リソースをデプロイする。  
-サンプルは nautible-app-ms に対して有効化している。
+自動計測を行う namespace に対して Instrumentation リソースをデプロイする。  
+サンプルは nautible-app-examples に対して有効化している。
 
 ```bash
-kubectl apply -f observation/examples/instrumentation/nautible-app-ms.yaml
+kubectl apply -f observation/examples/instrumentation/nautible-app-examples.yaml
 ```
 
 ### 4.3 アプリケーションへのアノテーション付与
@@ -111,14 +111,20 @@ Java 以外のアノテーションについては[公式ドキュメント](htt
 
 ### 参考） OpenTelemetry
 
-モニタリング情報、ロギング情報、トレース情報の収集構成には OpenTelemetry を利用している。
+モニタリング情報、ロギング情報、トレース情報の収集には OpenTelemetry を利用している。
 
 OpenTelemetry は開発言語ごとにサポート状況が異なるため、最新の状態は[公式サイト](https://opentelemetry.io/docs/languages/)を参照。
 
 ## Grafana からの接続設定
 
-| データソース        | ローカル                                    | AWS                      |
-| :------------------ | :------------------------------------------ | :----------------------- |
-| Mimir（Prometheus） | http://mimir-query-frontend:8080/prometheus | http://prometheus-server |
-| Loki                | http://loki-gateway                         | http://loki-gateway      |
-| Tempo               | http://tempo:3100                           | http://tempo:3100        |
+| データソース        | ローカル                 | AWS                                         |
+| :------------------ | :----------------------- | :------------------------------------------ |
+| Mimir（Prometheus） | http://prometheus-server | http://mimir-query-frontend:8080/prometheus |
+| Loki                | http://loki-gateway      | http://loki-gateway                         |
+| Tempo               | http://tempo:3100        | http://tempo:3100                           |
+
+なお、Grafana Mimir はテナント単位でデータを格納するため、参照時に HTTP ヘッダによるテナント指定が必要となる。Grafana のデータソース設定で以下の設定を行う。
+
+- HTTP headers
+  - Header : X-Scope-OrgID
+  - Value : nautible(alloy-config(ConfigMap)で指定している値)

@@ -24,18 +24,9 @@ data:
         scrape_interval = "30s"
         metrics_path   = "/metrics"
     }
-    prometheus.scrape "nautible_examples" {
+    prometheus.scrape "examples_java" {
         targets = [{
             __address__ = "nautible-app-examples-java.nautible-app-examples.svc.cluster.local:8080",
-        },
-        {
-            __address__ = "nautible-app-examples-python.nautible-app-examples.svc.cluster.local:8080",
-        },
-        {
-            __address__ = "nautible-app-examples-node.nautible-app-examples.svc.cluster.local:8080",
-        },
-        {
-            __address__ = "nautible-app-examples-go.nautible-app-examples.svc.cluster.local:8080",
         }]
         forward_to     = [prometheus.remote_write.mimir.receiver]
         job_name       = "otel-collector-examples"

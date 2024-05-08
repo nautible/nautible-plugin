@@ -10,28 +10,14 @@ spec:
     namespace: monitoring
     server: 'https://kubernetes.default.svc'
   source:
-    # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed
-    chart: 'tempo-distributed'
+    # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo
+    chart: 'tempo'
     repoURL: 'https://grafana.github.io/helm-charts'
     targetRevision: 1.9.4 # application v2.4.1
     helm:
       version: v3
       releaseName: tempo
       values: |
-        ingester:
-          replicas: 2
-        traces:
-          otlp:
-            http:
-              enabled: true
-            grpc:
-              enabled: true
-        distributor:
-          receivers:
-            otlp:
-              protocols:
-                grpc:
-                http:
         serviceAccount:
           create: false
           name: tempo-sa

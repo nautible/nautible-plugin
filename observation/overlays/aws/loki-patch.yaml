@@ -43,6 +43,8 @@ spec:
           replicas: 1
         lokiCanary:
           priorityClassName: daemonset-priority
+        chunksCache:
+          enabled: false
         serviceAccount:
           create: false
           name: loki-sa

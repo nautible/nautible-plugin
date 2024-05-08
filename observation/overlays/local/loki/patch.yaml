@@ -46,6 +46,8 @@ spec:
           replicas: 1
         read:
           replicas: 1
+        chunksCache:
+          enabled: false
   project: default
   syncPolicy:
     automated:

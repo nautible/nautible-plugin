@@ -64,11 +64,11 @@ data:
         stage.docker {}
         stage.json {
             expressions = {
-                level = "level"
-                timestamp = "timestamp"
-                hostName = "hostName"
-                message = "message"
-                mdc = "mdc"
+                level = "level",
+                timestamp = "timestamp",
+                hostName = "hostName",
+                message = "message",
+                mdc = "mdc",
             }
         }
         stage.json {

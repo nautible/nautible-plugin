@@ -76,54 +76,15 @@ kubectl create ns monitoring
 kubectl apply -f observation/local/manifests/.
 ```
 
-## 3. Auto Instrumentation の有効化
+## 3. 削除
 
-計測を行う namespace に対して Instrumentation リソースをデプロイする。  
-サンプルは nautible-app-examples に対して有効化している。
-
-```bash
-kubectl apply -f observation/examples/instrumentation/nautible-app-examples.yaml
-```
-
-## 4. アプリケーションへのアノテーション付与
-
-自動計装ライブラリを挿入するアプリケーションの Deployment にアノテーションを付与する。
-
-[nautible-app-examples-java](https://github.com/nautible/nautible-app-examples-manifest/blob/main/nautible-app-examples-manifest-java/base/examples-deployment.yaml) の例
-
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nautible-app-examples-java
-  namespace: nautible-app-examples
-...
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app.kubernetes.io/instance: nautible-app-examples-java
-      app.kubernetes.io/component: app
-  template:
-    metadata:
-      annotations:
-        instrumentation.opentelemetry.io/inject-java: 'true'
-...
-```
-
-### アプリケーションのデプロイ
-
-上記修正したマニフェストをデプロイする。
-
-## 5. 削除
-
-### Instrumentation リソースの削除
+### 3.1 Instrumentation リソースの削除
 
 ```bash
 kubectl delete -f observation/examples/instrumentation/nautible-app-examples.yaml
 ```
 
-### その他リソースの削除
+### 3.2 その他リソースの削除
 
 ArgoCD のコンソール画面より 各エコシステム の削除を行う。
 

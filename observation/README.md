@@ -123,7 +123,7 @@ OpenTelemetry は開発言語ごとにサポート状況が異なるため、最
 | Loki                | http://loki-gateway      | http://loki-gateway                         |
 | Tempo               | http://tempo:3100        | http://tempo:3100                           |
 
-なお、Grafana Mimir はテナント単位でデータを格納するため、参照時に HTTP ヘッダによるテナント指定が必要となる。Grafana のデータソース設定で以下の設定を行う。
+なお、Grafana Mimir はテナント単位でデータを格納するため、参照時に HTTP ヘッダによるテナント指定が必要となる。Grafana のデータソース設定で以下の設定を行う。（ローカル環境用の Prometheus は設定不要）
 
 - HTTP headers
   - Header : X-Scope-OrgID

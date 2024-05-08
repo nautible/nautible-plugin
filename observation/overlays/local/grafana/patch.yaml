@@ -13,7 +13,7 @@ spec:
         persistence:
           type: pvc
           enabled: true
-          storageClassName: default
+          storageClassName: standard
           accessModes:
             - ReadWriteOnce
           size: 1Gi

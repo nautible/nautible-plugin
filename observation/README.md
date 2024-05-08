@@ -113,7 +113,7 @@ Java 以外のアノテーションについては[公式ドキュメント](htt
 
 モニタリング情報、ロギング情報、トレース情報の収集には OpenTelemetry を利用している。
 
-OpenTelemetry は開発言語ごとにサポート状況が異なるため、最新の状態は[公式サイト](https://opentelemetry.io/docs/languages/)を参照。
+OpenTelemetry は開発言語ごとにサポート状況が異なるため、最新の状態は[公式ドキュメント](https://opentelemetry.io/docs/languages/)を参照。
 
 ## Grafana からの接続設定
 

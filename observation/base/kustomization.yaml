@@ -7,6 +7,3 @@ resources:
   - grafana/application.yaml
   - loki/application.yaml
   - otel/operator.yaml
-  - prometheus/kube-state-metrics/application.yaml
-  - prometheus/prometheus-node-exporter/application.yaml
-  - tempo/application.yaml

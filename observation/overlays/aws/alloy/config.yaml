@@ -98,10 +98,10 @@ data:
         }
         stage.json {
             expressions = {
-                x_request_id = "x-request-id",
+                x_request_id = `"x-request-id"`,
                 url = "url",
-                http_method = "http-method",
-                gRPC_method = "gRPC-method",
+                http_method = `"http-method"`,
+                gRPC_method = `"gRPC-method"`,
             }
         }
         stage.labels {

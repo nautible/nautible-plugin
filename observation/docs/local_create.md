@@ -22,7 +22,9 @@
 
 ### ロギング
 
-Grafana Alloy を Daemonset で配置し、各ノードの Pod ログをマウントして収集する。収集したログデータは Grafana Loki へ送信する。
+Grafana Alloy を Daemonset で配置し、各ノードの Pod ログをマウントして収集する。収集したログデータは Grafana Loki へ送信する。なお、ローカル環境では外部のオブジェクトストレージを利用しないため、データの保管用に内部で MINIO を使用する※。
+
+※ 本来ローカル用としてはシングルバイナリモードでファイル出力に filesystem を利用すれば MINIO は使用しなくてもよいが、2024 年 5 月時点の Loki v3 ではシングルバイナリモードだと Grafana から接続できない（queryFrontend 相当の機能が起動していない）問題があるため、マイクロサービスモードで起動し、ストレージに MINIO を利用する構成としている。
 
 ![logging](logging_local.png)
 
@@ -35,6 +37,10 @@ Grafana Alloy を Daemonset で配置し、各ノードの Pod ログをマウ�
 なお、Java の自動計装ライブラリでは otlp/http にて送信で行うが、Node.js では otlp/grpc で送信を行うなど言語ごとにプロトコルが異なる。（それに伴い Grafana Alloy 側の受信ポートが異なる）
 
 通信プロトコルについては、[Auto Instrumentation](https://opentelemetry.io/docs/kubernetes/operator/automatic/)の各言語の Instrumentation リソース例を参照。
+
+### 永続化
+
+ローカル 環境では外部ストレージへの永続化は行わない。（ローカルディスクをマウントして出力）
 
 ## 2. 導入手順
 

@@ -36,6 +36,11 @@ Grafana Alloy を Daemonset で配置し、各ノードの Pod ログをマウ�
 
 通信プロトコルについては、[Auto Instrumentation](https://opentelemetry.io/docs/kubernetes/operator/automatic/)の各言語の Instrumentation リソース例を参照。
 
+### 永続化
+
+AWS 環境では、Grafana Mimir / Loki / Tempo の長期保管データを S3 へ永続化する。
+また、データ格納前のログファイル（WAL）は出力先として EBS をマウントしてローカルに出力する。
+
 ## 2. 導入手順
 
 ## 2.1 Terraform で必要なリソースを作成

@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: monitoring
   source:
-    path: observation/overlays/aws
+    path: observation/overlays/local
     repoURL: https://github.com/nautible/nautible-plugin
     targetRevision: feature/observation
   syncPolicy:

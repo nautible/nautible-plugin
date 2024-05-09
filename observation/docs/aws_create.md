@@ -47,7 +47,7 @@ AWS 環境では、Grafana Mimir / Loki / Tempo の長期保管データを S3 �
 
 AWS では Grafana Mimir / Loki / Tempo のデータを S3 上に永続化するように設定を行う。必要な S3 バケット作成及び権限設定を Terraform で実施する。
 
-// TODO 参照先
+Terraform でのリソース作成については[nautible-infra](https://github.com/nautible/nautible-infra/tree/main/aws/plugin)を参照。
 
 ### 2.2 ServiceAccount の登録
 

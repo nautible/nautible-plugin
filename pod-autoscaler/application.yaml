@@ -11,10 +11,18 @@ spec:
   source:
     chart: keda
     repoURL: 'https://kedacore.github.io/charts'
-    targetRevision: 2.11.1
+    targetRevision: 2.13.1
     helm:
       version: v3
       releaseName: keda
+      # parameter https://github.com/kedacore/charts/blob/main/keda/values.yaml
+      parameters:
+      - name: 'operator.replicaCount'
+        value: '1'
+      - name: 'metricsServer.replicaCount'
+        value: '1'
+      - name: 'webhooks.replicaCount'
+        value: '1'
   project: default
   syncPolicy:
     automated:

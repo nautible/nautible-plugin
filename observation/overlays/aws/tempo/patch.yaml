@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tempo
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  source:
+    # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo
+    helm:
+      values: |
+        serviceAccount:
+          create: false
+          name: tempo-sa
+        storage:
+          trace:
+            backend: s3
+            s3:
+              bucket: nautible-plugin-dev-tempo-ap-northeast-1
+              endpoint: s3.dualstack.ap-northeast-1.amazonaws.com
+              region: ap-northeast-1
+              insecure: false
+              forcepathstyle: false

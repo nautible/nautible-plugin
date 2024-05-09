@@ -1,0 +1,67 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mimir
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: monitoring
+    server: 'https://kubernetes.default.svc'
+  source:
+    # ref https://github.com/grafana/mimir/tree/main/operations/helm/charts/mimir-distributed
+    chart: 'mimir-distributed'
+    repoURL: 'https://grafana.github.io/helm-charts'
+    targetRevision: 5.3.0 # application v2.12.0
+    helm:
+      version: v3
+      releaseName: mimir
+      values: |
+        serviceAccount:
+          create: false
+          name: mimir-sa
+        mimir:
+          structuredConfig:
+            common:
+              storage:
+                backend: s3
+                s3:
+                  bucket_name: nautible-plugin-dev-mimir-ap-northeast-1-tsdb
+                  endpoint: s3.ap-northeast-1.amazonaws.com
+          runtimeConfig:
+            max_global_exemplars_per_user: 100000
+        store_gateway:
+          replicas: 1
+          priorityClassName: daemonset-priority
+        minio:
+          enabled: false
+        distributor:
+          replicas: 1
+        ingester:
+          replicas: 1
+        overrides_exporter:
+          replicas: 1
+        ruler:
+          enabled: false
+        alertmanager:
+          enabled: false
+        querier:
+          replicas: 1
+        query_frontend: 
+          replicas: 1
+        query_scheduler:
+          replicas: 1
+        compactor:
+          replicas: 1
+        gateway:
+          replicas: 1
+
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

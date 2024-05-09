@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  source:
+    # ref https://github.com/grafana/loki/tree/main/production/helm/loki
+    helm: # minimum replicas and default storageClass
+      values: |
+        loki:
+          auth_enabled: false
+          commonConfig:
+            replication_factor: 1
+          storage:
+            bucketNames:
+              chunks: nautible-plugin-dev-loki-ap-northeast-1-chunks
+              ruler: nautible-plugin-dev-loki-ap-northeast-1-ruler
+              admin: nautible-plugin-dev-loki-ap-northeast-1-admin
+            type: s3
+            s3:
+              region: ap-northeast-1
+              s3ForcePathStyle: false
+              insecure: false
+          schemaConfig:
+            configs:
+              - from: 2024-04-01
+                store: tsdb
+                object_store: s3
+                schema: v13
+                index:
+                  prefix: loki_index_
+                  period: 24h
+        gateway:
+          replicas: 1
+        backend:
+          replicas: 1
+        write:
+          replicas: 1
+        read:
+          replicas: 1
+        lokiCanary:
+          priorityClassName: daemonset-priority
+        chunksCache:
+          enabled: false
+        serviceAccount:
+          create: false
+          name: loki-sa

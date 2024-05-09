@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - ./alloy/config.yaml
+  - ./mimir/application.yaml
+  - ./prometheus/kube-state-metrics.yaml
+  - ./prometheus/prometheus-node-exporter.yaml
+patches:
+  - path: grafana/patch.yaml
+  - path: loki/patch.yaml
+  - path: tempo/patch.yaml

@@ -30,12 +30,10 @@ kubectl delete -f observation/overlays/aws/serviceaccount.yaml
 kubectl delete -f observation/overlays/aws/namespace.yaml
 ```
 
-## 5. AWS リソースの削除
+## 5. nautible-infra で作成した S3 バケット、IAM ロールの削除
 
 永続データを保存している S3 およびアクセス用のロールを削除する。  
 削除の際は必要に応じて S3 の内容をバックアップする。
-
-## 6. nautible-infra で作成した IAM ロールの削除
 
 nautible-infra
 

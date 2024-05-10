@@ -17,19 +17,6 @@ spec:
     helm:
       version: v3
       releaseName: tempo
-      values: |
-        serviceAccount:
-          create: false
-          name: tempo-sa
-        storage:
-          trace:
-            backend: s3
-            s3:
-              bucket: nautible-plugin-dev-tempo-ap-northeast-1
-              endpoint: s3.dualstack.ap-northeast-1.amazonaws.com
-              region: ap-northeast-1
-              insecure: false
-              forcepathstyle: false
   project: default
   syncPolicy:
     automated:

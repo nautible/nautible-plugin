@@ -4,7 +4,6 @@ resources:
   - ../../base
   - ./alloy/config.yaml
   - ./prometheus/application.yaml
-  - ./tempo/application.yaml
 patches:
   - path: ./grafana/patch.yaml
   - path: ./loki/patch.yaml

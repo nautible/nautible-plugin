@@ -35,8 +35,8 @@ spec:
               '--import-realm',
               '--hostname-strict=false',
               '--db=postgres',
-              '--http-relative-path /auth',
-              '--proxy edge',
+              '--http-relative-path=/auth',
+              '--proxy=edge',
             ]
           # args: ["start-dev","--import-realm","--hostname-strict=false","--db=postgres","--http-relative-path /auth"]
           securityContext:

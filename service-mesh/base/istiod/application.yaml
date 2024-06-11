@@ -16,7 +16,7 @@ spec:
         - name: 'global.hub'
           value: 'docker.io/istio'
         - name: 'global.tag'
-          value: '1.18.1'
+          value: '1.22.1'
         # Enable Envoy's access logging
         # https://istio.io/latest/docs/tasks/observability/logs/access-log/
         - name: 'meshConfig.accessLogFile'

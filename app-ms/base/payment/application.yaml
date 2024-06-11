@@ -11,7 +11,7 @@ spec:
   source:
     path: payment/overlays/dev/
     repoURL: https://github.com/nautible/nautible-app-ms-payment-manifest
-    targetRevision: HEAD
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

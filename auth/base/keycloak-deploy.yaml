@@ -34,7 +34,6 @@ spec:
               'start',
               '--import-realm',
               '--hostname-strict=false',
-              '--auto-build',
               '--db=postgres',
               '--http-relative-path /auth',
               '--proxy edge',

@@ -38,20 +38,3 @@ upstream:
           - 503
         tcp_failures: 3
         timeouts: 30
-proxy:
-  protocol: http
-  path: /
-  connect_timeout: 30000
-  retries: 10
-  read_timeout: 30000
-  write_timeout: 30000
-route:
-  methods:
-    - POST
-    - GET
-  regex_priority: 0
-  strip_path: false
-  preserve_host: true
-  protocols:
-    - http
-    - https

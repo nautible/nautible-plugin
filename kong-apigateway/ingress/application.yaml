@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nautible-kong-apigateway
+  name: kong-ingress
   namespace: argocd
 spec:
   destination:
@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: kong-apigateway/overlays/aws
+    path: kong-apigateway/ingress
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: develop
+    targetRevision: update_kong
   syncPolicy:
     automated:
       prune: true

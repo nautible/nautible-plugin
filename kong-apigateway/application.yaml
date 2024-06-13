@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong-apigateway
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kong
+  source:
+    path: ''
+    # https://github.com/Kong/charts
+    repoURL: https://charts.konghq.com
+    targetRevision: 2.39.0
+    chart: 'kong'
+    helm:
+
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true

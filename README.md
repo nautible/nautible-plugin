@@ -19,7 +19,7 @@ Kubernetes へエコシステムやアプリケーションを導入するため
 | container-registry        | Harbor の導入                    |                                                    |              |
 | container-workflow-engine | Argo Workflows の導入            |                                                    |              |
 | distributed-application   | Dapr の導入                      |                                                    |              |
-| kong-apigateway           | KongApiGateway の導入            | distributed-application<br>pod-autoscaler          |              |
+| kong-apigateway           | KongApiGateway の導入            |                                                    |              |
 | metrics-server            | メトリクスサーバーの導入         |                                                    | AWS のみ必要 |
 | observation               | Grafana,Prometheus による監視    | metrics-server（AWS のみ） <br>cert-manager        |              |
 | pod-autoscaler            | KEDA の導入                      |                                                    |              |

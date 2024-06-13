@@ -1,7 +1,7 @@
 apiVersion: configuration.konghq.com/v1
 kind: KongIngress
 metadata:
-  name: kong-ingress
+  name: kong-ingress-configuration
   namespace: kong
 upstream:
   slots: 10
@@ -13,29 +13,29 @@ upstream:
       concurrency: 10
       healthy:
         http_statuses:
-        - 200
-        - 302
+          - 200
+          - 302
         interval: 0
         successes: 1
-      http_path: "/"
+      http_path: '/'
       timeout: 30
       unhealthy:
         http_failures: 3
         http_statuses:
-        - 429
+          - 429
         interval: 0
         tcp_failures: 3
         timeouts: 0
     passive:
       healthy:
         http_statuses:
-        - 200
+          - 200
         successes: 1
       unhealthy:
         http_failures: 3
         http_statuses:
-        - 429
-        - 503
+          - 429
+          - 503
         tcp_failures: 3
         timeouts: 30
 proxy:
@@ -47,11 +47,11 @@ proxy:
   write_timeout: 30000
 route:
   methods:
-  - POST
-  - GET
+    - POST
+    - GET
   regex_priority: 0
   strip_path: false
   preserve_host: true
   protocols:
-  - http
-  - https
+    - http
+    - https

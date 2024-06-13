@@ -11,7 +11,7 @@ spec:
   source:
     path: kong-apigateway/ingress
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: update_kong
+    targetRevision: feature/update_kong
   syncPolicy:
     automated:
       prune: true

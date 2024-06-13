@@ -1,20 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: serverless
+  name: kong-ingress
   namespace: kong
-  annotations:
-    konghq.com/override: kong-ingress
-    konghq.com/plugins: serverless
 spec:
   ingressClassName: kong
   rules:
-  - http:
-      paths:
-      - backend:
-          service:
-            name: consumer
-            port:
-              number: 8080
-        path: /kong/
-        pathType: ImplementationSpecific
+    - http:
+        paths:
+          - backend:
+              service:
+                name: consumer
+                port:
+                  number: 8080
+            path: /kong/
+            pathType: ImplementationSpecific

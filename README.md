@@ -7,24 +7,25 @@ Kubernetes へエコシステムやアプリケーションを導入するため
 
 ## プラグイン一覧
 
-| プラグイン                | 概要                             | 依存関係                                           | 備考         |
-| :------------------------ | :------------------------------- | :------------------------------------------------- | :----------- |
-| albc                      | AWS LoadBalancer Controller      |                                                    | AWS のみ必要 |
-| app-bookinfo              | Istio 動作確認アプリケーション   | service-mesh                                       |              |
-| app-examples              | サンプルアプリケーション         |                                                    |              |
-| app-ms                    | マイクロサービスアプリケーション | distributed-application<br>secrets<br>service-mesh |              |
-| auth                      | 認証(keycloak)の導入             | service-mesh                                       |              |
-| cert-manager              | SSL 証明書管理の導入             |                                                    |              |
-| cluster-autoscaler        | クラスタの Node 数調整           |                                                    | AWS のみ必要 |
-| container-registry        | Harbor の導入                    |                                                    |              |
-| container-workflow-engine | Argo Workflows の導入            |                                                    |              |
-| distributed-application   | Dapr の導入                      |                                                    |              |
-| kong-apigateway           | KongApiGateway の導入            | distributed-application<br>pod-autoscaler          |              |
-| metrics-server            | メトリクスサーバーの導入         |                                                    | AWS のみ必要 |
-| observation               | Grafana,Prometheus による監視    | metrics-server（AWS のみ） <br>cert-manager        |              |
-| pod-autoscaler            | KEDA の導入                      |                                                    |              |
-| secrets                   | external-secrets-operator の導入 |                                                    |              |
-| service-mesh              | Istio の導入                     | albc（AWS のみ）                                   |              |
+| プラグイン                | 概要                                   | 依存関係                                           | 備考                 |
+| :------------------------ | :------------------------------------- | :------------------------------------------------- | :------------------- |
+| albc                      | AWS LoadBalancer Controller            |                                                    | AWS のみ必要         |
+| app-bookinfo              | Istio 動作確認アプリケーション         | service-mesh                                       |                      |
+| app-examples              | サンプルアプリケーション               |                                                    |                      |
+| app-ms                    | マイクロサービスアプリケーション       | distributed-application<br>secrets<br>service-mesh |                      |
+| auth                      | 認証(keycloak)の導入                   | service-mesh                                       |                      |
+| cert-manager              | SSL 証明書管理の導入                   |                                                    |                      |
+| cluster-autoscaler        | AWS マネージドノードグループのスケール |                                                    | AWS のみ必要         |
+| container-registry        | Harbor の導入                          |                                                    |                      |
+| container-workflow-engine | Argo Workflows の導入                  |                                                    |                      |
+| distributed-application   | Dapr の導入                            |                                                    |                      |
+| kerpenter                 | ノードの柔軟なオートスケール           |                                                    | AWS/Azure をサポート |
+| kong-apigateway           | KongApiGateway の導入                  | distributed-application<br>pod-autoscaler          |                      |
+| metrics-server            | メトリクスサーバーの導入               |                                                    | AWS のみ必要         |
+| observation               | Grafana,Prometheus による監視          | metrics-server（AWS のみ） <br>cert-manager        |                      |
+| pod-autoscaler            | KEDA の導入                            |                                                    |                      |
+| secrets                   | external-secrets-operator の導入       |                                                    |                      |
+| service-mesh              | Istio の導入                           | albc（AWS のみ）                                   |                      |
 
 ※依存関係のあるものは、依存先のプラグインを先に導入しておく必要があります。
 

@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-autoscaler
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: autoscaler
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'https://kubernetes.github.io/autoscaler/'
+    targetRevision: 9.34.1
+    chart: cluster-autoscaler
+    helm:
+      parameters:
+        - name: 'autoDiscovery.clusterName'
+          value: 'nautible-dev-cluster'
+        - name: 'awsRegion'
+          value: 'ap-northeast-1'
+        - name: 'rbac.serviceAccount.annotations.eks\.amazonaws\.com/role-arn'
+          value: 'arn:aws:iam::XXXXXXXXXXX:role/XXXXXXXXXX-AmazonEKSClusterAutoscalerRole'
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true

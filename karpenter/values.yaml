@@ -1,0 +1,20 @@
+controller:
+  resources:
+    requests:
+      cpu: 1
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 1Gi
+nodeSelector:
+  karpenter.sh/controller: 'true'
+tolerations:
+  - key: CriticalAddonsOnly
+    operator: Exists
+  - key: karpenter.sh/controller
+    operator: Exists
+    effect: NoSchedule
+settings:
+  clusterName: 'nautible-dev-cluster-v1_29'
+  clusterEndpoint: 'https://39AAE26F37EB955868536956C014B1F9.gr7.ap-northeast-1.eks.amazonaws.com'
+  interruptionQueue: 'Karpenter-nautible-dev-cluster-v1_29'

@@ -18,9 +18,6 @@ spec:
     helm:
       version: v3
       releaseName: prometheus-node-exporter
-      values: |
-        tolerations:
-          - operator: Exists
 syncPolicy:
   automated:
     prune: true

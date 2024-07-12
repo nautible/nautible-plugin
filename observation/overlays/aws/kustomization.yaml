@@ -7,7 +7,6 @@ resources:
   - ./prometheus/kube-state-metrics.yaml
   - ./prometheus/prometheus-node-exporter.yaml
 patches:
-  - path: alloy/patch.yaml
   - path: grafana/patch.yaml
   - path: loki/patch.yaml
   - path: tempo/patch.yaml

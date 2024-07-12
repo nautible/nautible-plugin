@@ -18,9 +18,12 @@ spec:
     helm:
       version: v3
       releaseName: prometheus-node-exporter
-  syncPolicy:
-    automated:
-      prune: true
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
+      values: |
+        tolerations:
+          - operator: Exists
+syncPolicy:
+  automated:
+    prune: true
+  syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true

@@ -13,7 +13,7 @@ spec:
     # ref https://github.com/grafana/helm-charts/tree/main/charts/grafana
     chart: 'grafana'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 7.3.9 # application 10.4.1
+    targetRevision: 8.3.2 # application 11.1.0
     helm:
       version: v3
       releaseName: grafana

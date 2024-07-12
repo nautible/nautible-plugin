@@ -14,7 +14,7 @@ spec:
     # ref https://github.com/open-telemetry/opentelemetry-helm-charts
     chart: 'opentelemetry-operator'
     repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts/
-    targetRevision: 0.56.0 # application 0.98.0
+    targetRevision: 0.64.1 # application 0.103.0
     helm:
       version: v3
       values: |

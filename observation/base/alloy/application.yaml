@@ -13,7 +13,7 @@ spec:
     # ref https://github.com/grafana/alloy/tree/main/operations/helm/charts/alloy
     chart: 'alloy'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 0.1.1 # application v1.0.0
+    targetRevision: 0.5.1 # application v1.2.1
     helm:
       version: v3
       releaseName: alloy

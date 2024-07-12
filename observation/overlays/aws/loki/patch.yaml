@@ -47,4 +47,4 @@ spec:
           enabled: false
         serviceAccount:
           create: false
-          name: loki-sa
+          name: monitoring-sa

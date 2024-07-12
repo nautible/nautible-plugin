@@ -13,7 +13,7 @@ spec:
     # ref https://github.com/grafana/helm-charts/tree/main/charts/tempo
     chart: 'tempo'
     repoURL: 'https://grafana.github.io/helm-charts'
-    targetRevision: 1.7.2 # application v2.3.1
+    targetRevision: 1.10.1 # application v2.5.0
     helm:
       version: v3
       releaseName: tempo

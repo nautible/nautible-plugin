@@ -15,7 +15,7 @@ spec:
       values: |
         serviceAccount:
           create: false
-          name: tempo-sa
+          name: monitoring-sa
         storage:
           trace:
             backend: s3

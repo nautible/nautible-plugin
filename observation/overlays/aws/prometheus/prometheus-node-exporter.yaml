@@ -14,7 +14,7 @@ spec:
     # ref https://github.com/prometheus-community/helm-charts
     chart: 'prometheus-node-exporter'
     repoURL: https://prometheus-community.github.io/helm-charts/
-    targetRevision: 4.32.0 # application 1.7.0
+    targetRevision: 4.37.0 # application 1.8.1
     helm:
       version: v3
       releaseName: prometheus-node-exporter

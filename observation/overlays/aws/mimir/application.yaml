@@ -20,7 +20,7 @@ spec:
       values: |
         serviceAccount:
           create: false
-          name: mimir-sa
+          name: monitoring-sa
         mimir:
           structuredConfig:
             common:

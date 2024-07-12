@@ -17,29 +17,6 @@ spec:
     helm:
       version: v3
       releaseName: alloy
-      values: |
-        alloy:
-          extraPorts:
-            - name: 'grpc'
-              port: 4317
-              targetPort: 4317
-              protocol: 'TCP'
-            - name: 'http'
-              port: 4318
-              targetPort: 4318
-              protocol: 'TCP'
-          mounts:
-            varlog: true
-            dockercontainers: true
-          configMap:
-            create: false
-            name: alloy-config
-            key: config.alloy
-        controller:
-          tolerations:
-            - key: "karpenter.sh/controller"
-              value: "true"
-              effect: "NoSchedule"
   project: default
   syncPolicy:
     automated:

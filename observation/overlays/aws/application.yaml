@@ -11,7 +11,7 @@ spec:
   source:
     path: observation/overlays/aws
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: develop
+    targetRevision: feature/karpenter
   syncPolicy:
     automated:
       prune: true

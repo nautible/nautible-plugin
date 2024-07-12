@@ -35,7 +35,11 @@ spec:
             create: false
             name: alloy-config
             key: config.alloy
-
+        controller:
+          tolerations:
+            - key: "karpenter.sh/controller"
+              value: "true"
+              effect: "NoSchedule"
   project: default
   syncPolicy:
     automated:

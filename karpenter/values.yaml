@@ -17,5 +17,5 @@ tolerations:
     effect: NoSchedule
 settings:
   clusterName: 'nautible-dev-cluster-v1_29'
-  clusterEndpoint: 'https://9E24C2C71D425E53255B9DCE3BC9A55F.sk1.ap-northeast-1.eks.amazonaws.com'
+  clusterEndpoint: 'https://xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.gr7.ap-northeast-1.eks.amazonaws.com'
   interruptionQueue: 'Karpenter-nautible-dev-cluster-v1_29'

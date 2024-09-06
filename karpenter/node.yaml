@@ -5,7 +5,7 @@ metadata:
   name: default
 spec:
   amiFamily: AL2
-  role: nautible-dev-cluster-v1_29-karpenter-role
+  role: nautible-dev-cluster-v1_29-KarpenterNodeRole
   subnetSelectorTerms:
     - tags:
         karpenter.sh/discovery: nautible-dev-cluster-v1_29

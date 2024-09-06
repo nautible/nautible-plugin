@@ -10,56 +10,38 @@ XXX
 
 ### リソース準備
 
-### ロール
-
 ### コントローラー
 
-```
+Karpenter のカスタムコントローラーを導入する。
+導入先ネームスペースは Terraform の Karpenter モジュールと合わせておくこと。（Terraform で環境構築時に指定したネームスペースに karpenter 用の PodIdentity サービスアカウントが導入されるので、コントローラーの導入先を合わせる必要がある）
+なお、Terraform で未指定の場合は kube-system となる。
+
+```bash
 helm registry logout public.ecr.aws
-export KARPENTER_NAMESPACE=karpenter
+export KARPENTER_NAMESPACE=kube-system
 export KARPENTER_VERSION=0.37.0
 helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --version "${KARPENTER_VERSION}" --namespace "${KARPENTER_NAMESPACE}" --create-namespace -f ./karpenter/values.yaml --wait
 ```
 
 ### CRD
 
-helm.parameters.value の値を対象のクラスタ名、ロール arn に変更する。  
-※ロールは terraform で作成されます。terraform の output を参照してください。
+EC2NodeClass および NodePool のカスタムリソースを導入する。
+どのようなノードスペックを対象とするかは NodePool の設定でカスタマイズする。
 
-<pre>
-    helm:
-      parameters:
-        - name: 'autoDiscovery.clusterName'
-          value: 'nautible-dev-cluster'      # 対象のクラスタ名に変更する
-        - name: 'awsRegion'
-          value: 'ap-northeast-1'
-        - name: 'rbac.serviceAccount.annotations.eks\.amazonaws\.com/role-arn'
-          value: 'arn:aws:iam::XXXXXXXXXXX:role/XXXXXXXXXX-AmazonEKSClusterAutoscalerRole' # 対象のロールarnに変更する。
-</pre>
-
-cluster-autoscaler をデプロイする。
-
-```BASH
-kubectl apply -f cluster-autoscaler/application.yaml
+```bash
+kubectl apply -f karpenter/node.yaml
 ```
 
 ## 3. 確認
 
-```BASH
-kubectl get deploy -n autoscaler
+Karpenter の Pod ログを表示し、エラーが出ていないことを確認しておく。
+
+```bash
+kubectl logs -n kube-system <KarpenterのPod>
 ```
 
-<pre>
-NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
-cluster-autoscaler-aws-cluster-autoscaler   1/1     1            1           18d
-</pre>
+エラーが出ていないことが確認出来たら、任意のアプリケーションやエコシステムを導入してみて新規にノードが作成されることを確認する。
 
 ## 4. 削除
 
-ArgoCD のコンソール画面より cluster-autoscaler の削除を行う。
-
-コマンドラインによる削除を行う場合は、Argo CD CLI を使用して Application リソースを削除する。
-
-```BASH
-argocd app delete argocd/cluster-autoscaler
-```
+XXX

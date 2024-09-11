@@ -11,18 +11,16 @@ spec:
   source:
     path: ''
     repoURL: 'https://aws.github.io/eks-charts/'
-    targetRevision: 1.7.0
+    targetRevision: 1.7.1
     chart: 'aws-load-balancer-controller'
     helm:
       parameters:
         - name: 'serviceAccount.create'
           value: 'true'
         - name: 'serviceAccount.name'
-          value: 'aws-load-balancer-controller'
-        - name: 'serviceAccount.annotations.eks\.amazonaws\.com/role-arn'
-          value: 'arn:aws:iam::XXXXXXXXXXXX:role/XXXXXXXXXXXX-AmazonEKSLoadBalancerControllerRole' # 対象のロールarnに変更する。
+          value: 'aws-load-balancer-controller-sa'
         - name: 'clusterName'
-          value: 'nautible-dev-cluster'
+          value: 'nautible-dev-cluster' #FIXME: clusterName
   project: default
   syncPolicy:
     automated:

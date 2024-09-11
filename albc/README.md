@@ -1,26 +1,34 @@
 
 # AWS LoadBalancer Controller
 
+## 0. 注意事項
+
+本導入手順はnautible-infraの tag:2024.2.0 バージョン以降で構築されたEKSに対応しています。  
+（2024.2.0から認証方式をIRSAからPod Identityに変更しています）
+
+2024.2.0より前のバージョンのnautible-infraでEKSを構築している場合、nautible-pluginのバージョンも2024.2.0より前のバージョンを利用してください。
+
 ## 1. 概要
 
 AWS LoadBalancer Controllerを導入する。  
 
-以下の理由からAWS LoadBalancer Controllerを導入する  
+以下の理由からAWS LoadBalancer Controllerを導入する。  
 
 - AWSのロードバランサーはCloudfrontからのリクエストのみ受け付けるように制御する(AWS Security Groupで制御)。  
 - Classic LoadBalancerは2022年8月で廃止
 
 ## 2. 導入
 
-helm.parameters.valueの値をLoadBalancer Controllerのロールarnに変更する。  
-※ロールはterraformで作成されます。terraformのoutpoutを参照してください。
+### コントローラーの導入
+
+helm.parameters.valueのclusterNameにALBを導入するクラスタ名を設定する。
 
 application.yaml
 ```YAML
     helm:
       parameters:
-        - name: 'serviceAccount.annotations.eks\.amazonaws\.com/role-arn'
-          value: 'arn:aws:iam::XXXXXXXXXXXX:role/XXXXXXXXXXXX-AmazonEKSLoadBalancerControllerRole' # 対象のロールarnに変更する。
+        - name: 'clusterName'
+          value: 'nautible-dev-cluster' # 対象のクラスタ名に変更する。
 ```
 
 AWS LoadBalancer Controllerをデプロイする。
@@ -29,8 +37,9 @@ AWS LoadBalancer Controllerをデプロイする。
 $ kubectl apply -f albc/application.yaml
 ```
 
+### Istio用ロードバランサの導入
+
 Ingressの設定でLoadBalancerに設定するセキュリティグループに変更する。  
-※ロールはterraformで作成されます。terraformのoutpoutを参照してください。
 
 albc/ingress/manifest/ingress.yaml
 ```YAML

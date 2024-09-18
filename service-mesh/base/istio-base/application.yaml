@@ -8,9 +8,9 @@ spec:
     namespace: istio-system
     server: 'https://kubernetes.default.svc'
   source:
-    path: 'manifests/charts/base'
-    repoURL: 'https://github.com/istio/istio'
-    targetRevision: 1.22.1
+    path: 'charts/istio/base'
+    repoURL: 'https://istio-release.storage.googleapis.com'
+    targetRevision: 1.23.1
   project: default
   syncPolicy:
     automated:

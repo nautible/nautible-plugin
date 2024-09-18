@@ -8,7 +8,7 @@ spec:
     namespace: istio-system
     server: 'https://kubernetes.default.svc'
   source:
-    path: 'charts/istio/istiod'
+    path: 'charts/istio/cni'
     repoURL: 'https://istio-release.storage.googleapis.com'
     targetRevision: 1.23.1
     helm:

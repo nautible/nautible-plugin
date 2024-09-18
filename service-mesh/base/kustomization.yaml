@@ -3,17 +3,20 @@ kind: Kustomization
 resources:
   # Istio Operator Install
   # https://istio.io/latest/docs/setup/install/operator/
-  - istio-operator/application.yaml
+  #- istio-operator/application.yaml
   #- istio-controlplane/application.yaml
   # Install with Helm
   # https://istio.io/latest/docs/setup/install/helm/
   - istio-base/application.yaml
   - istiod/application.yaml
-  - istio-ingress/application.yaml
-  - istio-egress/application.yaml
+  - istio-cni/application.yaml
+  - ztunnel/application.yaml
+  - gateway-api/crd.yaml
+  #- istio-ingress/application.yaml
+  #- istio-egress/application.yaml
   # Observability
   # https://istio.io/latest/docs/tasks/observability/
   #- prometheus/application.yaml
   #- grafana/application.yaml
-  - jaeger/application.yaml
-  - kiali/application.yaml
+  #- jaeger/application.yaml
+  #- kiali/application.yaml

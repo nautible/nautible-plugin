@@ -51,8 +51,9 @@ app-msの稼働に必要なシークレットを登録する。AWSの場合はSe
   ```bash
   ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat app-ms/overlays/aws/secretstore.yaml)\"" | kubectl apply -f -
   ```
+
   ```bash
-  kubectl apply -f app-ms/overlays/azure/secret-parameter/application.yaml
+  kubectl apply -f app-ms/overlays/aws/secret-parameter/application.yaml
   ```
 
 - Azure（AzureKeyVault）
@@ -62,6 +63,11 @@ app-msの稼働に必要なシークレットを登録する。AWSの場合はSe
   ```bash
   TENANT_ID=<テナントID> && APP_MS_VAULT_URL=<AzureKeyVaultURL> && eval "echo \"$(cat app-ms/overlays/azure/secretstore.yaml)\"" | kubectl apply -f -
   ```
+
+  ```bash
+  kubectl apply -f app-ms/overlays/azure/secret-parameter/application.yaml
+  ```
+
 
 ### データ登録
 - [商品サービス](https://github.com/nautible/nautible-app-ms-product/blob/main/testdata.md#b-dev%E7%92%B0%E5%A2%83)

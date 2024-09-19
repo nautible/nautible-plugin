@@ -42,6 +42,7 @@ app-msの稼働に必要なシークレットを登録する。AWSの場合はSe
 | nautible-app-ms-servicebus-connectionstring| Azure Servicebus 接続文字列  | azure | Azureの管理コンソール＞Service Bus＞共有アクセスポリシー＞RootManageSharedAccessKey 参照 |
 
 ※AzureのKeyvaultのシークレット編集方法については[こちら](../docs/azure/keyvault/README.md)を参照してください
+
 ### SecretStoreの導入
 
 [secretsのドキュメント](../secrets/README.md)の手順を参考に以下のリソースを作成する。
@@ -51,7 +52,7 @@ app-msの稼働に必要なシークレットを登録する。AWSの場合はSe
   ACCOUNT_ID=<AWSアカウントID> && eval "echo \"$(cat app-ms/overlays/aws/secretstore.yaml)\"" | kubectl apply -f -
   ```
   ```bash
-  kubectl appy -f app-ms/overlays/azure/secret-parameter/application.yaml
+  kubectl apply -f app-ms/overlays/azure/secret-parameter/application.yaml
   ```
 
 - Azure（AzureKeyVault）

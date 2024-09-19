@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: service-mesh/overlays/aws
+    path: service-mesh/ambient/overlays/aws
     repoURL: https://github.com/nautible/nautible-plugin
     targetRevision: feature/ambient
   syncPolicy:

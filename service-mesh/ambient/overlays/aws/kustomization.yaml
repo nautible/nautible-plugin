@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - ../../base
 patches:
-  path: ingress.yaml
+  - path: ingress.yaml

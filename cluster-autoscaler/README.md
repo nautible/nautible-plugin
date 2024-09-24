@@ -1,6 +1,13 @@
 
 # Cluster Autoscaler
 
+## 0. 注意事項
+
+本導入手順はnautible-infraの tag:2024.2.0 バージョン以降で構築されたEKSに対応しています。  
+（2024.2.0から認証方式をIRSAからPod Identityに変更しています）
+
+2024.2.0より前のバージョンのnautible-infraでEKSを構築している場合、nautible-pluginのバージョンも2024.2.0より前のバージョンを利用してください。
+
 ## 1. 概要
 
 データプレーン（ワーカーノード）のオートスケール機能を導入する。
@@ -11,19 +18,16 @@ Cluster AutoscalerはPodのスケジュール失敗や別ノードへの再ス�
 
 ## 2. 導入
 
-helm.parameters.valueの値を対象のクラスタ名、ロールarnに変更する。  
-※ロールはterraformで作成されます。terraformのoutputを参照してください。
+helm.parameters.valueのautoDiscovery.clusterNameにクラスタ名を設定する。
 
-<pre>
+```YAML
     helm:
       parameters:
         - name: 'autoDiscovery.clusterName'
           value: 'nautible-dev-cluster'      # 対象のクラスタ名に変更する
         - name: 'awsRegion'
           value: 'ap-northeast-1'
-        - name: 'rbac.serviceAccount.annotations.eks\.amazonaws\.com/role-arn'
-          value: 'arn:aws:iam::XXXXXXXXXXX:role/XXXXXXXXXX-AmazonEKSClusterAutoscalerRole' # 対象のロールarnに変更する。
-</pre>
+```
 
 cluster-autoscalerをデプロイする。
 

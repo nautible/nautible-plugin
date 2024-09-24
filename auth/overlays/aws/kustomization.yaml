@@ -15,10 +15,10 @@ patchesJson6902:
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/env/0/value
-        value: https://d9sr2zchpwi7v.cloudfront.net/api/v1.0/nautible-auth/auth
+        value: https://d16d282u0desjz.cloudfront.net/api/v1.0/nautible-auth/auth
       - op: replace
         path: /spec/template/spec/containers/0/env/1/value
-        value: https://d9sr2zchpwi7v.cloudfront.net
+        value: https://d16d282u0desjz.cloudfront.net
   # see base\keycloak-istio-auth.yaml
   - target:
       group: security.istio.io
@@ -29,7 +29,7 @@ patchesJson6902:
     patch: |-
       - op: replace
         path: /spec/jwtRules/0/issuer
-        value: https://d9sr2zchpwi7v.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth
+        value: https://d16d282u0desjz.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth
   # see base\keycloak-istio-auth.yaml
   - target:
       group: security.istio.io
@@ -40,4 +40,4 @@ patchesJson6902:
     patch: |-
       - op: replace
         path: /spec/rules/0/when/0/values
-        value: ["https://d9sr2zchpwi7v.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth"]
+        value: ["https://d16d282u0desjz.cloudfront.net/api/v1.0/nautible-auth/auth/realms/nautible-auth"]

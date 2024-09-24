@@ -11,7 +11,7 @@ spec:
   source:
     path: app-examples/overlays/aws
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: HEAD
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

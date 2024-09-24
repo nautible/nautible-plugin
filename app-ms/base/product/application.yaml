@@ -11,7 +11,7 @@ spec:
   source:
     path: overlays/dev/
     repoURL: https://github.com/nautible/nautible-app-ms-product-manifest
-    targetRevision: HEAD
+    targetRevision: develop
   syncPolicy:
     automated:
       prune: true

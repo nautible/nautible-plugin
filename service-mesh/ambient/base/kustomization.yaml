@@ -8,10 +8,10 @@ resources:
   # Install with Helm
   # https://istio.io/latest/docs/setup/install/helm/
   - istio-base/application.yaml
+  - gateway-api/crd.yaml
   - istiod/application.yaml
   - istio-cni/application.yaml
   - ztunnel/application.yaml
-  - gateway-api/crd.yaml
   - istio-gateway/application.yaml
   #- istio-ingress/application.yaml
   #- istio-egress/application.yaml

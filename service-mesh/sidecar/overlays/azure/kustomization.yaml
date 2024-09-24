@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+  - ../../base
+resources:
+  - validate-fdid.yaml
+patchesJson6902:
+  # Frontdoorからのアクセスのみ許容するようにIstioのIngressGetewayにservice-tagsを定義する
+  - target:
+      version: v1alpha1
+      kind: Application
+      name: istio-ingress
+    patch: |-
+      - op: add
+        path: /spec/source/helm/parameters/0
+        value: {'name': 'gateways.istio-ingressgateway.serviceAnnotations.service\.beta\.kubernetes\.io/azure-allowed-service-tags', 'value': 'AzureFrontDoor.BackEnd'}
+  - target:
+      group: security.istio.io
+      version: v1beta1
+      kind: AuthorizationPolicy
+      name: validate-fdid
+    # Azure frontdoorのidを設定する。IstioのAuthorizationPolicyでヘッダーのfrontdoorのidを検証し、Frontdoorからのアクセスのみ許容する。
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/when/0/notValues
+        value: ["e115a916-6b69-4e4b-8a6f-02dbb59156b4"]

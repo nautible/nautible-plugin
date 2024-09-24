@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istiod
+  namespace: argocd
+spec:
+  destination:
+    namespace: istio-system
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: 'manifests/charts/istio-control/istio-discovery'
+    repoURL: 'https://github.com/istio/istio'
+    targetRevision: 1.22.1
+    helm:
+      parameters:
+        - name: 'global.hub'
+          value: 'docker.io/istio'
+        - name: 'global.tag'
+          value: '1.22.1'
+        # Enable Envoy's access logging
+        # https://istio.io/latest/docs/tasks/observability/logs/access-log/
+        - name: 'meshConfig.accessLogFile'
+          value: '/dev/stdout'
+        - name: 'meshConfig.accessLogEncoding'
+          value: 'JSON'
+        # Customizing Trace sampling
+        # https://istio.io/latest/docs/tasks/observability/distributed-tracing/configurability/
+        - name: 'meshConfig.defaultConfig.tracing.sampling'
+          value: '20'
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true

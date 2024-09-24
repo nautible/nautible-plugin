@@ -2,5 +2,9 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: nautible-app-ms
-  labels: 
-    istio-injection: enabled
+  labels:
+    istio.io/dataplane-mode=ambient
+    #istio.io/use-waypoint
+  # amnbientモードでは不要
+  # labels: 
+  #   istio-injection: enabled

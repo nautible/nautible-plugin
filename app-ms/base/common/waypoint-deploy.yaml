@@ -2,6 +2,7 @@ apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
 metadata:
   name: nautible-app-ms
+  namespace: nautible-app-ms
   labels:
     istio.io/waypoint-for: service
 spec:

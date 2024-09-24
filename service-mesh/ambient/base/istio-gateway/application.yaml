@@ -11,6 +11,10 @@ spec:
     chart: 'gateway'
     repoURL: 'https://istio-release.storage.googleapis.com/charts'
     targetRevision: 1.23.1
+    helm:
+      parameters:
+        - name: 'service.type'
+          value: 'NodePort'
   project: default
   syncPolicy:
     automated:

@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: istio-system
+    namespace: istio-ingress
     server: 'https://kubernetes.default.svc'
   source:
     path: 'manifests/charts/gateways/istio-ingress'

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: istio-ingress
+  name: istio-ingressgateway
   namespace: argocd
 spec:
   destination:
@@ -13,6 +13,8 @@ spec:
     targetRevision: 1.23.1
     helm:
       parameters:
+        - name: 'name'
+          value: 'istio-ingressgateway'
         - name: 'service.type'
           value: 'NodePort'
   project: default

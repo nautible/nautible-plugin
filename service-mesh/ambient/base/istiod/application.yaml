@@ -15,6 +15,14 @@ spec:
       parameters:
         - name: 'profile'
           value: 'ambient'
+        - name: 'pilot.resources.requests.cpu'
+          value: '100m'
+        - name: 'pilot.resources.requests.memory'
+          value: '128Mi'
+        - name: 'pilot.resources.limits.cpu'
+          value: '100m'
+        - name: 'pilot.resources.limits.memory'
+          value: '128Mi'
   project: default
   syncPolicy:
     automated:

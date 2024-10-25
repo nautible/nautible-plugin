@@ -19,4 +19,4 @@ resources:
   #- prometheus/application.yaml
   #- grafana/application.yaml
   #- jaeger/application.yaml
-  #- kiali/application.yaml
+  - kiali/application.yaml

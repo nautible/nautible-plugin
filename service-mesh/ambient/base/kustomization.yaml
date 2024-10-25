@@ -16,7 +16,7 @@ resources:
   #- istio-egress/application.yaml
   # Observability
   # https://istio.io/latest/docs/tasks/observability/
-  #- prometheus/application.yaml
+  - prometheus/application.yaml
   #- grafana/application.yaml
   #- jaeger/application.yaml
   - kiali/application.yaml

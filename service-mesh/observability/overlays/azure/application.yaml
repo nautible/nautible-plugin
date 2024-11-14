@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: istio-prometheus
+  name: istio-observability
   namespace: argocd
 spec:
   destination:
@@ -9,9 +9,11 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: service-mesh/base/prometheus/base
+    path: service-mesh/observability/overlays/azure
     repoURL: https://github.com/nautible/nautible-plugin
     targetRevision: develop
   syncPolicy:
     automated:
       prune: true
+    syncOptions:
+      - CreateNamespace=true

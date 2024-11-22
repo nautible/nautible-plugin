@@ -10,7 +10,15 @@ spec:
   source:
     chart: 'ztunnel'
     repoURL: 'https://istio-release.storage.googleapis.com/charts'
-    targetRevision: 1.23.1
+    targetRevision: 1.23.2
+    helm:
+      values: |
+        labels:
+          app.kubernetes.io/part-of: istio-ambient
+        podLabels:
+          app.kubernetes.io/part-of: istio-ambient
+        env:
+          LOG_FORMAT: json
   project: default
   syncPolicy:
     automated:

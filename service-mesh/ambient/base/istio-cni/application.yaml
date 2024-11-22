@@ -10,11 +10,22 @@ spec:
   source:
     chart: 'cni'
     repoURL: 'https://istio-release.storage.googleapis.com/charts'
-    targetRevision: 1.23.1
+    targetRevision: 1.23.2
     helm:
-      parameters:
-        - name: 'profile'
-          value: 'ambient'
+      values: |
+        global:
+          imagePullPolicy: IfNotPresent
+          logAsJson: true
+        cni:
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 200m
+            memory: 256Mi
+          ambient:
+            enabled: true
   project: default
   syncPolicy:
     automated:

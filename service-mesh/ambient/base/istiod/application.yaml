@@ -10,19 +10,51 @@ spec:
   source:
     chart: 'istiod'
     repoURL: 'https://istio-release.storage.googleapis.com/charts'
-    targetRevision: 1.23.1
+    targetRevision: 1.23.2
     helm:
-      parameters:
-        - name: 'profile'
-          value: 'ambient'
-        - name: 'pilot.resources.requests.cpu'
-          value: '100m'
-        - name: 'pilot.resources.requests.memory'
-          value: '128Mi'
-        - name: 'pilot.resources.limits.cpu'
-          value: '100m'
-        - name: 'pilot.resources.limits.memory'
-          value: '128Mi'
+      values: |
+        global:
+          imagePullPolicy: IfNotPresent
+          logAsJson: true
+          defaultPodDisruptionBudget:
+            enabled: false
+        pilot:
+          deploymentLabels:
+            app.kubernetes.io/part-of: istio-ambient
+          podLabels:
+            app.kubernetes.io/part-of: istio-ambient
+          autoscaleEnabled: false
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+          env:
+            # cf.) https://istio.io/latest/docs/reference/commands/pilot-discovery/#envvars
+            PILOT_ENABLE_AMBIENT: "true"
+        meshConfig:
+          defaultProviders:
+            metrics:
+            - prometheus
+          extensionProviders:
+          - name: prometheus
+            prometheus: {}
+          accessLogFile: /dev/stdout
+          accessLogEncoding: JSON
+          outboundTrafficPolicy:
+            mode: REGISTRY_ONLY
+        telemetry:
+          enabled: false
+          v2:
+            enabled: false
+        sidecarInjectorWebhook:
+          templates:
+            sidecar: ""
+            gateway: ""
+            grpc-simple: ""
+            grpc-agent: ""
   project: default
   syncPolicy:
     automated:

@@ -46,6 +46,46 @@ spec:
       uri: "/auth"
     route:
     - destination:
-        host: keycloak
+        host: keycloak.keycloak.svc.cluster.local
+        port:
+          number: 8080
+  - match:
+    - uri:
+        prefix: /api/v1.0/nautible-app-ms/product
+    rewrite:
+      uri: "/products"
+    route:
+    - destination:
+        host: nautible-app-ms-product.nautible-app-ms.svc.cluster.local
+        port:
+            number: 8080
+  - match:
+    - uri:
+        prefix: /api/v1.0/nautible-app-ms/order
+    rewrite:
+      uri: "/order"
+    route:
+    - destination:
+        host: nautible-app-ms-order.nautible-app-ms.svc.cluster.local
+        port:
+          number: 8080
+  - match:
+    - uri:
+        prefix: /api/v1.0/nautible-app-ms/cart
+    rewrite:
+      uri: "/cart"
+    route:
+    - destination:
+        host: nautible-app-ms-order.nautible-app-ms.svc.cluster.local
+        port:
+          number: 8080
+  - match:
+    - uri:
+        prefix: /api/v1.0/nautible-app-ms/customer
+    rewrite:
+      uri: "/customer"
+    route:
+    - destination:
+        host: nautible-app-ms-customer.nautible-app-ms.svc.cluster.local
         port:
           number: 8080

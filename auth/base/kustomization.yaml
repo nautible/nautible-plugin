@@ -6,4 +6,3 @@ resources:
   - keycloak-service.yaml
   - keycloak-istio-network.yaml
   - keycloak-istio-auth.yaml
-  - waypoint-deploy.yaml

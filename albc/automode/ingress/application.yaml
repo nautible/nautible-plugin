@@ -11,7 +11,7 @@ spec:
   source:
     path: albc/automode/ingress/manifest
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: feature/issues1169
+    targetRevision: feature/issues169
   syncPolicy:
     automated:
       prune: true

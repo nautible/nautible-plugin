@@ -50,33 +50,36 @@ spec:
             - name: KEYCLOAK_ADMIN
               valueFrom:
                 secretKeyRef:
-                  name: secret-keycloak
-                  key: KEYCLOAK_USER
+                  name: nautible-plugin-keycloak
+                  key: username
             - name: KEYCLOAK_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret-keycloak
-                  key: KEYCLOAK_PASSWORD
+                  name: nautible-plugin-keycloak
+                  key: password
             - name: KC_DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: secret-keycloak
-                  key: DB_USER
+                  name: nautible-plugin-keycloak-db
+                  key: user
             - name: KC_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secret-keycloak
-                  key: DB_PASSWORD
+                  name: nautible-plugin-keycloak-db
+                  key: password
             - name: KC_DB_URL_HOST
               valueFrom:
                 secretKeyRef:
-                  name: secret-keycloak
-                  key: DB_HOST
+                  name: nautible-plugin-keycloak-db
+                  key: host
             - name: PROXY_ADDRESS_FORWARDING
               value: 'true'
           volumeMounts:
             - name: realm
               mountPath: '/opt/keycloak/data/import'
+              readOnly: true
+            - name: secret-keycloak
+              mountPath: '/mnt/secret-store'
               readOnly: true
           ports:
             - name: http
@@ -87,6 +90,12 @@ spec:
         - name: secret-keycloak-realm
           secret:
             secretName: secret-keycloak-realm
+        - name: secret-keycloak
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-keycloak
       initContainers:
         - name: touch
           image: busybox

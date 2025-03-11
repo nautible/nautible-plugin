@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - keycloak-ns.yaml
   - keycloak-serviceaccount.yaml
+  - keycloak-role.yaml
   - keycloak-deploy.yaml
   - keycloak-service.yaml
   - keycloak-istio-network.yaml

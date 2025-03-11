@@ -26,6 +26,7 @@ spec:
         app.kubernetes.io/part-of: nautible
         app.kubernetes.io/managed-by: manual
     spec:
+      serviceAccountName: keycloak-sa
       containers:
         - name: keycloak
           image: quay.io/keycloak/keycloak:25.0.0
@@ -42,7 +43,6 @@ spec:
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
-          serviceAccountName: keycloak-sa
           env:
             - name: KC_IMPORT_VAL_FRONTEND_URL
               value: http://localhost:8080/api/v1.0/nautible-auth/auth # fix me

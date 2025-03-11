@@ -85,18 +85,6 @@ spec:
           ports:
             - name: http
               containerPort: 8080
-      volumes:
-        - name: realm
-          emptyDir: {}
-        - name: secret-keycloak-realm
-          secret:
-            secretName: secret-keycloak-realm
-        # - name: secret-keycloak
-        #   csi:
-        #     driver: secrets-store.csi.k8s.io
-        #     readOnly: true
-        #     volumeAttributes:
-        #       secretProviderClass: secret-keycloak
       initContainers:
         - name: touch
           image: busybox
@@ -118,10 +106,15 @@ spec:
           volumeMounts:  
           - name: secret-keycloak  
             mountPath: /mnt/secret-store  
-          volumes:  
-          - name: secret-keycloak  
-            csi:  
-              driver: secrets-store.csi.k8s.io  
-              readOnly: true  
-              volumeAttributes:  
-                secretProviderClass: secret-keycloak  
+      volumes:
+        - name: realm
+          emptyDir: {}
+        - name: secret-keycloak-realm
+          secret:
+            secretName: secret-keycloak-realm
+        - name: secret-keycloak
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: secret-keycloak

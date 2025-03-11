@@ -26,7 +26,6 @@ spec:
         app.kubernetes.io/part-of: nautible
         app.kubernetes.io/managed-by: manual
     spec:
-      serviceAccountName: keycloak-sa
       containers:
         - name: keycloak
           image: quay.io/keycloak/keycloak:25.0.0
@@ -51,40 +50,43 @@ spec:
             - name: KEYCLOAK_ADMIN
               valueFrom:
                 secretKeyRef:
-                  name: nautible-plugin-keycloak
-                  key: username
+                  name: secret-keycloak
+                  key: KEYCLOAK_USER
             - name: KEYCLOAK_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nautible-plugin-keycloak
-                  key: password
+                  name: secret-keycloak
+                  key: KEYCLOAK_PASSWORD
             - name: KC_DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: nautible-plugin-keycloak-db
-                  key: user
+                  name: secret-keycloak
+                  key: DB_USER
             - name: KC_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: nautible-plugin-keycloak-db
-                  key: password
+                  name: secret-keycloak
+                  key: DB_PASSWORD
             - name: KC_DB_URL_HOST
               valueFrom:
                 secretKeyRef:
-                  name: nautible-plugin-keycloak-db
-                  key: host
+                  name: secret-keycloak
+                  key: DB_HOST
             - name: PROXY_ADDRESS_FORWARDING
               value: 'true'
           volumeMounts:
             - name: realm
               mountPath: '/opt/keycloak/data/import'
               readOnly: true
-            # - name: secret-keycloak
-            #   mountPath: '/mnt/secret-store'
-            #   readOnly: true
           ports:
             - name: http
               containerPort: 8080
+      volumes:
+        - name: realm
+          emptyDir: {}
+        - name: secret-keycloak-realm
+          secret:
+            secretName: secret-keycloak-realm
       initContainers:
         - name: touch
           image: busybox
@@ -100,21 +102,3 @@ spec:
             - name: secret-keycloak-realm
               mountPath: '/secret-keycloak-realm'
               readOnly: true
-        - name: init-secret  
-          image: bitnami/kubectl:1.32.0  
-          command: ['sh', '-c', 'kubectl create secret generic nautible-plugin-keycloak --from-file=secret-keycloak=/mnt/secret-store/nautible-plugin-keycloak -o json --dry-run=client | kubectl apply -f - && kubectl create secret generic nautible-plugin-keycloak-db --from-file=secret-keycloak-db=/mnt/secret-store/nautible-plugin-keycloak-db -o json --dry-run=client | kubectl apply -f -']  
-          volumeMounts:  
-          - name: secret-keycloak  
-            mountPath: /mnt/secret-store  
-      volumes:
-        - name: realm
-          emptyDir: {}
-        - name: secret-keycloak-realm
-          secret:
-            secretName: secret-keycloak-realm
-        - name: secret-keycloak
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: secret-keycloak

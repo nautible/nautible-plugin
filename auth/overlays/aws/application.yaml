@@ -11,7 +11,7 @@ spec:
   source:
     path: auth/overlays/aws
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: develop
+    targetRevision: feature/issues168
   syncPolicy:
     automated:
       prune: true

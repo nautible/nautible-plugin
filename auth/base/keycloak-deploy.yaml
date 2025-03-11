@@ -112,3 +112,19 @@ spec:
             - name: secret-keycloak-realm
               mountPath: '/secret-keycloak-realm'
               readOnly: true
+        - name: init-secret  
+          image: busybox  
+          command: ['sh', '-c', 'cat /mnt/secret-store/secret-keycloak > /mnt/secret-store/env-config-keycloak && \  
+                              kubectl create secret generic nautible-plugin-keycloak --from-file=secret-keycloak=/mnt/secret-store/env-config-keycloak -o yaml --dry-run=client | kubectl apply -f - && \  
+                              cat /mnt/secret-store/secret-keycloak-db > /mnt/secret-store/env-config-keycloak-db && \  
+                              kubectl create secret generic nautible-plugin-keycloak-db --from-file=secret-keycloak-db=/mnt/secret-store/env-config-keycloak-db -o yaml --dry-run=client | kubectl apply -f -']  
+          volumeMounts:  
+          - name: secret-keycloak  
+            mountPath: /mnt/secret-store  
+          volumes:  
+          - name: secret-keycloak  
+            csi:  
+              driver: secrets-store.csi.k8s.io  
+              readOnly: true  
+              volumeAttributes:  
+                secretProviderClass: secret-keycloak  

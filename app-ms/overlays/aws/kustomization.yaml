@@ -4,7 +4,7 @@ bases:
   - ../../base
 
 resources:
-- ./secret-parameter/application.yaml
+- ./secrets/application.yaml
 
 patches:
 - path: patch.json

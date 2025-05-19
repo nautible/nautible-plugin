@@ -20,7 +20,7 @@ spec:
         - name: 'serviceAccount.name'
           value: 'aws-load-balancer-controller-sa'
         - name: 'clusterName'
-          value: 'nautible-dev-cluster' #FIXME: clusterName
+          value: 'nautible-dev-cluster-v1_32' #FIXME: clusterName
   project: default
   syncPolicy:
     automated:

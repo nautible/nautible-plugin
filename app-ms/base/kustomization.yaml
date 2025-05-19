@@ -4,6 +4,7 @@ resources:
   - common/namespace.yaml
   - common/dapr-rbac.yaml
   - common/argowf-accesstoken.yaml
+  - common/serviceaccount.yaml
   - customer/application.yaml
   - product/application.yaml
   - stock/application.yaml

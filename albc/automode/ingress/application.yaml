@@ -1,17 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: secret-app-ms
+  name: aws-load-balancer-controller-ingress
   namespace: argocd
 spec:
+  project: default
   destination:
-    namespace: nautible-app-ms
     server: https://kubernetes.default.svc
-  project: application
+    namespace: istio-system
   source:
-    path: app-ms/overlays/aws/secret-parameter
+    path: albc/automode/ingress/manifest
     repoURL: https://github.com/nautible/nautible-plugin
-    targetRevision: develop
+    targetRevision: feature/issues169
   syncPolicy:
     automated:
       prune: true
+    syncOptions:
+      - CreateNamespace=true

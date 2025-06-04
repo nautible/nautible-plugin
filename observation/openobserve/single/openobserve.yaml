@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openobserve
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: openobserve
+    server: 'https://kubernetes.default.svc'
+  source:
+    # ref https://github.com/openobserve-standalone/openobserve-helm-chart/tree/main/charts/openobserve
+    chart: 'openobserve-standalone'
+    repoURL: 'https://charts.openobserve.ai'
+    targetRevision: 0.14.7 # application v0.14.7
+    helm:
+      version: v3
+      releaseName: openobserve
+      values: |
+        serviceAccount:
+          create: true
+          name: openobserve
+          annotations:
+            eks.amazonaws.com/role-arn: arn:aws:iam::${ACCOUNT_ID}:role/nautible-dev-openobserve-access-role
+        config:
+          ZO_LOCAL_MODE_STORAGE: s3
+          ZO_S3_REGION_NAME: ap-northeast-1
+          ZO_S3_BUCKET_NAME: nautible-dev-openobserve-ap-northeast-1
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

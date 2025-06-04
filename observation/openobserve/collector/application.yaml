@@ -1,0 +1,122 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openobserve-collector
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: openobserve-collector
+    server: 'https://kubernetes.default.svc'
+  source:
+    # ref https://github.com/openobserve/openobserve-helm-chart/blob/main/charts/openobserve-collector
+    chart: 'openobserve-collector'
+    repoURL: 'https://charts.openobserve.ai'
+    targetRevision: 0.3.22 # application 0.113.0
+    helm:
+      version: v3
+      releaseName: openobserve
+      values: |
+        k8sCluster: nautible-dev-cluster-v1_32
+        agent:
+          receivers:
+            filelog/std:
+              ### デフォルトのオペレーター
+              ### 追記があるので既存部分が消えないようにGitHubからコードを取得してそのまま貼り付け
+              operators:
+                - type: router
+                  id: get-format
+                  routes:
+                    - output: parser-docker
+                      expr: 'body matches "^\\{"'
+                    - output: parser-crio
+                      expr: 'body matches "^[^ Z]+ "'
+                    - output: parser-containerd
+                      expr: 'body matches "^[^ Z]+Z"'
+                # Parse CRI-O format
+                - type: regex_parser
+                  id: parser-crio
+                  regex: "^(?P<time>[^ Z]+) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) ?(?P<log>.*)$"
+                  output: extract_metadata_from_filepath
+                  timestamp:
+                    parse_from: attributes.time
+                    layout_type: gotime
+                    layout: "2006-01-02T15:04:05.999999999Z07:00"
+                # Parse CRI-Containerd format
+                - type: regex_parser
+                  id: parser-containerd
+                  regex: "^(?P<time>[^ ^Z]+Z) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) ?(?P<log>.*)$"
+                  output: extract_metadata_from_filepath
+                  timestamp:
+                    parse_from: attributes.time
+                    layout: "%Y-%m-%dT%H:%M:%S.%LZ"
+                # Parse Docker format
+                - type: json_parser
+                  id: parser-docker
+                  output: extract_metadata_from_filepath
+                  timestamp:
+                    parse_from: attributes.time
+                    layout: "%Y-%m-%dT%H:%M:%S.%LZ"
+                # Extract metadata from file path
+                - type: regex_parser
+                  id: extract_metadata_from_filepath
+                  regex: '^.*\/(?P<namespace>[^_]+)_(?P<pod_name>[^_]+)_(?P<uid>[a-f0-9\-]{36})\/(?P<container_name>[^\._]+)\/(?P<restart_count>\d+)\.log$'
+                  parse_from: attributes["log.file.path"]
+                  cache:
+                    size: 128 # default maximum amount of Pods per Node is 110
+                # Update body field after finishing all parsing
+                - type: move
+                  from: attributes.log
+                  to: body
+                # Rename attributes
+                - type: move
+                  from: attributes.stream
+                  to: attributes["log.iostream"]
+                - type: move
+                  from: attributes.container_name
+                  to: resource["k8s.container.name"]
+                - type: move
+                  from: attributes.namespace
+                  to: resource["k8s.namespace.name"]
+                - type: move
+                  from: attributes.pod_name
+                  to: resource["k8s.pod.name"]
+                - type: move
+                  from: attributes.restart_count
+                  to: resource["k8s.container.restart_count"]
+                - type: move
+                  from: attributes.uid
+                  to: resource["k8s.pod.uid"]
+
+          processors:
+            transform:
+              log_statements:
+                - context: resource
+                  statements:
+                    - set(resource.attributes["trace.id"], ParseJSON(body)["mdc"]["trace_id"]) where body != nil
+                    - set(resource.attributes["span.id"], ParseJSON(body)["mdc"]["span_id"]) where body matches != nil
+                    - set(resource.attributes["trace.flags"], ParseJSON(body)["mdc"]["trace_flags"]) where body != nil
+          service:
+            pipelines:
+              logs:
+                receivers: [filelog/std]
+                processors: [batch, attributes, k8sattributes, transform]
+                exporters: [otlphttp/openobserve]
+        exporters:
+          otlphttp/openobserve: 
+            endpoint: http://openobserve-openobserve-standalone.openobserve.svc.cluster.local:5080/api/default
+            headers:
+              Authorization: "Basic XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+          otlphttp/openobserve_k8s_events:
+            endpoint: http://openobserve-openobserve-standalone.openobserve.svc.cluster.local:5080/api/default
+            headers:
+              Authorization: "Basic XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

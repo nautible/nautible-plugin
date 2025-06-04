@@ -1,0 +1,18 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: java-instrumentation
+  namespace: nautible-app-ms
+spec:
+  exporter:
+    endpoint: http://openobserve-openobserve-collector-gateway-collector.openobserve-collector.svc.cluster.local:4317
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    type: parentbased_traceidratio
+    argument: "1"
+  java:
+    env:
+      - name: OTEL_RESOURCE_PROVIDERS_AWS_ENABLED
+        value: true

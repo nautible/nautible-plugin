@@ -4,4 +4,9 @@ metadata:
   name: alb
 spec:
   scheme: internet-facing
-  group.name: nautible-alb-ingress
+  group: 
+    name: nautible-alb-ingress
+  subnets:
+    matchTags:
+      - key: Name
+        values: ["nautible-dev-public-subnet"] # FIXME 対象のサブネットに変更する。(NAMEタグ名を指定する)
